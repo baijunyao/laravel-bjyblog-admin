@@ -370,13 +370,14 @@ export default {
     basePath: '/',
   },
   chainWebpack: webpackPlugin,
-  /*
   proxy: {
-    '/server/api/': {
-      target: 'https://preview.pro.ant.design/',
+    '/oauth/*': {
+      target: 'http://laravel-bjyblog.test/',
       changeOrigin: true,
-      pathRewrite: { '^/server': '' },
+    },
+    '/api/*': {
+      target: 'http://laravel-bjyblog.test/',
+      changeOrigin: true,
     },
   },
-  */
 } as IConfig;

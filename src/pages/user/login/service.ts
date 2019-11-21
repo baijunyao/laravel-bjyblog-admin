@@ -2,12 +2,14 @@ import request from '@/utils/request';
 import { FormDataType } from './index';
 
 export async function fakeAccountLogin(params: FormDataType) {
-  return request('/api/login/account', {
+  return request('/oauth/token', {
     method: 'POST',
-    data: params,
+    data: {
+      grant_type: 'password',
+      client_id: 1,
+      scope: '',
+      username: params.email,
+      password: params.password,
+    },
   });
-}
-
-export async function getFakeCaptcha(mobile: string) {
-  return request(`/api/login/captcha?mobile=${mobile}`);
 }

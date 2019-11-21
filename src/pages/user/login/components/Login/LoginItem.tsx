@@ -1,21 +1,17 @@
-import { Button, Col, Form, Input, Row } from 'antd';
+import { Form, Input } from 'antd';
 import React, { Component } from 'react';
 
 import { FormComponentProps } from 'antd/es/form';
-import omit from 'omit.js';
 import ItemMap from './map';
 import LoginContext, { LoginContextProps } from './LoginContext';
-import styles from './index.less';
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 export type WrappedLoginItemProps = Omit<LoginItemProps, 'form' | 'type' | 'updateActive'>;
 export type LoginItemKeyType = keyof typeof ItemMap;
 export interface LoginItemType {
-  UserName: React.FC<WrappedLoginItemProps>;
+  Email: React.FC<WrappedLoginItemProps>;
   Password: React.FC<WrappedLoginItemProps>;
-  Mobile: React.FC<WrappedLoginItemProps>;
-  Captcha: React.FC<WrappedLoginItemProps>;
 }
 
 export interface LoginItemProps {
@@ -42,6 +38,7 @@ interface LoginItemState {
   count: number;
 }
 
+
 const FormItem = Form.Item;
 
 class WrapFormItem extends Component<LoginItemProps, LoginItemState> {
@@ -54,9 +51,6 @@ class WrapFormItem extends Component<LoginItemProps, LoginItemState> {
 
   constructor(props: LoginItemProps) {
     super(props);
-    this.state = {
-      count: 0,
-    };
   }
 
   componentDidMount() {
@@ -69,19 +63,6 @@ class WrapFormItem extends Component<LoginItemProps, LoginItemState> {
   componentWillUnmount() {
     clearInterval(this.interval);
   }
-
-  onGetCaptcha = () => {
-    const { onGetCaptcha } = this.props;
-    const result = onGetCaptcha ? onGetCaptcha() : null;
-    if (result === false) {
-      return;
-    }
-    if (result instanceof Promise) {
-      result.then(this.runGetCaptchaCountDown);
-    } else {
-      this.runGetCaptchaCountDown();
-    }
-  };
 
   getFormItemOptions = ({ onChange, defaultValue, customProps = {}, rules }: LoginItemProps) => {
     const options: {
@@ -100,22 +81,7 @@ class WrapFormItem extends Component<LoginItemProps, LoginItemState> {
     return options;
   };
 
-  runGetCaptchaCountDown = () => {
-    const { countDown } = this.props;
-    let count = countDown || 59;
-    this.setState({ count });
-    this.interval = window.setInterval(() => {
-      count -= 1;
-      this.setState({ count });
-      if (count === 0) {
-        clearInterval(this.interval);
-      }
-    }, 1000);
-  };
-
   render() {
-    const { count } = this.state;
-
     // 这么写是为了防止restProps中 带入 onChange, defaultValue, rules props tabUtil
     const {
       onChange,
@@ -142,29 +108,6 @@ class WrapFormItem extends Component<LoginItemProps, LoginItemState> {
     const options = this.getFormItemOptions(this.props);
     const otherProps = restProps || {};
 
-    if (type === 'Captcha') {
-      const inputProps = omit(otherProps, ['onGetCaptcha', 'countDown']);
-
-      return (
-        <FormItem>
-          <Row gutter={8}>
-            <Col span={16}>
-              {getFieldDecorator(name, options)(<Input {...customProps} {...inputProps} />)}
-            </Col>
-            <Col span={8}>
-              <Button
-                disabled={!!count}
-                className={styles.getCaptcha}
-                size="large"
-                onClick={this.onGetCaptcha}
-              >
-                {count ? `${count} ${getCaptchaSecondText}` : getCaptchaButtonText}
-              </Button>
-            </Col>
-          </Row>
-        </FormItem>
-      );
-    }
     return (
       <FormItem>
         {getFieldDecorator(name, options)(<Input {...customProps} {...otherProps} />)}

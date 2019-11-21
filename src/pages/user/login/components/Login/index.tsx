@@ -30,13 +30,9 @@ class Login extends Component<LoginProps, LoginState> {
 
   public static Submit = LoginSubmit;
 
-  public static UserName: React.FunctionComponent<LoginItemProps>;
+  public static Email: React.FunctionComponent<LoginItemProps>;
 
   public static Password: React.FunctionComponent<LoginItemProps>;
-
-  public static Mobile: React.FunctionComponent<LoginItemProps>;
-
-  public static Captcha: React.FunctionComponent<LoginItemProps>;
 
   static defaultProps = {
     className: '',

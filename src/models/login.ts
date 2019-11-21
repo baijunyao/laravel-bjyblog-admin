@@ -3,7 +3,7 @@ import { routerRedux } from 'dva/router';
 import { Effect } from 'dva';
 import { stringify } from 'querystring';
 
-import { fakeAccountLogin, getFakeCaptcha } from '@/services/login';
+import { fakeAccountLogin } from '@/services/login';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 
@@ -18,7 +18,6 @@ export interface LoginModelType {
   state: StateType;
   effects: {
     login: Effect;
-    getCaptcha: Effect;
     logout: Effect;
   };
   reducers: {
@@ -40,9 +39,11 @@ const Model: LoginModelType = {
         type: 'changeLoginStatus',
         payload: response,
       });
+      console.log(response);
       // Login successfully
       if (response.status === 'ok') {
         const urlParams = new URL(window.location.href);
+        console.log(urlParams)
         const params = getPageQuery();
         let { redirect } = params as { redirect: string };
         if (redirect) {
@@ -61,9 +62,6 @@ const Model: LoginModelType = {
       }
     },
 
-    *getCaptcha({ payload }, { call }) {
-      yield call(getFakeCaptcha, payload);
-    },
     *logout(_, { put }) {
       const { redirect } = getPageQuery();
       // redirect
