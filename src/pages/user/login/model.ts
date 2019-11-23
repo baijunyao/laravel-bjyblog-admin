@@ -1,8 +1,7 @@
 import { AnyAction, Reducer } from 'redux';
 import { EffectsCommandMap } from 'dva';
-import { routerRedux } from 'dva/router';
-import { fakeAccountLogin } from './service';
-import { getPageQuery, setAuthority } from './utils/utils';
+import { login } from './service';
+import { setAuthority } from './utils/utils';
 
 export interface StateType {
   status?: 'ok' | 'error';
@@ -35,7 +34,7 @@ const Model: ModelType = {
 
   effects: {
     *login({ payload }, { call, put }) {
-      const response = yield call(fakeAccountLogin, payload);
+      const response = yield call(login, payload);
       yield put({
         type: 'changeLoginStatus',
         payload: response,
@@ -43,6 +42,7 @@ const Model: ModelType = {
 
       // Login successfully
       if (response.access_token !== undefined) {
+        localStorage.setItem('token', response.access_token);
         window.location.href = '/dashboard/analysis'
       }
     },

@@ -45,12 +45,18 @@ const errorHandler = (error: { response: Response }): Response => {
   return response;
 };
 
+const authorization:string = localStorage.getItem('token') === undefined ? '' : `Bearer ${localStorage.getItem('token')}`;
+
 /**
  * 配置request请求时的默认参数
  */
 const request = extend({
   errorHandler, // 默认错误处理
   credentials: 'include', // 默认请求是否带上cookie
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: authorization,
+  },
 });
 
 export default request;
