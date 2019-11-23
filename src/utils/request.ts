@@ -4,6 +4,7 @@
  */
 import { extend } from 'umi-request';
 import { notification } from 'antd';
+import {TableListData, LaravelPaginationResponse} from '@/models/data';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -58,5 +59,19 @@ const request = extend({
     Authorization: authorization,
   },
 });
+
+// eslint-disable-next-line max-len
+export function convertPaginationResponse(laravelPaginationResponse: LaravelPaginationResponse): TableListData {
+  const tableListData: TableListData = {
+    list: laravelPaginationResponse.data,
+    pagination: {
+        total: laravelPaginationResponse.meta.total,
+        pageSize: laravelPaginationResponse.meta.per_page,
+        current: laravelPaginationResponse.meta.current_page,
+    },
+  };
+
+  return tableListData;
+}
 
 export default request;
