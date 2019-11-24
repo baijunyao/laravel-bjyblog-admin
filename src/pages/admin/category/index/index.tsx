@@ -17,7 +17,7 @@ import { SorterResult } from 'antd/es/table';
 import { connect } from 'dva';
 import moment from 'moment';
 import { StateType } from './model';
-import CreateForm from './components/CreateForm';
+import CreateForm, { NewCategory } from './components/CreateForm';
 import StandardTable, { StandardTableColumnProps } from './components/StandardTable';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
 import { TableListItem } from './data.d';
@@ -106,7 +106,6 @@ class TableList extends Component<TableListProps, TableListState> {
         },
       ],
       render(val: string|null) {
-        console.log(val);
         return val === null ? status[0] : status[1];
       },
     },
@@ -210,13 +209,11 @@ class TableList extends Component<TableListProps, TableListState> {
     });
   };
 
-  handleAdd = (fields: { desc: any }) => {
+  handleAdd = (fields: NewCategory) => {
     const { dispatch } = this.props;
     dispatch({
       type: 'adminAndcategoryAndindex/add',
-      payload: {
-        desc: fields.desc,
-      },
+      payload: fields,
     });
 
     message.success('添加成功');

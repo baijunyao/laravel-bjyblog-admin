@@ -4,7 +4,6 @@ export interface TableListItem {
   id: number;
   name: string;
   slug: string;
-  title: string;
   keywords: string;
   description: string;
   sort: number;

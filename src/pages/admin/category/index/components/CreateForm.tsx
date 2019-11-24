@@ -2,14 +2,18 @@ import { Form, Input, Modal } from 'antd';
 
 import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
+import { TableListItem } from '@/pages/admin/category/index/data';
+
+export type NewCategory = Pick<TableListItem, 'name' | 'keywords' | 'description'>
 
 const FormItem = Form.Item;
 
 interface CreateFormProps extends FormComponentProps {
   modalVisible: boolean;
-  handleAdd: (fieldsValue: { desc: string }) => void;
+  handleAdd: (fieldsValue: NewCategory) => void;
   handleModalVisible: () => void;
 }
+
 const CreateForm: React.FC<CreateFormProps> = props => {
   const { modalVisible, form, handleAdd, handleModalVisible } = props;
   const okHandle = () => {
@@ -22,15 +26,21 @@ const CreateForm: React.FC<CreateFormProps> = props => {
   return (
     <Modal
       destroyOnClose
-      title="新建规则"
+      title="新增分类"
       visible={modalVisible}
       onOk={okHandle}
       onCancel={() => handleModalVisible()}
     >
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="分类名">
+        {form.getFieldDecorator('name', {
+          rules: [{ required: true }],
+        })(<Input />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="关键字">
+        {form.getFieldDecorator('keywords')(<Input />)}
+      </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="描述">
-        {form.getFieldDecorator('desc', {
-          rules: [{ required: true, message: '请输入至少五个字符的规则描述！', min: 5 }],
-        })(<Input placeholder="请输入" />)}
+        {form.getFieldDecorator('description')(<Input />)}
       </FormItem>
     </Modal>
   );
