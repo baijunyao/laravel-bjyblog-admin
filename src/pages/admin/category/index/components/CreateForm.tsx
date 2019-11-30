@@ -37,10 +37,14 @@ const CreateForm: React.FC<CreateFormProps> = props => {
         })(<Input />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="关键字">
-        {form.getFieldDecorator('keywords')(<Input />)}
+        {form.getFieldDecorator('keywords', {
+          rules: [{ required: true }],
+        })(<Input />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="描述">
-        {form.getFieldDecorator('description')(<Input />)}
+        {form.getFieldDecorator('description', {
+          rules: [{ required: true }],
+        })(<Input />)}
       </FormItem>
     </Modal>
   );

@@ -1,6 +1,7 @@
 import request, { convertPaginationResponse } from '@/utils/request';
 import { TableListParams } from '@/models/data.d';
 import { NewCategory } from './components/CreateForm'
+import {UpdateCategory} from "@/pages/admin/category/index/components/UpdateForm";
 
 export async function queryRule(params: TableListParams) {
   const response = await request('/api/categories', {
@@ -31,12 +32,9 @@ export async function removeRule(params: TableListParams) {
   return response;
 }
 
-export async function updateRule(params: TableListParams) {
-  return request('/api/rule', {
-    method: 'POST',
-    data: {
-      ...params,
-      method: 'update',
-    },
+export async function updateRule(params: UpdateCategory) {
+  return request(`/api/categories/${params.id}`, {
+    method: 'PUT',
+    data: params,
   });
 }

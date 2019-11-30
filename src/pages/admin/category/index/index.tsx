@@ -18,8 +18,8 @@ import { connect } from 'dva';
 import moment from 'moment';
 import { StateType } from './model';
 import CreateForm, { NewCategory } from './components/CreateForm';
+import UpdateForm, { UpdateCategory } from './components/UpdateForm';
 import StandardTable, { StandardTableColumnProps } from './components/StandardTable';
-import UpdateForm, { FormValueType } from './components/UpdateForm';
 import { TableListItem } from './data.d';
 import { TableListPagination, TableListParams } from '@/models/data.d';
 
@@ -50,7 +50,7 @@ interface TableListState {
   updateModalVisible: boolean;
   selectedRows: TableListItem[];
   formValues: { [key: string]: string };
-  stepFormValues: Partial<TableListItem>;
+  updateFormValues: UpdateCategory;
 }
 
 /* eslint react/no-multi-comp:0 */
@@ -76,7 +76,12 @@ class TableList extends Component<TableListProps, TableListState> {
     updateModalVisible: false,
     selectedRows: [],
     formValues: {},
-    stepFormValues: {},
+    updateFormValues: {
+      id: 0,
+      name: '',
+      keywords: '',
+      description: '',
+    },
   };
 
   columns: StandardTableColumnProps[] = [
@@ -117,15 +122,15 @@ class TableList extends Component<TableListProps, TableListState> {
     },
     {
       title: '操作',
-      render: (text, record) => (
-        <Fragment>
+      render: (text, record) => {
+        return (<Fragment>
           <a onClick={() => this.handleUpdateModalVisible(true, record)}>修改</a>
           <Divider type="vertical" />
           <a href="">删除</a>
           <Divider type="vertical" />
           <a href="">彻底删除</a>
-        </Fragment>
-      ),
+        </Fragment>)
+      },
     },
   ];
 
@@ -202,10 +207,15 @@ class TableList extends Component<TableListProps, TableListState> {
     });
   };
 
-  handleUpdateModalVisible = (flag?: boolean, record?: FormValueType) => {
+  handleUpdateModalVisible = (flag?: boolean, record?: UpdateCategory) => {
     this.setState({
       updateModalVisible: !!flag,
-      stepFormValues: record || {},
+      updateFormValues: record || {
+        id: 0,
+        name: '',
+        keywords: '',
+        description: '',
+      },
     });
   };
 
@@ -220,14 +230,14 @@ class TableList extends Component<TableListProps, TableListState> {
     this.handleModalVisible();
   };
 
-  handleUpdate = (fields: FormValueType) => {
+  handleUpdate = (fields: UpdateCategory) => {
     const { dispatch } = this.props;
     dispatch({
       type: 'adminAndcategoryAndindex/update',
       payload: fields,
     });
 
-    message.success('配置成功');
+    message.success('修改成功');
     this.handleUpdateModalVisible();
   };
 
@@ -237,7 +247,7 @@ class TableList extends Component<TableListProps, TableListState> {
       loading,
     } = this.props;
 
-    const { selectedRows, modalVisible, updateModalVisible, stepFormValues } = this.state;
+    const { selectedRows, modalVisible, updateModalVisible, updateFormValues } = this.state;
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
         <Menu.Item key="remove">删除</Menu.Item>
@@ -253,6 +263,7 @@ class TableList extends Component<TableListProps, TableListState> {
       handleUpdateModalVisible: this.handleUpdateModalVisible,
       handleUpdate: this.handleUpdate,
     };
+
     return (
       <PageHeaderWrapper>
         <Card bordered={false}>
@@ -283,13 +294,11 @@ class TableList extends Component<TableListProps, TableListState> {
           </div>
         </Card>
         <CreateForm {...parentMethods} modalVisible={modalVisible} />
-        {stepFormValues && Object.keys(stepFormValues).length ? (
-          <UpdateForm
-            {...updateMethods}
-            updateModalVisible={updateModalVisible}
-            values={stepFormValues}
-          />
-        ) : null}
+        <UpdateForm
+          {...updateMethods}
+          updateModalVisible={updateModalVisible}
+          updateFormValues={ updateFormValues }
+        />
       </PageHeaderWrapper>
     );
   }

@@ -25,6 +25,7 @@ export interface ModelType {
   reducers: {
     save: Reducer<StateType>;
     new: Reducer<StateType>;
+    edit: Reducer<StateType>;
   };
 }
 
@@ -65,7 +66,7 @@ const Model: ModelType = {
     *update({ payload, callback }, { call, put }) {
       const response = yield call(updateRule, payload);
       yield put({
-        type: 'save',
+        type: 'edit',
         payload: response,
       });
       if (callback) callback();
@@ -82,6 +83,20 @@ const Model: ModelType = {
     new(state, action) {
       if (state !== undefined) {
         state.data.list.push(action.payload.list);
+      }
+
+      return {
+        data: action.payload,
+        ...state,
+      };
+    },
+    edit(state, action) {
+      if (state !== undefined) {
+        state.data.list.forEach((value, key) => {
+          if (value.id === action.payload.data.id) {
+            state.data.list[key] = action.payload.data
+          }
+        })
       }
 
       return {
