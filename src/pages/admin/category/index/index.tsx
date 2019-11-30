@@ -37,8 +37,9 @@ interface TableListProps extends FormComponentProps {
     Action<
       | 'adminAndcategoryAndindex/add'
       | 'adminAndcategoryAndindex/fetch'
-      | 'adminAndcategoryAndindex/remove'
       | 'adminAndcategoryAndindex/update'
+      | 'adminAndcategoryAndindex/destroy'
+      | 'adminAndcategoryAndindex/forceDelete'
     >
   >;
   loading: boolean;
@@ -123,13 +124,24 @@ class TableList extends Component<TableListProps, TableListState> {
     {
       title: '操作',
       render: (text, record) => {
-        return (<Fragment>
-          <a onClick={() => this.handleUpdateModalVisible(true, record)}>修改</a>
-          <Divider type="vertical" />
-          <a href="">删除</a>
-          <Divider type="vertical" />
-          <a href="">彻底删除</a>
-        </Fragment>)
+        if (record.deleted_at === null) {
+          return (
+            <Fragment>
+              <a onClick={() => this.handleUpdateModalVisible(true, record)}>修改</a>
+              <Divider type="vertical" />
+              <a onClick={() => this.handleDestroy(record)}>删除</a>
+            </Fragment>
+          )
+        }
+        return (
+          <Fragment>
+            <a onClick={() => this.handleUpdateModalVisible(true, record)}>修改</a>
+            <Divider type="vertical" />
+            <a onClick={() => this.handleForceDelete(record)}>彻底删除</a>
+            <Divider type="vertical" />
+            <a onClick={() => this.handleDestroy(record)}>恢复</a>
+          </Fragment>
+        )
       },
     },
   ];
@@ -179,7 +191,7 @@ class TableList extends Component<TableListProps, TableListState> {
     switch (e.key) {
       case 'remove':
         dispatch({
-          type: 'adminAndcategoryAndindex/remove',
+          type: 'adminAndcategoryAndindex/destroy',
           payload: {
             key: selectedRows.map(row => row.id),
           },
@@ -239,6 +251,26 @@ class TableList extends Component<TableListProps, TableListState> {
 
     message.success('修改成功');
     this.handleUpdateModalVisible();
+  };
+
+  handleDestroy = (fields: UpdateCategory) => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'adminAndcategoryAndindex/destroy',
+      payload: fields,
+    });
+
+    message.success('删除成功');
+  };
+
+  handleForceDelete = (fields: UpdateCategory) => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'adminAndcategoryAndindex/forceDelete',
+      payload: fields,
+    });
+
+    message.success('删除成功');
   };
 
   render() {
