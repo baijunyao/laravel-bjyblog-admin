@@ -38,3 +38,10 @@ export async function forceDeleteRule(params: UpdateCategory) {
     data: params,
   });
 }
+
+export async function restoreRule(params: UpdateCategory) {
+  return request(`/api/categories/${params.id}/restore`, {
+    method: 'PATCH',
+    data: params,
+  });
+}

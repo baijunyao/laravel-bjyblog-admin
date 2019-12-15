@@ -1,6 +1,6 @@
 import { AnyAction, Reducer } from 'redux';
 import { EffectsCommandMap } from 'dva';
-import { addRule, queryRule, removeRule, updateRule, forceDeleteRule } from './service';
+import { addRule, queryRule, removeRule, updateRule, forceDeleteRule, restoreRule } from './service';
 
 import { TableListData } from './data.d';
 
@@ -22,6 +22,7 @@ export interface ModelType {
     update: Effect;
     destroy: Effect;
     forceDelete: Effect;
+    restore: Effect;
   };
   reducers: {
     save: Reducer<StateType>;
@@ -82,6 +83,15 @@ const Model: ModelType = {
       yield put({
         type: 'remove',
         payload: payload.id,
+      });
+      if (callback) callback();
+    },
+
+    *restore({ payload, callback }, { call, put }) {
+      const response = yield call(restoreRule, payload);
+      yield put({
+        type: 'edit',
+        payload: response,
       });
       if (callback) callback();
     },

@@ -40,6 +40,7 @@ interface TableListProps extends FormComponentProps {
       | 'adminAndcategoryAndindex/update'
       | 'adminAndcategoryAndindex/destroy'
       | 'adminAndcategoryAndindex/forceDelete'
+      | 'adminAndcategoryAndindex/restore'
     >
   >;
   loading: boolean;
@@ -139,7 +140,7 @@ class TableList extends Component<TableListProps, TableListState> {
             <Divider type="vertical" />
             <a onClick={() => this.handleForceDelete(record)}>彻底删除</a>
             <Divider type="vertical" />
-            <a onClick={() => this.handleDestroy(record)}>恢复</a>
+            <a onClick={() => this.handleRestore(record)}>恢复</a>
           </Fragment>
         )
       },
@@ -271,6 +272,16 @@ class TableList extends Component<TableListProps, TableListState> {
     });
 
     message.success('删除成功');
+  };
+
+  handleRestore = (fields: UpdateCategory) => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'adminAndcategoryAndindex/restore',
+      payload: fields,
+    });
+
+    message.success('恢复成功');
   };
 
   render() {
