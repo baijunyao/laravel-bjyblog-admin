@@ -49,4 +49,6 @@ export default {
   'menu.editor.koni': 'Koni Editor',
   'menu.category': 'Category',
   'menu.category.index': 'Index',
+  'menu.tag': 'Tag',
+  'menu.tag.index': 'Index',
 };

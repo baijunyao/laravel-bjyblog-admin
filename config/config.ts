@@ -327,6 +327,18 @@ export default {
               ],
             },
             {
+              name: 'tag',
+              icon: 'highlight',
+              path: '/admin/tag',
+              routes: [
+                {
+                  name: 'index',
+                  path: '/admin/tag/index',
+                  component: './admin/tag/index',
+                },
+              ],
+            },
+            {
               component: '404',
             },
           ],
