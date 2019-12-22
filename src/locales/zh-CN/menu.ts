@@ -51,4 +51,6 @@ export default {
   'menu.category.index': '分类列表',
   'menu.tag': '标签',
   'menu.tag.index': '标签列表',
+  'menu.comment': '评论',
+  'menu.comment.index': '评论列表',
 };

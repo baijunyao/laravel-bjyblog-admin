@@ -339,6 +339,18 @@ export default {
               ],
             },
             {
+              name: 'comment',
+              icon: 'highlight',
+              path: '/admin/comment',
+              routes: [
+                {
+                  name: 'index',
+                  path: '/admin/comment/index',
+                  component: './admin/comment/index',
+                },
+              ],
+            },
+            {
               component: '404',
             },
           ],
