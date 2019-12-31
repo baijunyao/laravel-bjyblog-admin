@@ -351,6 +351,18 @@ export default {
               ],
             },
             {
+              name: 'user',
+              icon: 'highlight',
+              path: '/admin/adminUser',
+              routes: [
+                {
+                  name: 'adminUser',
+                  path: '/admin/adminUser/index',
+                  component: './admin/adminUser/index',
+                },
+              ],
+            },
+            {
               component: '404',
             },
           ],

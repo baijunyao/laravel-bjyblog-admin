@@ -57,7 +57,7 @@ export default {
     phone: '0752-268888888',
   },
   // GET POST 可省略
-  'GET /api/users': [
+  'GET /api/users2': [
     {
       key: '1',
       name: 'John Brown',

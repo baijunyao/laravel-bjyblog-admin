@@ -53,4 +53,6 @@ export default {
   'menu.tag.index': 'Index',
   'menu.comment': 'Comment',
   'menu.comment.index': 'Index',
+  'menu.user': 'User',
+  'menu.user.adminUser': 'Admin',
 };
