@@ -13,5 +13,5 @@ export async function queryCity(province: string) {
 }
 
 export async function query() {
-  return request('/api/users');
+  return request('/api/users2');
 }

@@ -53,6 +53,8 @@ export default {
   'menu.tag.index': '标签列表',
   'menu.comment': '评论',
   'menu.comment.index': '评论列表',
-  'menu.user': '用户',
-  'menu.user.adminUser': '管理员',
+  'menu.adminUser': '管理员',
+  'menu.adminUser.index': '列表',
+  'menu.socialiteUser': '第三方用户',
+  'menu.socialiteUser.index': '列表',
 };

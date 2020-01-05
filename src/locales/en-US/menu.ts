@@ -55,4 +55,5 @@ export default {
   'menu.comment.index': 'Index',
   'menu.user': 'User',
   'menu.user.adminUser': 'Admin',
+  'menu.user.socialiteUser': 'Socialite User',
 };
