@@ -181,6 +181,18 @@ export default {
             },
           ],
         },
+        {
+          name: 'friendshipLink',
+          icon: 'highlight',
+          path: '/admin/friendshipLink',
+          routes: [
+            {
+              name: 'index',
+              path: '/admin/friendshipLink/index',
+              component: './admin/friendshipLink/index',
+            },
+          ],
+        },
         // {
         //   component: '404',
         // },
