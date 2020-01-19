@@ -58,4 +58,6 @@ export default {
   'menu.user.socialiteUser': 'Socialite User',
   'menu.friendshipLink': 'friendship Link',
   'menu.friendshipLink.index': 'List',
+  'menu.site': 'Recommend Blog',
+  'menu.site.index': 'List',
 };

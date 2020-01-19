@@ -193,6 +193,18 @@ export default {
             },
           ],
         },
+        {
+          name: 'site',
+          icon: 'highlight',
+          path: '/admin/site',
+          routes: [
+            {
+              name: 'index',
+              path: '/admin/site/index',
+              component: './admin/site/index',
+            },
+          ],
+        },
         // {
         //   component: '404',
         // },

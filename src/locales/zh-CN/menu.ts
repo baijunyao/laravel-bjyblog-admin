@@ -59,4 +59,6 @@ export default {
   'menu.socialiteUser.index': '列表',
   'menu.friendshipLink': '友情链接',
   'menu.friendshipLink.index': '列表',
+  'menu.site': '推荐博客',
+  'menu.site.index': '列表',
 };
