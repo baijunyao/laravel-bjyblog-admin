@@ -60,4 +60,6 @@ export default {
   'menu.friendshipLink.index': 'List',
   'menu.site': 'Recommend Blog',
   'menu.site.index': 'List',
+  'menu.note': 'Note',
+  'menu.note.index': 'List',
 };

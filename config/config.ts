@@ -205,6 +205,18 @@ export default {
             },
           ],
         },
+        {
+          name: 'note',
+          icon: 'highlight',
+          path: '/admin/note',
+          routes: [
+            {
+              name: 'index',
+              path: '/admin/note/index',
+              component: './admin/note/index',
+            },
+          ],
+        },
         // {
         //   component: '404',
         // },
