@@ -62,4 +62,6 @@ export default {
   'menu.site.index': 'List',
   'menu.note': 'Note',
   'menu.note.index': 'List',
+  'menu.config': 'Config',
+  'menu.config.email': 'Email',
 };

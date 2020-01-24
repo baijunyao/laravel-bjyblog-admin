@@ -217,6 +217,18 @@ export default {
             },
           ],
         },
+        {
+          name: 'config',
+          icon: 'highlight',
+          path: '/admin/config',
+          routes: [
+            {
+              name: 'email',
+              path: '/admin/config/email',
+              component: './admin/config/email',
+            },
+          ],
+        },
         // {
         //   component: '404',
         // },

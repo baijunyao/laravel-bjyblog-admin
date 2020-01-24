@@ -63,4 +63,6 @@ export default {
   'menu.site.index': '列表',
   'menu.note': '随言碎语',
   'menu.note.index': '列表',
+  'menu.config': '设置',
+  'menu.config.email': '邮箱',
 };
