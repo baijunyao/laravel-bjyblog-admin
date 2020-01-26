@@ -170,6 +170,18 @@ export default {
           ],
         },
         {
+          name: 'socialiteClient',
+          icon: 'highlight',
+          path: '/admin/socialiteClient',
+          routes: [
+            {
+              name: 'index',
+              path: '/admin/socialiteClient/index',
+              component: './admin/socialiteClient/index',
+            },
+          ],
+        },
+        {
           name: 'socialiteUser',
           icon: 'highlight',
           path: '/admin/socialiteUser',

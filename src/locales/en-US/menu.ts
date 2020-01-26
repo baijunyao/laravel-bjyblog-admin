@@ -64,4 +64,6 @@ export default {
   'menu.note.index': 'List',
   'menu.config': 'Config',
   'menu.config.email': 'Email',
+  'menu.socialiteClient': 'Socialite Client',
+  'menu.socialiteClient.index': 'List',
 };
