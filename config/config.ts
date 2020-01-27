@@ -239,6 +239,11 @@ export default {
               path: '/admin/config/email',
               component: './admin/config/email',
             },
+            {
+              name: 'commentAudit',
+              path: '/admin/config/commentAudit',
+              component: './admin/config/commentAudit',
+            },
           ],
         },
         // {

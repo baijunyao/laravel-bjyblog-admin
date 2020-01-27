@@ -65,6 +65,7 @@ export default {
   'menu.note.index': '列表',
   'menu.config': '设置',
   'menu.config.email': '邮箱',
+  'menu.config.commentAudit': '评论审核',
   'menu.socialiteClient': '第三方登录',
   'menu.socialiteClient.index': '列表',
 };
