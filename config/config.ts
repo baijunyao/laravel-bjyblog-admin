@@ -230,6 +230,18 @@ export default {
           ],
         },
         {
+          name: 'openSource',
+          icon: 'highlight',
+          path: '/admin/openSource',
+          routes: [
+            {
+              name: 'index',
+              path: '/admin/openSource/index',
+              component: './admin/openSource/index',
+            },
+          ],
+        },
+        {
           name: 'config',
           icon: 'highlight',
           path: '/admin/config',
