@@ -256,6 +256,11 @@ export default {
               path: '/admin/config/commentAudit',
               component: './admin/config/commentAudit',
             },
+            {
+              name: 'qqQun',
+              path: '/admin/config/qqQun',
+              component: './admin/config/qqQun',
+            },
           ],
         },
         // {
