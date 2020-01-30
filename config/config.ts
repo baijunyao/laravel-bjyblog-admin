@@ -261,6 +261,11 @@ export default {
               path: '/admin/config/qqQun',
               component: './admin/config/qqQun',
             },
+            {
+              name: 'backup',
+              path: '/admin/config/backup',
+              component: './admin/config/backup',
+            },
           ],
         },
         // {

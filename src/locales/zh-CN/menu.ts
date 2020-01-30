@@ -71,4 +71,5 @@ export default {
   'menu.config.email': '邮箱',
   'menu.config.commentAudit': '评论审核',
   'menu.config.qqQun': 'QQ 群',
+  'menu.config.backup': '备份',
 };
