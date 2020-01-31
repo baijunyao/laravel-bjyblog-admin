@@ -266,6 +266,11 @@ export default {
               path: '/admin/config/backup',
               component: './admin/config/backup',
             },
+            {
+              name: 'seo',
+              path: '/admin/config/seo',
+              component: './admin/config/seo',
+            },
           ],
         },
         // {
