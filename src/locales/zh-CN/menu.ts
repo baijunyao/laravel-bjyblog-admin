@@ -73,4 +73,5 @@ export default {
   'menu.config.qqQun': 'QQ 群',
   'menu.config.backup': '备份',
   'menu.config.seo': 'SEO',
+  'menu.config.socialShare': '社会化分享',
 };

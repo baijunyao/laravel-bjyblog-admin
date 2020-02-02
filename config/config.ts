@@ -271,6 +271,11 @@ export default {
               path: '/admin/config/seo',
               component: './admin/config/seo',
             },
+            {
+              name: 'socialShare',
+              path: '/admin/config/socialShare',
+              component: './admin/config/socialShare',
+            },
           ],
         },
         // {
