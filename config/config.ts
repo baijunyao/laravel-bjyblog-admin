@@ -276,6 +276,11 @@ export default {
               path: '/admin/config/socialShare',
               component: './admin/config/socialShare',
             },
+            {
+              name: 'socialLink',
+              path: '/admin/config/socialLink',
+              component: './admin/config/socialLink',
+            },
           ],
         },
         // {
