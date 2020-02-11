@@ -281,6 +281,11 @@ export default {
               path: '/admin/config/socialLink',
               component: './admin/config/socialLink',
             },
+            {
+              name: 'search',
+              path: '/admin/config/search',
+              component: './admin/config/search',
+            },
           ],
         },
         // {

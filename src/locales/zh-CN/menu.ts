@@ -75,4 +75,5 @@ export default {
   'menu.config.seo': 'SEO',
   'menu.config.socialShare': '社会化分享',
   'menu.config.socialLink': '社会化链接',
+  'menu.config.search': '搜索',
 };
