@@ -286,6 +286,11 @@ export default {
               path: '/admin/config/search',
               component: './admin/config/search',
             },
+            {
+              name: 'otherSetting',
+              path: '/admin/config/otherSetting',
+              component: './admin/config/otherSetting',
+            },
           ],
         },
         // {

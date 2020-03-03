@@ -76,4 +76,5 @@ export default {
   'menu.config.socialShare': '社会化分享',
   'menu.config.socialLink': '社会化链接',
   'menu.config.search': '搜索',
+  'menu.config.otherSetting': '其他设置',
 };

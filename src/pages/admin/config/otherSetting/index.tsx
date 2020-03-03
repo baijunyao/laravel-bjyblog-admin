@@ -2,7 +2,7 @@ import {
   Button,
   Card,
   Form, Input,
-  message, Radio,
+  message, Radio, Select,
 } from 'antd';
 import React, { Component, Fragment } from 'react';
 
@@ -20,6 +20,7 @@ import { FormattedMessage } from 'umi-plugin-react/locale';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
+const { Option } = Select;
 
 const getValue = (obj: { [x: string]: string[] }) =>
   Object.keys(obj)
@@ -223,45 +224,250 @@ class TableList extends Component<TableListProps, TableListState> {
           <Form onSubmit={this.handleSubmit} hideRequiredMark style={{ marginTop: 8 }}>
             <FormItem
               {...formItemLayout}
-              label="选择插件"
+              label="语言"
             >
-              {getFieldDecorator('168', {
+              {getFieldDecorator('166', {
                 rules: [{ required: true }],
-                initialValue: data.list[168].value,
+                initialValue: data.list[166].value,
+              })(
+                <Select>
+                  <Option value="en">英文</Option>
+                  <Option value="fr">法语</Option>
+                  <Option value="ru">俄语</Option>
+                  <Option value="zh-CN">简体中文</Option>
+                </Select>,
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="Logo 风格"
+            >
+              {getFieldDecorator('171', {
+                rules: [{ required: true }],
+                initialValue: data.list[171].value,
               })(<Radio.Group>
-                <Radio value="jssocials">jssocials</Radio>
-                <Radio value="sharejs">sharejs</Radio>
+                <Radio value="true">带 PHP 标签</Radio>
+                <Radio value="false">纯文本</Radio>
               </Radio.Group>)}
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="Baidu appid"
+              label="ICP 备案"
             >
-              {getFieldDecorator('169', {
+              {getFieldDecorator('117', {
                 rules: [
                   {
                     required: true,
                   },
                 ],
-                initialValue: data.list[169].value,
+                initialValue: data.list[117].value,
+              })(
+                <Input />,
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="默认作者"
+            >
+              {getFieldDecorator('125', {
+                rules: [
+                  {
+                    required: true,
+                  },
+                ],
+                initialValue: data.list[125].value,
+              })(
+                <Input />,
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="文章保留版权提示"
+            >
+              {getFieldDecorator('119', {
+                rules: [
+                  {
+                    required: true,
+                  },
+                ],
+                initialValue: data.list[119].value,
               })(
                 <TextArea />,
               )}
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="Baidu appkey"
+              label="图片title和alt内容"
             >
-              {getFieldDecorator('170', {
+              {getFieldDecorator('141', {
                 rules: [
                   {
                     required: true,
                   },
                 ],
-                initialValue: data.list[170].value,
+                initialValue: data.list[141].value,
+              })(
+                <Input />,
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="水印内容"
+            >
+              {getFieldDecorator('107', {
+                rules: [
+                  {
+                    required: true,
+                  },
+                ],
+                initialValue: data.list[107].value,
+              })(
+                <Input />,
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="水印颜色"
+            >
+              {getFieldDecorator('110', {
+                rules: [
+                  {
+                    required: true,
+                  },
+                ],
+                initialValue: data.list[110].value,
+              })(
+                <Input />,
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="百度推送site提交链接"
+            >
+              {getFieldDecorator('128', {
+                rules: [
+                  {
+                    required: true,
+                  },
+                ],
+                initialValue: data.list[128].value,
+              })(
+                <Input />,
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="第三方统计代码"
+            >
+              {getFieldDecorator('123', {
+                rules: [
+                  {
+                    required: true,
+                  },
+                ],
+                initialValue: data.list[123].value,
               })(
                 <TextArea />,
               )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="站长邮箱"
+            >
+              {getFieldDecorator('118', {
+                rules: [
+                  {
+                    required: true,
+                  },
+                ],
+                initialValue: data.list[118].value,
+              })(
+                <Input />,
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="用于接收通知的邮箱"
+            >
+              {getFieldDecorator('148', {
+                rules: [
+                  {
+                    required: true,
+                  },
+                ],
+                initialValue: data.list[148].value,
+              })(
+                <Input />,
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="Sentry DSN"
+            >
+              {getFieldDecorator('158', {
+                rules: [
+                  {
+                    required: true,
+                  },
+                ],
+                initialValue: data.list[158].value,
+              })(
+                <Input />,
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="CDN 域名"
+            >
+              {getFieldDecorator('172', {
+                rules: [
+                  {
+                    required: true,
+                  },
+                ],
+                initialValue: data.list[172].value,
+              })(
+                <Input />,
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="Cookie Domain"
+            >
+              {getFieldDecorator('185', {
+                rules: [
+                  {
+                    required: true,
+                  },
+                ],
+                initialValue: data.list[185].value,
+              })(
+                <Input />,
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="链接打开方式"
+            >
+              {getFieldDecorator('193', {
+                rules: [{ required: true }],
+                initialValue: data.list[193].value,
+              })(<Radio.Group>
+                <Radio value="_blank">新标签</Radio>
+                <Radio value="_self">当前标签</Radio>
+              </Radio.Group>)}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="面包屑"
+            >
+              {getFieldDecorator('194', {
+                rules: [{ required: true }],
+                initialValue: data.list[194].value,
+              })(<Radio.Group>
+                <Radio value="true">是</Radio>
+                <Radio value="false">否</Radio>
+              </Radio.Group>)}
             </FormItem>
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
               <Button type="primary" htmlType="submit">
