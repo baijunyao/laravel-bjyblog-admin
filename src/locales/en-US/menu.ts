@@ -51,6 +51,8 @@ export default {
   'menu.category.index': 'List',
   'menu.tag': 'Tag',
   'menu.tag.index': 'List',
+  'menu.article': 'Article',
+  'menu.article.index': 'List',
   'menu.comment': 'Comment',
   'menu.comment.index': 'List',
   'menu.user': 'User',

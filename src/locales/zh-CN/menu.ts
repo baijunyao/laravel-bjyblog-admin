@@ -51,6 +51,8 @@ export default {
   'menu.category.index': '列表',
   'menu.tag': '标签',
   'menu.tag.index': '列表',
+  'menu.article': '文章',
+  'menu.article.index': '列表',
   'menu.comment': '评论',
   'menu.comment.index': '列表',
   'menu.adminUser': '管理员',

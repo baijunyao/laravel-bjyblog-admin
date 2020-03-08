@@ -146,6 +146,18 @@ export default {
           ],
         },
         {
+          name: 'article',
+          icon: 'highlight',
+          path: '/admin/article',
+          routes: [
+            {
+              name: 'index',
+              path: '/admin/article/index',
+              component: './admin/article/index',
+            },
+          ],
+        },
+        {
           name: 'comment',
           icon: 'highlight',
           path: '/admin/comment',
