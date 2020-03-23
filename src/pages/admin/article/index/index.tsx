@@ -41,10 +41,14 @@ interface TableListProps extends FormComponentProps {
       | 'adminAndarticleAndindex/destroy'
       | 'adminAndarticleAndindex/forceDelete'
       | 'adminAndarticleAndindex/restore'
+      | 'adminAndcategoryAndindex/fetch'
+      | 'adminAndtagAndindex/fetch'
     >
   >;
   loading: boolean;
   adminAndarticleAndindex: StateType;
+  adminAndcategoryAndindex: StateType;
+  adminAndtagAndindex: StateType;
 }
 
 interface TableListState {
@@ -58,10 +62,14 @@ interface TableListState {
 /* eslint react/no-multi-comp:0 */
 @connect(
   ({
-    adminAndarticleAndindex,
+     adminAndarticleAndindex,
+     adminAndcategoryAndindex,
+     adminAndtagAndindex,
     loading,
   }: {
     adminAndarticleAndindex: StateType;
+    adminAndcategoryAndindex: StateType;
+    adminAndtagAndindex: StateType;
     loading: {
       models: {
         [key: string]: boolean;
@@ -69,6 +77,8 @@ interface TableListState {
     };
   }) => ({
     adminAndarticleAndindex,
+    adminAndcategoryAndindex,
+    adminAndtagAndindex,
     loading: loading.models.adminAndarticleAndindex,
   }),
 )
@@ -161,6 +171,14 @@ class TableList extends Component<TableListProps, TableListState> {
     const { dispatch } = this.props;
     dispatch({
       type: 'adminAndarticleAndindex/fetch',
+    });
+
+    dispatch({
+      type: 'adminAndcategoryAndindex/fetch',
+    });
+
+    dispatch({
+      type: 'adminAndtagAndindex/fetch',
     });
   }
 
@@ -301,6 +319,7 @@ class TableList extends Component<TableListProps, TableListState> {
   };
 
   render() {
+    console.log('props');
     console.log(this.props);
     const {
       adminAndarticleAndindex: { data },
@@ -319,6 +338,12 @@ class TableList extends Component<TableListProps, TableListState> {
       handleAdd: this.handleAdd,
       handleModalVisible: this.handleModalVisible,
     };
+
+    const parentDatas = {
+      adminAndcategoryAndindex: this.props.adminAndcategoryAndindex,
+      adminAndtagAndindex: this.props.adminAndtagAndindex,
+    };
+
     const updateMethods = {
       handleUpdateModalVisible: this.handleUpdateModalVisible,
       handleUpdate: this.handleUpdate,
@@ -353,7 +378,7 @@ class TableList extends Component<TableListProps, TableListState> {
             />
           </div>
         </Card>
-        <CreateForm {...parentMethods} modalVisible={modalVisible} />
+        <CreateForm {...parentMethods} modalVisible={modalVisible} {...parentDatas} />
         <UpdateForm
           {...updateMethods}
           updateModalVisible={updateModalVisible}

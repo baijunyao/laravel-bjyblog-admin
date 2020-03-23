@@ -1,6 +1,6 @@
 import { TableListData as BaseTableListData } from '@/models/data'
-import { TableListItem as Category } from 'src/pages/admin/category/index/data'
-import { TableListItem as Tag } from 'src/pages/admin/tag/index/data'
+import { TableListItem as Category } from '@/pages/admin/category/index/data'
+import { TableListItem as Tag } from '@/pages/admin/tag/index/data'
 
 export interface TableListItem {
   id: number;
