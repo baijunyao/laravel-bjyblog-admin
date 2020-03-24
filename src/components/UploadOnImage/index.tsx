@@ -1,11 +1,6 @@
 import { Upload, Icon, message } from 'antd';
 import React, { Component } from 'react';
-
-function getBase64(img: any, callback: any) {
-  const reader = new FileReader();
-  reader.addEventListener('load', () => callback(reader.result));
-  reader.readAsDataURL(img);
-}
+import { getToken } from '@/utils/request';
 
 function beforeUpload(file: any) {
   const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
@@ -21,9 +16,32 @@ function beforeUpload(file: any) {
 
 export default class UploadOnImage extends Component {
   state = {
+    action: '',
     loading: false,
     imageUrl: '',
+    fileList: [],
   };
+
+  constructor(props: any) {
+    super(props);
+
+    console.log('constructor.props');
+    console.log(props);
+
+    this.state = {
+      action: props.action,
+      loading: false,
+      imageUrl: props.imageUrl,
+      fileList: [
+        {
+          uid: '-1',
+          name: 'image.png',
+          status: 'done',
+          url: props.defaultUrl,
+        },
+      ],
+    };
+  }
 
   handleChange = (info: any) => {
     if (info.file.status === 'uploading') {
@@ -31,13 +49,12 @@ export default class UploadOnImage extends Component {
       return;
     }
     if (info.file.status === 'done') {
-      // Get this url from response in real world.
-      getBase64(info.file.originFileObj, (imageUrl: any) =>
-        this.setState({
-          imageUrl,
-          loading: false,
-        }),
-      );
+      console.log(info);
+
+      this.setState({
+        imageUrl: info.file.response.url,
+        loading: false,
+      })
     }
   };
 
@@ -48,16 +65,23 @@ export default class UploadOnImage extends Component {
         <div className="ant-upload-text">Upload</div>
       </div>
     );
-    const { imageUrl } = this.state;
+    const { imageUrl, fileList } = this.state;
+
+    console.log('this.state')
+    console.log(imageUrl)
+
     return (
       <Upload
-        name="avatar"
+        name="cover"
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
-        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+        action={this.state.action}
         beforeUpload={beforeUpload}
         onChange={this.handleChange}
+        headers={{
+          Authorization: getToken(),
+        }}
       >
         {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
       </Upload>

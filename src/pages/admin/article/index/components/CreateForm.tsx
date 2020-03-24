@@ -7,7 +7,7 @@ import { StateType as Tag } from '@/models/tag'
 import UploadOnImage from '@/components/UploadOnImage'
 import Markdown from '@/components/Markdown'
 
-export type NewItem = Pick<TableListItem, 'category_id'>
+export type NewItem = Pick<TableListItem, 'id' | 'category_id' | 'title' | 'slug' | 'author' | 'markdown' | 'description' | 'keywords' | 'cover'>
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -157,7 +157,7 @@ const CreateForm: React.FC<CreateFormProps> = props => {
         {getFieldDecorator('cover', {
           rules: [],
         })(
-          <UploadOnImage />,
+          <UploadOnImage action="/api/articleCover" />,
         )}
       </FormItem>
 

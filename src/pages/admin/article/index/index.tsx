@@ -99,6 +99,8 @@ class TableList extends Component<TableListProps, TableListState> {
       keywords: '',
       cover: '',
       is_top: 0,
+      tags: [],
+      category: {},
     },
   };
 
@@ -262,6 +264,8 @@ class TableList extends Component<TableListProps, TableListState> {
         keywords: '',
         cover: '',
         is_top: 0,
+        tags: [],
+        category: {},
       },
     });
   };
@@ -279,6 +283,8 @@ class TableList extends Component<TableListProps, TableListState> {
 
   handleUpdate = (fields: UpdateItem) => {
     const { dispatch } = this.props;
+    console.log('handleUpdate');
+    console.log(fields);
     dispatch({
       type: 'adminAndarticleAndindex/update',
       payload: fields,
@@ -378,11 +384,16 @@ class TableList extends Component<TableListProps, TableListState> {
             />
           </div>
         </Card>
-        <CreateForm {...parentMethods} modalVisible={modalVisible} {...parentDatas} />
+        <CreateForm
+          {...parentMethods}
+          modalVisible={modalVisible}
+          {...parentDatas}
+        />
         <UpdateForm
           {...updateMethods}
           updateModalVisible={updateModalVisible}
           updateFormValues={ updateFormValues }
+          {...parentDatas}
         />
       </PageHeaderWrapper>
     );

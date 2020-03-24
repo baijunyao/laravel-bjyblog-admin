@@ -60,8 +60,6 @@ const errorHandler = (error: { response: Response }): Response => {
   return response;
 };
 
-const authorization:string = localStorage.getItem('token') === undefined ? '' : `Bearer ${localStorage.getItem('token')}`;
-
 /**
  * 配置request请求时的默认参数
  */
@@ -70,9 +68,13 @@ const request = extend({
   credentials: 'include', // 默认请求是否带上cookie
   headers: {
     'Content-Type': 'application/json',
-    Authorization: authorization,
+    Authorization: getToken(),
   },
 });
+
+export function getToken() {
+  return localStorage.getItem('token') === undefined ? '' : `Bearer ${localStorage.getItem('token')}`;
+}
 
 // eslint-disable-next-line max-len
 export function convertPaginationResponse(laravelPaginationResponse: LaravelPaginationResponse): TableListData {

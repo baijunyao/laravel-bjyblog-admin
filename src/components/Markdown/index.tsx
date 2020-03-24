@@ -18,7 +18,7 @@ export default (props: any) => {
   antForm = props.antForm;
 
   return <MdEditor
-    value=""
+    value={props.value}
     renderHTML={(text) => mdParser.render(text)}
     onChange={handleEditorChange}
   />

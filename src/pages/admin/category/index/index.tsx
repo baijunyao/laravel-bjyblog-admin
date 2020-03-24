@@ -16,7 +16,7 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { SorterResult } from 'antd/es/table';
 import { connect } from 'dva';
 import moment from 'moment';
-import { StateType } from './model';
+import { StateType } from '@/models/category';
 import CreateForm, { NewCategory } from './components/CreateForm';
 import UpdateForm, { UpdateCategory } from './components/UpdateForm';
 import StandardTable, { StandardTableColumnProps } from './components/StandardTable';
