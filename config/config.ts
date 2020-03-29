@@ -85,6 +85,10 @@ export default {
   // umi routes: https://umijs.org/zh/guide/router.html
   routes: [
     {
+      path: '/',
+      redirect: '/admin/dashboard/analysis',
+    },
+    {
       path: '/user',
       routes: [
         {
@@ -120,6 +124,8 @@ export default {
     {
       path: '/admin',
       component: '../layouts/BasicLayout',
+      Routes: ['src/pages/Authorized'],
+      authority: ['user'],
       routes: [
         {
           name: 'category',

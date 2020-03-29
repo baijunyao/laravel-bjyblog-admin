@@ -1,11 +1,10 @@
 import { Alert } from 'antd';
 import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
 import React, { Component } from 'react';
-
 import { Dispatch } from 'redux';
 import { FormComponentProps } from 'antd/es/form';
 import { connect } from 'dva';
-import { StateType } from './model';
+import { StateType } from '@/models/login';
 import LoginComponents from './components/Login';
 import styles from './style.less';
 
@@ -13,7 +12,7 @@ const { Tab, Email, Password, Submit } = LoginComponents;
 
 interface LoginProps {
   dispatch: Dispatch<any>;
-  userAndlogin: StateType;
+  login: StateType;
   submitting: boolean;
 }
 interface LoginState {
@@ -26,18 +25,18 @@ export interface FormDataType {
 
 @connect(
   ({
-    userAndlogin,
+    login,
     loading,
   }: {
-    userAndlogin: StateType;
+    login: StateType;
     loading: {
       effects: {
         [key: string]: string;
       };
     };
   }) => ({
-    userAndlogin,
-    submitting: loading.effects['userAndlogin/login'],
+    login,
+    submitting: loading.effects['login/login'],
   }),
 )
 class Login extends Component<LoginProps, LoginState> {
@@ -52,7 +51,7 @@ class Login extends Component<LoginProps, LoginState> {
     if (!err) {
       const { dispatch } = this.props;
       dispatch({
-        type: 'userAndlogin/login',
+        type: 'login/login',
         payload: {
           ...values,
           type,
@@ -66,8 +65,8 @@ class Login extends Component<LoginProps, LoginState> {
   );
 
   render() {
-    const { userAndlogin, submitting } = this.props;
-    const { status, type: loginType } = userAndlogin;
+    const { login, submitting } = this.props;
+    const { status, type: loginType } = login;
     const { type } = this.state;
     return (
       <div className={styles.main}>

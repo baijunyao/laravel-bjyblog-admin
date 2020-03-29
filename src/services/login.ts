@@ -1,13 +1,21 @@
-import request from 'umi-request';
+import request from '@/utils/request';
+import { FormDataType } from '@/pages/user/login';
 
-export interface LoginParamsType {
-  email: string;
-  password: string;
+export async function login(params: FormDataType) {
+  return request('/oauth/token', {
+    method: 'POST',
+    data: {
+      grant_type: 'password',
+      client_id: 1,
+      scope: '',
+      username: params.email,
+      password: params.password,
+    },
+  });
 }
 
-export async function fakeAccountLogin(params: LoginParamsType) {
-  return request('/api/oauth/authorize', {
+export async function logout() {
+  return request('/api/auth/passport/logout', {
     method: 'POST',
-    data: params,
   });
 }

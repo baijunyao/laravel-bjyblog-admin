@@ -6,7 +6,7 @@ import { connect } from 'dva';
 import router from 'umi/router';
 
 import { ConnectProps, ConnectState } from '@/models/connect';
-import { CurrentUser } from '@/models/user';
+import { CurrentUser } from '@/models/currentUser';
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
 
@@ -33,7 +33,7 @@ class AvatarDropdown extends React.Component<GlobalHeaderRightProps> {
   };
 
   render(): React.ReactNode {
-    const { currentUser = { avatar: '', name: '' }, menu } = this.props;
+    const { currentUser, menu } = this.props;
 
     const menuHeaderDropdown = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={this.onMenuClick}>

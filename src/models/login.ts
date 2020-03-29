@@ -2,10 +2,9 @@ import { Reducer } from 'redux';
 import { routerRedux } from 'dva/router';
 import { Effect } from 'dva';
 import { stringify } from 'querystring';
-
-import { fakeAccountLogin } from '@/services/login';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
+import { login, logout } from '@/services/login';
 
 export interface StateType {
   status?: 'ok' | 'error';
@@ -34,38 +33,24 @@ const Model: LoginModelType = {
 
   effects: {
     *login({ payload }, { call, put }) {
-      const response = yield call(fakeAccountLogin, payload);
+      const response = yield call(login, payload);
       yield put({
         type: 'changeLoginStatus',
         payload: response,
       });
-      console.log(response);
+
       // Login successfully
-      if (response.status === 'ok') {
-        const urlParams = new URL(window.location.href);
-        console.log(urlParams)
-        const params = getPageQuery();
-        let { redirect } = params as { redirect: string };
-        if (redirect) {
-          const redirectUrlParams = new URL(redirect);
-          if (redirectUrlParams.origin === urlParams.origin) {
-            redirect = redirect.substr(urlParams.origin.length);
-            if (redirect.match(/^\/.*#/)) {
-              redirect = redirect.substr(redirect.indexOf('#') + 1);
-            }
-          } else {
-            window.location.href = redirect;
-            return;
-          }
-        }
-        yield put(routerRedux.replace(redirect || '/'));
+      if (response.access_token !== undefined) {
+        localStorage.setItem('token', response.access_token);
+        window.location.href = '/'
       }
     },
 
-    *logout(_, { put }) {
+    *logout(_, { call, put }) {
       const { redirect } = getPageQuery();
       // redirect
       if (window.location.pathname !== '/user/login' && !redirect) {
+        yield call(logout);
         yield put(
           routerRedux.replace({
             pathname: '/user/login',
@@ -80,7 +65,8 @@ const Model: LoginModelType = {
 
   reducers: {
     changeLoginStatus(state, { payload }) {
-      setAuthority(payload.currentAuthority);
+      setAuthority('admin');
+
       return {
         ...state,
         status: payload.status,

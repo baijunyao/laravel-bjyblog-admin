@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'dva';
 import { Redirect } from 'umi';
 import { ConnectState, ConnectProps } from '@/models/connect';
-import { CurrentUser } from '@/models/user';
+import { CurrentUser } from '@/models/currentUser';
 import PageLoading from '@/components/PageLoading';
 
 interface SecurityLayoutProps extends ConnectProps {

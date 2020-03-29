@@ -10,6 +10,24 @@ export async function queryRule(params: TableListParams) {
   return convertPaginationResponse(response);
 }
 
+export async function showSocialiteUser(id: string|number) {
+  const response = await request(`/api/socialiteUsers/${id}`);
+
+  return convertPaginationResponse(response);
+}
+
+export async function showCurrentSocialiteUser() {
+  const response = await request('/api/socialiteUsers/me');
+
+  return response.status === undefined ? {
+    name: response.data.name,
+    avatar: response.data.avatar,
+  } : {
+    name: '',
+    avatar: '',
+  };
+}
+
 export async function updateRule(params: UpdateItem) {
   return request(`/api/socialiteUsers/${params.id}`, {
     method: 'PUT',

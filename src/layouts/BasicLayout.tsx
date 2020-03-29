@@ -19,6 +19,7 @@ import RightContent from '@/components/GlobalHeader/RightContent';
 import { ConnectState } from '@/models/connect';
 import { isAntDesignPro } from '@/utils/utils';
 import logo from '../assets/logo.svg';
+
 export interface BasicLayoutProps extends ProLayoutProps {
   breadcrumbNameMap: {
     [path: string]: MenuDataItem;
@@ -76,7 +77,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
   useEffect(() => {
     if (dispatch) {
       dispatch({
-        type: 'user/fetchCurrent',
+        type: 'user/fetch',
       });
       dispatch({
         type: 'settings/getSetting',

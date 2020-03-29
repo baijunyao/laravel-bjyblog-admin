@@ -7,7 +7,7 @@ import moment from 'moment';
 
 import { NoticeItem } from '@/models/global';
 import NoticeIcon from '../NoticeIcon';
-import { CurrentUser } from '@/models/user';
+import { CurrentUser } from '@/models/currentUser';
 import { ConnectProps, ConnectState } from '@/models/connect';
 import styles from './index.less';
 

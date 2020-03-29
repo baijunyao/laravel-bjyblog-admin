@@ -39,15 +39,15 @@ const AuthComponent: React.FC<AuthComponentProps> = ({
 }) => {
   const { currentUser } = user;
   const { routes = [] } = route;
-  const isLogin = currentUser && currentUser.name;
-  return (
+
+  return currentUser.name !== undefined ? (
     <Authorized
       authority={getRouteAuthority(location.pathname, routes) || ''}
-      noMatch={isLogin ? <Redirect to="/exception/403" /> : <Redirect to="/user/login" />}
+      noMatch={<Redirect to="/user/login" />}
     >
       {children}
     </Authorized>
-  );
+  ) : <Redirect to="/user/login" />;
 };
 
 export default connect(({ user }: ConnectState) => ({
