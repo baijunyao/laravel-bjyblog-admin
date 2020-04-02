@@ -128,6 +128,19 @@ export default {
       authority: ['user'],
       routes: [
         {
+          name: 'dashboard',
+          icon: 'highlight',
+          path: '/admin/dashboard',
+          hideInMenu: true,
+          routes: [
+            {
+              name: 'analysis',
+              path: '/admin/dashboard/analysis',
+              component: './admin/dashboard/analysis/index',
+            },
+          ],
+        },
+        {
           name: 'category',
           icon: 'highlight',
           path: '/admin/category',

@@ -1,8 +1,9 @@
 import { AnyAction, Reducer } from 'redux';
 
 import { EffectsCommandMap } from 'dva';
-import { AnalysisData } from './data.d';
-import { fakeChartData } from './service';
+import {AnalysisData, Counts, LatestComments, Versions} from './data.d';
+import { analysis } from './service';
+import {TableListItem as SocialiteUser} from "@/pages/admin/socialiteUser/index/data";
 
 export type Effect = (
   action: AnyAction,
@@ -14,7 +15,6 @@ export interface ModelType {
   state: AnalysisData;
   effects: {
     fetch: Effect;
-    fetchSalesData: Effect;
   };
   reducers: {
     save: Reducer<AnalysisData>;
@@ -23,16 +23,10 @@ export interface ModelType {
 }
 
 const initState = {
-  visitData: [],
-  visitData2: [],
-  salesData: [],
-  searchData: [],
-  offlineData: [],
-  offlineChartData: [],
-  salesTypeData: [],
-  salesTypeDataOnline: [],
-  salesTypeDataOffline: [],
-  radarData: [],
+  latest_socialite_users: [],
+  latest_comments: [],
+  versions: {},
+  counts: {},
 };
 
 const Model: ModelType = {
@@ -42,19 +36,10 @@ const Model: ModelType = {
 
   effects: {
     *fetch(_, { call, put }) {
-      const response = yield call(fakeChartData);
+      const response = yield call(analysis);
       yield put({
         type: 'save',
         payload: response,
-      });
-    },
-    *fetchSalesData(_, { call, put }) {
-      const response = yield call(fakeChartData);
-      yield put({
-        type: 'save',
-        payload: {
-          salesData: response.salesData,
-        },
       });
     },
   },
