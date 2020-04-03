@@ -86,7 +86,7 @@ export default {
   routes: [
     {
       path: '/',
-      redirect: '/admin/dashboard/analysis',
+      redirect: '/dashboard/analysis',
     },
     {
       path: '/user',
@@ -122,7 +122,7 @@ export default {
       ]
     },
     {
-      path: '/admin',
+      path: '/',
       component: '../layouts/BasicLayout',
       Routes: ['src/pages/Authorized'],
       authority: ['user'],
@@ -130,12 +130,12 @@ export default {
         {
           name: 'dashboard',
           icon: 'highlight',
-          path: '/admin/dashboard',
+          path: '/dashboard',
           hideInMenu: true,
           routes: [
             {
               name: 'analysis',
-              path: '/admin/dashboard/analysis',
+              path: '/dashboard/analysis',
               component: './admin/dashboard/analysis/index',
             },
           ],
@@ -143,11 +143,11 @@ export default {
         {
           name: 'category',
           icon: 'highlight',
-          path: '/admin/category',
+          path: '/category',
           routes: [
             {
               name: 'index',
-              path: '/admin/category/index',
+              path: '/category/index',
               component: './admin/category/index',
             },
           ],
@@ -155,11 +155,11 @@ export default {
         {
           name: 'tag',
           icon: 'highlight',
-          path: '/admin/tag',
+          path: '/tag',
           routes: [
             {
               name: 'index',
-              path: '/admin/tag/index',
+              path: '/tag/index',
               component: './admin/tag/index',
             },
           ],
@@ -167,11 +167,11 @@ export default {
         {
           name: 'article',
           icon: 'highlight',
-          path: '/admin/article',
+          path: '/article',
           routes: [
             {
               name: 'index',
-              path: '/admin/article/index',
+              path: '/article/index',
               component: './admin/article/index',
             },
           ],
@@ -179,11 +179,11 @@ export default {
         {
           name: 'comment',
           icon: 'highlight',
-          path: '/admin/comment',
+          path: '/comment',
           routes: [
             {
               name: 'index',
-              path: '/admin/comment/index',
+              path: '/comment/index',
               component: './admin/comment/index',
             },
           ],
@@ -191,11 +191,11 @@ export default {
         {
           name: 'adminUser',
           icon: 'highlight',
-          path: '/admin/adminUser',
+          path: '/adminUser',
           routes: [
             {
               name: 'index',
-              path: '/admin/adminUser/index',
+              path: '/adminUser/index',
               component: './admin/adminUser/index',
             }
           ],
@@ -203,11 +203,11 @@ export default {
         {
           name: 'socialiteClient',
           icon: 'highlight',
-          path: '/admin/socialiteClient',
+          path: '/socialiteClient',
           routes: [
             {
               name: 'index',
-              path: '/admin/socialiteClient/index',
+              path: '/socialiteClient/index',
               component: './admin/socialiteClient/index',
             },
           ],
@@ -215,11 +215,11 @@ export default {
         {
           name: 'socialiteUser',
           icon: 'highlight',
-          path: '/admin/socialiteUser',
+          path: '/socialiteUser',
           routes: [
             {
               name: 'index',
-              path: '/admin/socialiteUser/index',
+              path: '/socialiteUser/index',
               component: './admin/socialiteUser/index',
             },
           ],
@@ -227,11 +227,11 @@ export default {
         {
           name: 'friendshipLink',
           icon: 'highlight',
-          path: '/admin/friendshipLink',
+          path: '/friendshipLink',
           routes: [
             {
               name: 'index',
-              path: '/admin/friendshipLink/index',
+              path: '/friendshipLink/index',
               component: './admin/friendshipLink/index',
             },
           ],
@@ -239,11 +239,11 @@ export default {
         {
           name: 'site',
           icon: 'highlight',
-          path: '/admin/site',
+          path: '/site',
           routes: [
             {
               name: 'index',
-              path: '/admin/site/index',
+              path: '/site/index',
               component: './admin/site/index',
             },
           ],
@@ -251,11 +251,11 @@ export default {
         {
           name: 'note',
           icon: 'highlight',
-          path: '/admin/note',
+          path: '/note',
           routes: [
             {
               name: 'index',
-              path: '/admin/note/index',
+              path: '/note/index',
               component: './admin/note/index',
             },
           ],
@@ -263,11 +263,11 @@ export default {
         {
           name: 'openSource',
           icon: 'highlight',
-          path: '/admin/openSource',
+          path: '/openSource',
           routes: [
             {
               name: 'index',
-              path: '/admin/openSource/index',
+              path: '/openSource/index',
               component: './admin/openSource/index',
             },
           ],
@@ -275,51 +275,51 @@ export default {
         {
           name: 'config',
           icon: 'highlight',
-          path: '/admin/config',
+          path: '/config',
           routes: [
             {
               name: 'email',
-              path: '/admin/config/email',
+              path: '/config/email',
               component: './admin/config/email',
             },
             {
               name: 'commentAudit',
-              path: '/admin/config/commentAudit',
+              path: '/config/commentAudit',
               component: './admin/config/commentAudit',
             },
             {
               name: 'qqQun',
-              path: '/admin/config/qqQun',
+              path: '/config/qqQun',
               component: './admin/config/qqQun',
             },
             {
               name: 'backup',
-              path: '/admin/config/backup',
+              path: '/config/backup',
               component: './admin/config/backup',
             },
             {
               name: 'seo',
-              path: '/admin/config/seo',
+              path: '/config/seo',
               component: './admin/config/seo',
             },
             {
               name: 'socialShare',
-              path: '/admin/config/socialShare',
+              path: '/config/socialShare',
               component: './admin/config/socialShare',
             },
             {
               name: 'socialLink',
-              path: '/admin/config/socialLink',
+              path: '/config/socialLink',
               component: './admin/config/socialLink',
             },
             {
               name: 'search',
-              path: '/admin/config/search',
+              path: '/config/search',
               component: './admin/config/search',
             },
             {
               name: 'otherSetting',
-              path: '/admin/config/otherSetting',
+              path: '/config/otherSetting',
               component: './admin/config/otherSetting',
             },
           ],
@@ -388,4 +388,6 @@ export default {
       changeOrigin: true,
     },
   },
+  base: '/ant/',
+  publicPath: '/ant/',
 } as IConfig;
