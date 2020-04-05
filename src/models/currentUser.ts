@@ -38,14 +38,9 @@ const UserModel: UserModelType = {
     *fetch(_, { call, put }) {
       let currentUser:CurrentUser = yield call(showCurrentSocialiteUser);
 
-      console.log('currentUser');
-      console.log(currentUser);
-      if (currentUser.name === '') {
+      if (currentUser.name === undefined) {
         currentUser = yield call(showCurrentUser);
       }
-
-      console.log('currentUser');
-      console.log(currentUser);
 
       yield put({
         type: 'saveCurrentUser',

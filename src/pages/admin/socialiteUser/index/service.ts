@@ -23,8 +23,8 @@ export async function showCurrentSocialiteUser() {
     name: response.data.name,
     avatar: response.data.avatar,
   } : {
-    name: '',
-    avatar: '',
+    name: undefined,
+    avatar: undefined,
   };
 }
 

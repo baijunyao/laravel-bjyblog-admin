@@ -18,9 +18,13 @@ export async function showUser(id: string|number) {
 
 export async function showCurrentUser() {
   const response = await request('/api/users/me');
-  return {
+
+  return response.data === undefined ? {
+    name: undefined,
+    avatar: undefined,
+  } : {
     name: response.data.name,
-    avatar: 'default.jpg',
+    avatar: '/uploads/avatar/default.jpg',
   };
 }
 
