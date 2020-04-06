@@ -23,6 +23,7 @@ export interface TableListPagination {
   total: number;
   pageSize: number;
   current: number;
+  showSizeChanger: boolean;
 }
 
 export interface TableListData {

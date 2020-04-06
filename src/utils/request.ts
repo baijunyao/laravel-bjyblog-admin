@@ -72,6 +72,14 @@ const request = extend({
   },
 });
 
+request.use(async (ctx, next) => {
+  if (ctx.req.options.params.currentPage !== undefined) {
+    ctx.req.options.params.page = ctx.req.options.params.currentPage;
+  }
+
+  await next();
+})
+
 export function getToken() {
   return localStorage.getItem('token') === undefined ? '' : `Bearer ${localStorage.getItem('token')}`;
 }
@@ -85,12 +93,14 @@ export function convertPaginationResponse(laravelPaginationResponse: LaravelPagi
       total: 0,
       pageSize: 0,
       current: 0,
+      showSizeChanger: false,
     };
   } else {
     pagination = {
       total: laravelPaginationResponse.meta.total,
       pageSize: laravelPaginationResponse.meta.per_page,
       current: laravelPaginationResponse.meta.current_page,
+      showSizeChanger: false,
     };
   }
 
