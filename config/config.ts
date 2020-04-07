@@ -390,4 +390,5 @@ export default {
   },
   base: '/ant/',
   publicPath: '/ant/',
+  history: 'hash',
 } as IConfig;
