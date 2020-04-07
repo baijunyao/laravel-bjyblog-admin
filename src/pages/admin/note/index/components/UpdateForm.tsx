@@ -2,6 +2,7 @@ import { Form, Input, Modal } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
 import { TableListItem } from '@/pages/admin/note/index/data';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 export type UpdateItem = Pick<TableListItem, 'id' | 'content'>
 
@@ -34,7 +35,7 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
   return (
     <Modal
       destroyOnClose
-      title="编辑"
+      title={formatMessage({ id: 'Edit' })}
       visible={updateModalVisible}
       onOk={okHandle}
       onCancel={() => handleUpdateModalVisible()}
@@ -43,7 +44,7 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
         rules: [{ required: true }],
         initialValue: updateFormValues.id,
       })(<Input type="hidden" />)}
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="名称">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label={formatMessage({ id: 'Name' })}>
         {form.getFieldDecorator('content', {
           rules: [{ required: true }],
           initialValue: updateFormValues.content,

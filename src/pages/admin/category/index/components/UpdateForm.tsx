@@ -3,6 +3,7 @@ import { Form, Input, Modal } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
 import { TableListItem } from '@/pages/admin/category/index/data';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 export type UpdateCategory = Pick<TableListItem, 'id' | 'name' | 'keywords' | 'description'>
 
@@ -34,7 +35,7 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
   return (
     <Modal
       destroyOnClose
-      title="新增分类"
+      title={formatMessage({ id: 'Edit' })}
       visible={updateModalVisible}
       onOk={okHandle}
       onCancel={() => handleUpdateModalVisible()}
@@ -43,19 +44,19 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
         rules: [{ required: true }],
         initialValue: updateFormValues.id,
       })(<Input type="hidden" />)}
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="分类名">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label={formatMessage({ id: 'Name' })}>
         {form.getFieldDecorator('name', {
           rules: [{ required: true }],
           initialValue: updateFormValues.name,
         })(<Input />)}
       </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="关键字">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label={formatMessage({ id: 'Keywords' })}>
         {form.getFieldDecorator('keywords', {
           rules: [{ required: true }],
           initialValue: updateFormValues.keywords,
         })(<Input />)}
       </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="描述">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label={formatMessage({ id: 'Description' })}>
         {form.getFieldDecorator('description', {
           rules: [{ required: true }],
           initialValue: updateFormValues.description,

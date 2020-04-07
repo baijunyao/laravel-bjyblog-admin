@@ -3,6 +3,7 @@ import { Form, Input, Modal, Radio } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
 import { TableListItem } from '@/pages/admin/openSource/index/data';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 export type NewItem = Pick<TableListItem, 'name' | 'type' | 'sort'>
 
@@ -26,12 +27,12 @@ const CreateForm: React.FC<CreateFormProps> = props => {
   return (
     <Modal
       destroyOnClose
-      title="新增"
+      title={formatMessage({ id: 'Add' })}
       visible={modalVisible}
       onOk={okHandle}
       onCancel={() => handleModalVisible()}
     >
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="类型">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label={formatMessage({ id: 'Type' })}>
         {form.getFieldDecorator('type', {
           rules: [{ required: true }],
           initialValue: 1,
@@ -40,12 +41,12 @@ const CreateForm: React.FC<CreateFormProps> = props => {
           <Radio value={2}>Gitee</Radio>
         </Radio.Group>)}
       </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="名称">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label={formatMessage({ id: 'Name' })}>
         {form.getFieldDecorator('name', {
           rules: [{ required: true }],
         })(<Input />)}
       </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="排序">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label={formatMessage({ id: 'Sort' })}>
         {form.getFieldDecorator('sort', {
           rules: [{ required: true }],
         })(<Input />)}

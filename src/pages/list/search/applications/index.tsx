@@ -135,7 +135,7 @@ class Applications extends Component<ApplicationsProps> {
             <StandardFormRow title="其它选项" grid last>
               <Row gutter={16}>
                 <Col lg={8} md={10} sm={10} xs={24}>
-                  <FormItem {...formItemLayout} label="作者">
+                  <FormItem {...formItemLayout} label={formatMessage({ id: 'Author' })}>
                     {getFieldDecorator('author', {})(
                       <Select placeholder="不限" style={{ maxWidth: 200, width: '100%' }}>
                         <Option value="lisa">王昭君</Option>

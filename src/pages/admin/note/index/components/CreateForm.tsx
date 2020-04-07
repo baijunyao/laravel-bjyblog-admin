@@ -2,6 +2,7 @@ import { Form, Input, Modal } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
 import { TableListItem } from '@/pages/admin/note/index/data';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 export type NewItem = Pick<TableListItem, 'content'>
 
@@ -26,12 +27,12 @@ const CreateForm: React.FC<CreateFormProps> = props => {
   return (
     <Modal
       destroyOnClose
-      title="新增"
+      title={formatMessage({ id: 'Add' })}
       visible={modalVisible}
       onOk={okHandle}
       onCancel={() => handleModalVisible()}
     >
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="内容">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label={formatMessage({ id: 'Content' })}>
         {form.getFieldDecorator('content', {
           rules: [{ required: true }],
         })(<TextArea rows={4} />)}

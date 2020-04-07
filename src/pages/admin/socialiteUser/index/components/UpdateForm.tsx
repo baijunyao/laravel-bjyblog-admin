@@ -3,6 +3,7 @@ import { Form, Input, Modal, Radio } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
 import { TableListItem } from '@/pages/admin/socialiteUser/index/data';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 export type UpdateItem = Pick<TableListItem, 'id' | 'name' | 'email' | 'is_admin'>
 
@@ -34,7 +35,7 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
   return (
     <Modal
       destroyOnClose
-      title="编辑"
+      title={formatMessage({ id: 'Edit' })}
       visible={updateModalVisible}
       onOk={okHandle}
       onCancel={() => handleUpdateModalVisible()}
@@ -43,25 +44,25 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
         rules: [{ required: true }],
         initialValue: updateFormValues.id,
       })(<Input type="hidden" />)}
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="用户名">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label={formatMessage({ id: 'Name' })}>
         {form.getFieldDecorator('name', {
           rules: [{ required: true }],
           initialValue: updateFormValues.name,
         })(<Input />)}
       </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="邮件">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label={formatMessage({ id: 'Email' })}>
         {form.getFieldDecorator('email', {
           rules: [{ required: true }],
           initialValue: updateFormValues.email,
         })(<Input />)}
       </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="管理员">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label={formatMessage({ id: 'Is Administrator' })}>
         {form.getFieldDecorator('is_admin', {
           rules: [{ required: true }],
           initialValue: updateFormValues.is_admin,
         })(<Radio.Group>
-          <Radio value={1}>是</Radio>
-          <Radio value={0}>否</Radio>
+          <Radio value={1}>{formatMessage({ id: 'Yes' })}</Radio>
+          <Radio value={0}>{formatMessage({ id: 'No' })}</Radio>
         </Radio.Group>)}
       </FormItem>
     </Modal>

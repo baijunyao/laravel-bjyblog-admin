@@ -1,10 +1,6 @@
 import {
-  Button,
   Card,
-  Dropdown,
   Form,
-  Icon,
-  Menu,
   message,
 } from 'antd';
 import React, { Component, Fragment } from 'react';
@@ -20,6 +16,7 @@ import UpdateForm, { UpdateItem } from './components/UpdateForm';
 import StandardTable, { StandardTableColumnProps } from './components/StandardTable';
 import { TableListItem } from './data.d';
 import { TableListPagination, TableListParams } from '@/models/data.d';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 import styles from './style.less';
 
@@ -83,19 +80,19 @@ class TableList extends Component<TableListProps, TableListState> {
 
   columns: StandardTableColumnProps[] = [
     {
-      title: '名称',
+      title: formatMessage({ id: 'Name' }),
       dataIndex: 'name',
     },
     {
-      title: '邮箱',
+      title: formatMessage({ id: 'Email' }),
       dataIndex: 'email',
     },
     {
-      title: '平台',
+      title: formatMessage({ id: 'Socialite Client Name' }),
       dataIndex: 'socialite_client.name',
     },
     {
-      title: '管理员',
+      title: formatMessage({ id: 'Is Administrator' }),
       dataIndex: 'is_admin',
       filters: [
         {
@@ -112,24 +109,24 @@ class TableList extends Component<TableListProps, TableListState> {
       },
     },
     {
-      title: '创建时间',
+      title: formatMessage({ id: 'Created_at' }),
       dataIndex: 'created_at',
       sorter: true,
       render: (val: string) => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
     },
     {
-      title: '操作',
+      title: formatMessage({ id: 'Handle' }),
       render: (text, record) => {
         if (record.deleted_at === null) {
           return (
             <Fragment>
-              <a onClick={() => this.handleUpdateModalVisible(true, record)}>修改</a>
+              <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
             </Fragment>
           )
         }
         return (
           <Fragment>
-            <a onClick={() => this.handleUpdateModalVisible(true, record)}>修改</a>
+            <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
           </Fragment>
         )
       },
@@ -222,7 +219,7 @@ class TableList extends Component<TableListProps, TableListState> {
       payload: fields,
     });
 
-    message.success('修改成功');
+    message.success(formatMessage({ id: 'Update Success' }));
     this.handleUpdateModalVisible();
   };
 
@@ -234,12 +231,6 @@ class TableList extends Component<TableListProps, TableListState> {
     } = this.props;
 
     const { selectedRows, updateModalVisible, updateFormValues } = this.state;
-    const menu = (
-      <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
-        <Menu.Item key="remove">删除</Menu.Item>
-        <Menu.Item key="approval">批量审批</Menu.Item>
-      </Menu>
-    );
 
     const updateMethods = {
       handleUpdateModalVisible: this.handleUpdateModalVisible,
@@ -251,16 +242,6 @@ class TableList extends Component<TableListProps, TableListState> {
         <Card bordered={false}>
           <div className={styles.tableList}>
             <div className={styles.tableListOperator}>
-              {selectedRows.length > 0 && (
-                <span>
-                  <Button>批量操作</Button>
-                  <Dropdown overlay={menu}>
-                    <Button>
-                      更多操作 <Icon type="down" />
-                    </Button>
-                  </Dropdown>
-                </span>
-              )}
             </div>
             <StandardTable
               selectedRows={selectedRows}

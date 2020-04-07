@@ -350,7 +350,7 @@ class Advanced extends Component<
                   <Descriptions.Item label="角色码">1234567</Descriptions.Item>
                   <Descriptions.Item label="所属部门">XX公司 - YY部</Descriptions.Item>
                   <Descriptions.Item label="过期时间">2017-08-08</Descriptions.Item>
-                  <Descriptions.Item label="描述">
+                  <Descriptions.Item label={formatMessage({ id: 'Description' })}>
                     这段描述很长很长很长很长很长很长很长很长很长很长很长很长很长很长...
                   </Descriptions.Item>
                 </Descriptions>

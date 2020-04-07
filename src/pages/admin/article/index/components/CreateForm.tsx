@@ -6,6 +6,7 @@ import { StateType as Category } from '@/models/category'
 import { StateType as Tag } from '@/models/tag'
 import UploadOnImage from '@/components/UploadOnImage'
 import Markdown from '@/components/Markdown'
+import { formatMessage } from 'umi-plugin-react/locale';
 
 export type NewItem = Pick<TableListItem, 'id' | 'category_id' | 'title' | 'slug' | 'author' | 'markdown' | 'description' | 'keywords' | 'cover'>
 
@@ -37,7 +38,7 @@ const CreateForm: React.FC<CreateFormProps> = props => {
   const CategorySelect = (categories: any) => {
     const options = categories.map((category: any) => <Option value={category.id}>{category.name}</Option>)
     return (
-      <Select placeholder="请选择分类" style={{ width: '100%' }}>
+      <Select placeholder={formatMessage({ id: 'Select Category' })} style={{ width: '100%' }}>
         {options}
       </Select>
     )
@@ -70,14 +71,14 @@ const CreateForm: React.FC<CreateFormProps> = props => {
       style={{ top: 0 }}
       width="300"
       centered={false}
-      title="新增"
+      title={formatMessage({ id: 'Add' })}
       visible={modalVisible}
       onOk={okHandle}
       onCancel={() => handleModalVisible()}
     >
       <FormItem
         {...formItemLayout}
-        label="分类"
+        label={formatMessage({ id: 'Category' })}
       >
         {getFieldDecorator('category_id', {
           rules: [
@@ -92,7 +93,7 @@ const CreateForm: React.FC<CreateFormProps> = props => {
 
       <FormItem
         {...formItemLayout}
-        label="标题"
+        label={formatMessage({ id: 'Title' })}
       >
         {getFieldDecorator('title', {
           rules: [
@@ -107,7 +108,7 @@ const CreateForm: React.FC<CreateFormProps> = props => {
 
       <FormItem
         {...formItemLayout}
-        label="作者"
+        label={formatMessage({ id: 'Author' })}
       >
         {getFieldDecorator('author', {
           rules: [
@@ -122,7 +123,7 @@ const CreateForm: React.FC<CreateFormProps> = props => {
 
       <FormItem
         {...formItemLayout}
-        label="关键字"
+        label={formatMessage({ id: 'Keywords' })}
       >
         {getFieldDecorator('keywords', {
           rules: [
@@ -137,7 +138,7 @@ const CreateForm: React.FC<CreateFormProps> = props => {
 
       <FormItem
         {...formItemLayout}
-        label="标签"
+        label={formatMessage({ id: 'Tag' })}
       >
         {getFieldDecorator('tag_ids', {
           rules: [
@@ -152,7 +153,7 @@ const CreateForm: React.FC<CreateFormProps> = props => {
 
       <FormItem
         {...formItemLayout}
-        label="封面"
+        label={formatMessage({ id: 'Cover' })}
       >
         {getFieldDecorator('cover', {
           rules: [],
@@ -163,7 +164,7 @@ const CreateForm: React.FC<CreateFormProps> = props => {
 
       <FormItem
         {...formItemLayout}
-        label="描述"
+        label={formatMessage({ id: 'Description' })}
       >
         {getFieldDecorator('description', {
           rules: [],
@@ -174,7 +175,7 @@ const CreateForm: React.FC<CreateFormProps> = props => {
 
       <FormItem
         {...formItemLayout}
-        label="内容"
+        label={formatMessage({ id: 'Content' })}
       >
         {getFieldDecorator('markdown', {
           rules: [
@@ -189,14 +190,14 @@ const CreateForm: React.FC<CreateFormProps> = props => {
 
       <FormItem
         {...formItemLayout}
-        label="置顶"
+        label={formatMessage({ id: 'Topping' })}
       >
         {getFieldDecorator('is_top', {
           rules: [{ required: true }],
           initialValue: 0,
         })(<Radio.Group>
-          <Radio value={1}>是</Radio>
-          <Radio value={0}>否</Radio>
+          <Radio value={1}>{formatMessage({ id: 'Yes' })}</Radio>
+          <Radio value={0}>{formatMessage({ id: 'No' })}</Radio>
         </Radio.Group>)}
       </FormItem>
 

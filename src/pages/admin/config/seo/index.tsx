@@ -16,7 +16,7 @@ import UpdateForm, { UpdateItem } from '../components/UpdateForm';
 import { StandardTableColumnProps } from '../components/StandardTable';
 import { TableListItem } from '../data.d';
 import { TableListPagination, TableListParams } from '@/models/data.d';
-import { FormattedMessage } from 'umi-plugin-react/locale';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -72,7 +72,7 @@ class TableList extends Component<TableListProps, TableListState> {
 
   columns: StandardTableColumnProps[] = [
     {
-      title: '名称',
+      title: formatMessage({ id: 'Name' }),
       dataIndex: 'name',
     },
     {
@@ -80,10 +80,10 @@ class TableList extends Component<TableListProps, TableListState> {
       dataIndex: 'value',
     },
     {
-      title: '操作',
+      title: formatMessage({ id: 'Handle' }),
       render: (text, record) => (
           <Fragment>
-            <a onClick={() => this.handleUpdateModalVisible(true, record)}>修改</a>
+            <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
           </Fragment>
         ),
     },
@@ -143,7 +143,7 @@ class TableList extends Component<TableListProps, TableListState> {
       payload: fields,
     });
 
-    message.success('修改成功');
+    message.success(formatMessage({ id: 'Update Success' }));
     this.handleUpdateModalVisible();
   };
 
@@ -223,19 +223,19 @@ class TableList extends Component<TableListProps, TableListState> {
           <Form onSubmit={this.handleSubmit} hideRequiredMark style={{ marginTop: 8 }}>
             <FormItem
               {...formItemLayout}
-              label="使用 Slug"
+              label={formatMessage({ id: 'Use Slug' })}
             >
               {getFieldDecorator('167', {
                 rules: [{ required: true }],
                 initialValue: data.list[167].value,
               })(<Radio.Group>
-                <Radio value="true">是</Radio>
-                <Radio value="false">否</Radio>
+                <Radio value="true">{formatMessage({ id: 'Yes' })}</Radio>
+                <Radio value="false">{formatMessage({ id: 'No' })}</Radio>
               </Radio.Group>)}
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="网站名"
+              label={formatMessage({ id: 'Blog Name' })}
             >
               {getFieldDecorator('101', {
                 rules: [
@@ -250,7 +250,7 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="网站标题"
+              label={formatMessage({ id: 'Blog Title' })}
             >
               {getFieldDecorator('149', {
                 rules: [
@@ -265,7 +265,7 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="网站关键字"
+              label={formatMessage({ id: 'Blog Keywords' })}
             >
               {getFieldDecorator('102', {
                 rules: [
@@ -280,7 +280,7 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="网站描述"
+              label={formatMessage({ id: 'Blog Description' })}
             >
               {getFieldDecorator('103', {
                 rules: [
@@ -295,7 +295,7 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
               <Button type="primary" htmlType="submit">
-                <FormattedMessage id="formandbasic-form.form.submit" />
+                {formatMessage({ id: 'Submit' })}
               </Button>
             </FormItem>
           </Form>

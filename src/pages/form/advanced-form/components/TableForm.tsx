@@ -100,7 +100,7 @@ class TableForm extends PureComponent<TableFormProps, TableFormState> {
       },
     },
     {
-      title: '操作',
+      title: formatMessage({ id: 'Handle' }),
       key: 'action',
       render: (text: string, record: TableFormDateType) => {
         const { loading } = this.state;

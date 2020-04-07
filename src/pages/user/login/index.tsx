@@ -79,7 +79,7 @@ class Login extends Component<LoginProps, LoginState> {
         >
           <Tab
             key="account"
-            tab={formatMessage({ id: 'userandlogin.login.tab-login-credentials' })}
+            tab={formatMessage({ id: 'Email and password login' })}
           >
             {status === 'error' &&
               loginType === 'account' &&
@@ -89,21 +89,21 @@ class Login extends Component<LoginProps, LoginState> {
               )}
             <Email
               name="email"
-              placeholder={`${formatMessage({ id: 'userandlogin.email.placeholder' })}`}
+              placeholder={`${formatMessage({ id: 'Email' })}`}
               rules={[
                 {
                   required: true,
-                  message: formatMessage({ id: 'userandlogin.email.required' }),
+                  message: formatMessage({ id: 'Email required' }),
                 },
               ]}
             />
             <Password
               name="password"
-              placeholder={`${formatMessage({ id: 'userandlogin.login.password' })}`}
+              placeholder={`${formatMessage({ id: 'Password' })}`}
               rules={[
                 {
                   required: true,
-                  message: formatMessage({ id: 'userandlogin.password.required' }),
+                  message: formatMessage({ id: 'Password required' }),
                 },
               ]}
               onPressEnter={e => {
@@ -115,7 +115,7 @@ class Login extends Component<LoginProps, LoginState> {
             />
           </Tab>
           <Submit loading={submitting}>
-            <FormattedMessage id="userandlogin.login.login" />
+            <FormattedMessage id="Sign In" />
           </Submit>
         </LoginComponents>
       </div>

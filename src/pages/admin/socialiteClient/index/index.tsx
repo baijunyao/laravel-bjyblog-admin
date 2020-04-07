@@ -1,10 +1,6 @@
 import {
-  Button,
   Card,
-  Dropdown,
   Form,
-  Icon,
-  Menu,
   message,
 } from 'antd';
 import React, { Component, Fragment } from 'react';
@@ -19,6 +15,7 @@ import UpdateForm, { UpdateItem } from './components/UpdateForm';
 import StandardTable, { StandardTableColumnProps } from './components/StandardTable';
 import { TableListItem } from './data.d';
 import { TableListPagination, TableListParams } from '@/models/data.d';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 import styles from './style.less';
 
@@ -40,7 +37,6 @@ interface TableListProps extends FormComponentProps {
 }
 
 interface TableListState {
-  modalVisible: boolean;
   updateModalVisible: boolean;
   selectedRows: TableListItem[];
   formValues: { [key: string]: string };
@@ -66,7 +62,6 @@ interface TableListState {
 )
 class TableList extends Component<TableListProps, TableListState> {
   state: TableListState = {
-    modalVisible: false,
     updateModalVisible: false,
     selectedRows: [],
     formValues: {},
@@ -87,10 +82,10 @@ class TableList extends Component<TableListProps, TableListState> {
       dataIndex: 'client_secret',
     },
     {
-      title: '操作',
+      title: formatMessage({ id: 'Handle' }),
       render: (text, record) => (
           <Fragment>
-            <a onClick={() => this.handleUpdateModalVisible(true, record)}>修改</a>
+            <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
           </Fragment>
         ),
     },
@@ -163,12 +158,6 @@ class TableList extends Component<TableListProps, TableListState> {
     });
   };
 
-  handleModalVisible = (flag?: boolean) => {
-    this.setState({
-      modalVisible: !!flag,
-    });
-  };
-
   handleUpdateModalVisible = (flag?: boolean, record?: UpdateItem) => {
     this.setState({
       updateModalVisible: !!flag,
@@ -187,7 +176,7 @@ class TableList extends Component<TableListProps, TableListState> {
       payload: fields,
     });
 
-    message.success('修改成功');
+    message.success(formatMessage({ id: 'Update Success' }));
     this.handleUpdateModalVisible();
   };
 
@@ -199,12 +188,6 @@ class TableList extends Component<TableListProps, TableListState> {
     } = this.props;
 
     const { selectedRows, updateModalVisible, updateFormValues } = this.state;
-    const menu = (
-      <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
-        <Menu.Item key="remove">删除</Menu.Item>
-        <Menu.Item key="approval">批量审批</Menu.Item>
-      </Menu>
-    );
 
     const updateMethods = {
       handleUpdateModalVisible: this.handleUpdateModalVisible,
@@ -215,21 +198,6 @@ class TableList extends Component<TableListProps, TableListState> {
       <PageHeaderWrapper>
         <Card bordered={false}>
           <div className={styles.tableList}>
-            <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
-                新建
-              </Button>
-              {selectedRows.length > 0 && (
-                <span>
-                  <Button>批量操作</Button>
-                  <Dropdown overlay={menu}>
-                    <Button>
-                      更多操作 <Icon type="down" />
-                    </Button>
-                  </Dropdown>
-                </span>
-              )}
-            </div>
             <StandardTable
               selectedRows={selectedRows}
               loading={loading}

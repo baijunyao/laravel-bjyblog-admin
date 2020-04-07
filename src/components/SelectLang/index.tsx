@@ -14,18 +14,18 @@ const SelectLang: React.FC<SelectLangProps> = props => {
   const { className } = props;
   const selectedLang = getLocale();
   const changeLang = ({ key }: ClickParam): void => setLocale(key, false);
-  const locales = ['zh-CN', 'zh-TW', 'en-US', 'pt-BR'];
+  const locales = ['zh-CN', 'en-US', 'ru-RU', 'fr-FR'];
   const languageLabels = {
-    'zh-CN': '简体中文',
-    'zh-TW': '繁体中文',
+    'zh-CN': 'Chinese(Simplified)',
     'en-US': 'English',
-    'pt-BR': 'Português',
+    'ru-RU': 'Russian',
+    'fr-FR': 'French',
   };
   const languageIcons = {
     'zh-CN': '🇨🇳',
-    'zh-TW': '🇭🇰',
     'en-US': '🇬🇧',
-    'pt-BR': '🇧🇷',
+    'ru-RU': '🇷🇺',
+    'fr-FR': '🇫🇷',
   };
   const langMenu = (
     <Menu className={styles.menu} selectedKeys={[selectedLang]} onClick={changeLang}>

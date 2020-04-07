@@ -3,6 +3,7 @@ import { Form, Input, Modal } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
 import { TableListItem } from '@/pages/admin/friendshipLink/index/data';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 export type NewItem = Pick<TableListItem, 'name' | 'url' | 'sort'>
 
@@ -26,12 +27,12 @@ const CreateForm: React.FC<CreateFormProps> = props => {
   return (
     <Modal
       destroyOnClose
-      title="新增"
+      title={formatMessage({ id: 'Add' })}
       visible={modalVisible}
       onOk={okHandle}
       onCancel={() => handleModalVisible()}
     >
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="名称">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label={formatMessage({ id: 'Name' })}>
         {form.getFieldDecorator('name', {
           rules: [{ required: true }],
         })(<Input />)}
@@ -41,7 +42,7 @@ const CreateForm: React.FC<CreateFormProps> = props => {
           rules: [{ required: true }],
         })(<Input />)}
       </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="排序">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label={formatMessage({ id: 'Sort' })}>
         {form.getFieldDecorator('sort', {
           rules: [{ required: true }],
         })(<Input />)}

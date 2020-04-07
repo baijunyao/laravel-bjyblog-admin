@@ -7,6 +7,7 @@ import { StateType as Tag } from '@/models/tag'
 import UploadOnImage from '@/components/UploadOnImage'
 import Markdown from '@/components/Markdown'
 import { TableListItem as TagItem } from '@/pages/admin/tag/index/data'
+import { formatMessage } from 'umi-plugin-react/locale';
 
 export type UpdateItem = Pick<TableListItem, 'id' | 'category_id' | 'title' | 'slug' | 'author' | 'markdown' | 'description' | 'keywords' | 'cover' | 'is_top' | 'category' | 'tags'>
 
@@ -77,14 +78,14 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
       style={{ top: 0 }}
       width="300"
       centered={false}
-      title="新增"
+      title={formatMessage({ id: 'Add' })}
       visible={updateModalVisible}
       onOk={okHandle}
       onCancel={() => handleUpdateModalVisible()}
     >
       <FormItem
         {...formItemLayout}
-        label="分类"
+        label={formatMessage({ id: 'Category' })}
       >
         {getFieldDecorator('category_id', {
           rules: [
@@ -100,7 +101,7 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
 
       <FormItem
         {...formItemLayout}
-        label="标题"
+        label={formatMessage({ id: 'Title' })}
       >
         {getFieldDecorator('title', {
           rules: [
@@ -116,7 +117,7 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
 
       <FormItem
         {...formItemLayout}
-        label="作者"
+        label={formatMessage({ id: 'Author' })}
       >
         {getFieldDecorator('author', {
           rules: [
@@ -132,7 +133,7 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
 
       <FormItem
         {...formItemLayout}
-        label="关键字"
+        label={formatMessage({ id: 'Keywords' })}
       >
         {getFieldDecorator('keywords', {
           rules: [
@@ -148,7 +149,7 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
 
       <FormItem
         {...formItemLayout}
-        label="标签"
+        label={formatMessage({ id: 'Tag' })}
       >
         {getFieldDecorator('tag_ids', {
           rules: [
@@ -164,7 +165,7 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
 
       <FormItem
         {...formItemLayout}
-        label="封面"
+        label={formatMessage({ id: 'Cover' })}
       >
         {getFieldDecorator('cover', {
           rules: [],
@@ -176,7 +177,7 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
 
       <FormItem
         {...formItemLayout}
-        label="描述"
+        label={formatMessage({ id: 'Description' })}
       >
         {getFieldDecorator('description', {
           rules: [],
@@ -188,7 +189,7 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
 
       <FormItem
         {...formItemLayout}
-        label="内容"
+        label={formatMessage({ id: 'Content' })}
       >
         {getFieldDecorator('markdown', {
           rules: [
@@ -204,14 +205,14 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
 
       <FormItem
         {...formItemLayout}
-        label="置顶"
+        label={formatMessage({ id: 'Topping' })}
       >
         {getFieldDecorator('is_top', {
           rules: [{ required: true }],
           initialValue: updateFormValues.is_top,
         })(<Radio.Group>
-          <Radio value={1}>是</Radio>
-          <Radio value={0}>否</Radio>
+          <Radio value={1}>{formatMessage({ id: 'Yes' })}</Radio>
+          <Radio value={0}>{formatMessage({ id: 'No' })}</Radio>
         </Radio.Group>)}
       </FormItem>
 

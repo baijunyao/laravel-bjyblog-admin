@@ -3,6 +3,7 @@ import {Form, Input, Modal, Radio} from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
 import { TableListItem } from '@/pages/admin/site/index/data';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 export type UpdateItem = Pick<TableListItem, 'id' | 'name' | 'description' | 'url' | 'sort' | 'audit'>
 
@@ -34,7 +35,7 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
   return (
     <Modal
       destroyOnClose
-      title="编辑"
+      title={formatMessage({ id: 'Edit' })}
       visible={updateModalVisible}
       onOk={okHandle}
       onCancel={() => handleUpdateModalVisible()}
@@ -43,13 +44,13 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
         rules: [{ required: true }],
         initialValue: updateFormValues.id,
       })(<Input type="hidden" />)}
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="名称">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label={formatMessage({ id: 'Name' })}>
         {form.getFieldDecorator('name', {
           rules: [{ required: true }],
           initialValue: updateFormValues.name,
         })(<Input />)}
       </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="描述">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label={formatMessage({ id: 'Description' })}>
         {form.getFieldDecorator('description', {
           rules: [{ required: true }],
           initialValue: updateFormValues.description,
@@ -61,19 +62,19 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
           initialValue: updateFormValues.url,
         })(<Input />)}
       </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="排序">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label={formatMessage({ id: 'Sort' })}>
         {form.getFieldDecorator('sort', {
           rules: [{ required: true }],
           initialValue: updateFormValues.sort,
         })(<Input />)}
       </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="已审核">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label={formatMessage({ id: 'Audited' })}>
         {form.getFieldDecorator('audit', {
           rules: [{ required: true }],
           initialValue: updateFormValues.audit,
         })(<Radio.Group>
-          <Radio value={1}>是</Radio>
-          <Radio value={0}>否</Radio>
+          <Radio value={1}>{formatMessage({ id: 'Yes' })}</Radio>
+          <Radio value={0}>{formatMessage({ id: 'No' })}</Radio>
         </Radio.Group>)}
       </FormItem>
     </Modal>

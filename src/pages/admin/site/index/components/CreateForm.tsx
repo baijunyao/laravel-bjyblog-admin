@@ -3,6 +3,7 @@ import {Form, Input, Modal, Radio} from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
 import { TableListItem } from '@/pages/admin/site/index/data';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 export type NewItem = Pick<TableListItem, 'name' | 'description' | 'url' | 'sort' | 'audit'>
 
@@ -26,17 +27,17 @@ const CreateForm: React.FC<CreateFormProps> = props => {
   return (
     <Modal
       destroyOnClose
-      title="新增"
+      title={formatMessage({ id: 'Add' })}
       visible={modalVisible}
       onOk={okHandle}
       onCancel={() => handleModalVisible()}
     >
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="名称">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label={formatMessage({ id: 'Name' })}>
         {form.getFieldDecorator('name', {
           rules: [{ required: true }],
         })(<Input />)}
       </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="描述">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label={formatMessage({ id: 'Description' })}>
         {form.getFieldDecorator('description', {
           rules: [{ required: true }],
         })(<Input />)}
@@ -46,18 +47,18 @@ const CreateForm: React.FC<CreateFormProps> = props => {
           rules: [{ required: true }],
         })(<Input />)}
       </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="排序">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label={formatMessage({ id: 'Sort' })}>
         {form.getFieldDecorator('sort', {
           rules: [{ required: true }],
         })(<Input />)}
       </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="已审核">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label={formatMessage({ id: 'Audited' })}>
         {form.getFieldDecorator('audit', {
           rules: [{ required: true }],
           initialValue: 1,
         })(<Radio.Group>
-          <Radio value={1}>是</Radio>
-          <Radio value={0}>否</Radio>
+          <Radio value={1}>{formatMessage({ id: 'Yes' })}</Radio>
+          <Radio value={0}>{formatMessage({ id: 'No' })}</Radio>
         </Radio.Group>)}
       </FormItem>
     </Modal>

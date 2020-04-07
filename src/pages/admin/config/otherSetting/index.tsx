@@ -16,7 +16,7 @@ import UpdateForm, { UpdateItem } from '../components/UpdateForm';
 import { StandardTableColumnProps } from '../components/StandardTable';
 import { TableListItem } from '../data.d';
 import { TableListPagination, TableListParams } from '@/models/data.d';
-import { FormattedMessage } from 'umi-plugin-react/locale';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -73,7 +73,7 @@ class TableList extends Component<TableListProps, TableListState> {
 
   columns: StandardTableColumnProps[] = [
     {
-      title: '名称',
+      title: formatMessage({ id: 'Name' }),
       dataIndex: 'name',
     },
     {
@@ -81,10 +81,10 @@ class TableList extends Component<TableListProps, TableListState> {
       dataIndex: 'value',
     },
     {
-      title: '操作',
+      title: formatMessage({ id: 'Handle' }),
       render: (text, record) => (
           <Fragment>
-            <a onClick={() => this.handleUpdateModalVisible(true, record)}>修改</a>
+            <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
           </Fragment>
         ),
     },
@@ -144,7 +144,7 @@ class TableList extends Component<TableListProps, TableListState> {
       payload: fields,
     });
 
-    message.success('修改成功');
+    message.success(formatMessage({ id: 'Update Success' }));
     this.handleUpdateModalVisible();
   };
 
@@ -180,10 +180,6 @@ class TableList extends Component<TableListProps, TableListState> {
       adminAndconfigAndindex: { data },
       form: { getFieldDecorator },
     } = this.props;
-
-    console.log('data');
-    console.log(data);
-    // console.log(data.list['101']);
 
     const { updateModalVisible, updateFormValues } = this.state;
 
@@ -224,35 +220,35 @@ class TableList extends Component<TableListProps, TableListState> {
           <Form onSubmit={this.handleSubmit} hideRequiredMark style={{ marginTop: 8 }}>
             <FormItem
               {...formItemLayout}
-              label="语言"
+              label={formatMessage({ id: 'Language' })}
             >
               {getFieldDecorator('166', {
                 rules: [{ required: true }],
                 initialValue: data.list[166].value,
               })(
                 <Select>
-                  <Option value="en">英文</Option>
-                  <Option value="fr">法语</Option>
-                  <Option value="ru">俄语</Option>
-                  <Option value="zh-CN">简体中文</Option>
+                  <Option value="en">{formatMessage({ id: 'English' })}</Option>
+                  <Option value="fr">{formatMessage({ id: 'French' })}</Option>
+                  <Option value="ru">{formatMessage({ id: 'Russian' })}</Option>
+                  <Option value="zh-CN">{formatMessage({ id: 'Chinese(Simplified)' })}</Option>
                 </Select>,
               )}
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="Logo 风格"
+              label={formatMessage({ id: 'Logo Style' })}
             >
               {getFieldDecorator('171', {
                 rules: [{ required: true }],
                 initialValue: data.list[171].value,
               })(<Radio.Group>
-                <Radio value="true">带 PHP 标签</Radio>
-                <Radio value="false">纯文本</Radio>
+                <Radio value="true">{formatMessage({ id: 'Text with php tag' })}</Radio>
+                <Radio value="false">{formatMessage({ id: 'Only text' })}</Radio>
               </Radio.Group>)}
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="ICP 备案"
+              label={formatMessage({ id: 'ICP' })}
             >
               {getFieldDecorator('117', {
                 rules: [
@@ -267,7 +263,7 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="默认作者"
+              label={formatMessage({ id: 'Default Author' })}
             >
               {getFieldDecorator('125', {
                 rules: [
@@ -282,7 +278,7 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="文章保留版权提示"
+              label={formatMessage({ id: 'Article Copyright Word' })}
             >
               {getFieldDecorator('119', {
                 rules: [
@@ -297,7 +293,7 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="图片title和alt内容"
+              label={formatMessage({ id: 'Image Alt Word' })}
             >
               {getFieldDecorator('141', {
                 rules: [
@@ -312,7 +308,7 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="水印内容"
+              label={formatMessage({ id: 'Image Water Text' })}
             >
               {getFieldDecorator('107', {
                 rules: [
@@ -327,7 +323,7 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="水印颜色"
+              label={formatMessage({ id: 'Image Water Color' })}
             >
               {getFieldDecorator('110', {
                 rules: [
@@ -342,7 +338,7 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="百度推送site提交链接"
+              label={formatMessage({ id: 'Baidu Site URL' })}
             >
               {getFieldDecorator('128', {
                 rules: [
@@ -357,7 +353,7 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="第三方统计代码"
+              label={formatMessage({ id: 'Statistics Code' })}
             >
               {getFieldDecorator('123', {
                 rules: [
@@ -372,7 +368,7 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="站长邮箱"
+              label={formatMessage({ id: 'Admin Email' })}
             >
               {getFieldDecorator('118', {
                 rules: [
@@ -387,7 +383,7 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="用于接收通知的邮箱"
+              label={formatMessage({ id: 'Notification Email' })}
             >
               {getFieldDecorator('148', {
                 rules: [
@@ -402,7 +398,7 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="Sentry DSN"
+              label={formatMessage({ id: 'Sentry DSN' })}
             >
               {getFieldDecorator('158', {
                 rules: [
@@ -417,7 +413,7 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="CDN 域名"
+              label={formatMessage({ id: 'CDN Domain' })}
             >
               {getFieldDecorator('172', {
                 rules: [
@@ -432,7 +428,7 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="Cookie Domain"
+              label={formatMessage({ id: 'Cookie Domain' })}
             >
               {getFieldDecorator('185', {
                 rules: [
@@ -447,31 +443,31 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="链接打开方式"
+              label={formatMessage({ id: 'Link Target' })}
             >
               {getFieldDecorator('193', {
                 rules: [{ required: true }],
                 initialValue: data.list[193].value,
               })(<Radio.Group>
-                <Radio value="_blank">新标签</Radio>
-                <Radio value="_self">当前标签</Radio>
+                <Radio value="_blank">{formatMessage({ id: 'New Tab' })}</Radio>
+                <Radio value="_self">{formatMessage({ id: 'Current Tab' })}</Radio>
               </Radio.Group>)}
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="面包屑"
+              label={formatMessage({ id: 'Breadcrumb' })}
             >
               {getFieldDecorator('194', {
                 rules: [{ required: true }],
                 initialValue: data.list[194].value,
               })(<Radio.Group>
-                <Radio value="true">是</Radio>
-                <Radio value="false">否</Radio>
+                <Radio value="true">{formatMessage({ id: 'Yes' })}</Radio>
+                <Radio value="false">{formatMessage({ id: 'No' })}</Radio>
               </Radio.Group>)}
             </FormItem>
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
               <Button type="primary" htmlType="submit">
-                <FormattedMessage id="formandbasic-form.form.submit" />
+                {formatMessage({ id: 'Submit' })}
               </Button>
             </FormItem>
           </Form>

@@ -6,8 +6,8 @@ import { GridContent } from '@ant-design/pro-layout';
 import { RangePickerValue } from 'antd/es/date-picker/interface';
 import { connect } from 'dva';
 import PageLoading from './components/PageLoading';
-import { getTimeDistance } from './utils/utils';
 import { AnalysisData } from './data.d';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 const IntroduceRow = React.lazy(() => import('./components/IntroduceRow'));
 
@@ -77,7 +77,7 @@ class Analysis extends Component<AnalysisProps, AnalysisState> {
           <div style={{ background: '#ECECEC', padding: '30px' }}>
             <Row gutter={16}>
               <Col span={8}>
-                <Card title="最新评论" bordered={false}>
+                <Card title={ formatMessage({ id: 'Latest logged in users' }) } bordered={false}>
                   <List
                     size="large"
                     dataSource={dashboardAndanalysis.latest_socialite_users}
@@ -85,7 +85,7 @@ class Analysis extends Component<AnalysisProps, AnalysisState> {
                       <List.Item>
                         <List.Item.Meta
                           avatar={<Avatar src={ item.avatar } />}
-                          title={<a href="https://ant.design">{item.name}</a>}
+                          title={item.name}
                           description={item.created_at}
                         />
                       </List.Item>
@@ -95,7 +95,7 @@ class Analysis extends Component<AnalysisProps, AnalysisState> {
               </Col>
 
               <Col span={8}>
-                <Card title="最新评论" bordered={false}>
+                <Card title={ formatMessage({ id: 'Recent Comments' }) } bordered={false}>
                   <List
                     size="large"
                     dataSource={dashboardAndanalysis.latest_comments}
@@ -113,7 +113,7 @@ class Analysis extends Component<AnalysisProps, AnalysisState> {
               </Col>
 
               <Col span={8}>
-                <Card title="环境" bordered={false}>
+                <Card title={ formatMessage({ id: 'Server environment' }) } bordered={false}>
                   <List
                     size="large"
                     dataSource={version}

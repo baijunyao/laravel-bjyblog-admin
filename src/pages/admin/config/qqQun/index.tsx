@@ -19,8 +19,7 @@ import UpdateForm, { UpdateItem } from '../components/UpdateForm';
 import { StandardTableColumnProps } from '../components/StandardTable';
 import { TableListItem } from '../data.d';
 import { TableListPagination, TableListParams } from '@/models/data.d';
-import { FormattedMessage } from 'umi-plugin-react/locale';
-
+import { formatMessage } from 'umi-plugin-react/locale';
 
 const FormItem = Form.Item;
 
@@ -97,7 +96,7 @@ class TableList extends Component<TableListProps, TableListState> {
 
   columns: StandardTableColumnProps[] = [
     {
-      title: '名称',
+      title: formatMessage({ id: 'Name' }),
       dataIndex: 'name',
     },
     {
@@ -105,10 +104,10 @@ class TableList extends Component<TableListProps, TableListState> {
       dataIndex: 'value',
     },
     {
-      title: '操作',
+      title: formatMessage({ id: 'Handle' }),
       render: (text, record) => (
           <Fragment>
-            <a onClick={() => this.handleUpdateModalVisible(true, record)}>修改</a>
+            <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
           </Fragment>
         ),
     },
@@ -168,7 +167,7 @@ class TableList extends Component<TableListProps, TableListState> {
       payload: fields,
     });
 
-    message.success('修改成功');
+    message.success(formatMessage({ id: 'Update Success' }));
     this.handleUpdateModalVisible();
   };
 
@@ -286,7 +285,7 @@ class TableList extends Component<TableListProps, TableListState> {
           <Form onSubmit={this.handleSubmit} hideRequiredMark style={{ marginTop: 8 }}>
             <FormItem
               {...formItemLayout}
-              label="QQ群说明文章id"
+              label={`${formatMessage({ id: 'Article' })} ID`}
             >
               {getFieldDecorator('150', {
                 rules: [
@@ -301,7 +300,7 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="QQ群账号"
+              label={formatMessage({ id: 'QQ group number' })}
             >
               {getFieldDecorator('151', {
                 rules: [
@@ -316,7 +315,7 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="QQ群代码"
+              label={formatMessage({ id: 'QQ group code' })}
             >
               {getFieldDecorator('152', {
                 rules: [
@@ -331,7 +330,7 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="QQ群二维码"
+              label={formatMessage({ id: 'QQ group QR code' })}
             >
               <Upload
                 name="file"
@@ -348,7 +347,7 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
               <Button type="primary" htmlType="submit">
-                <FormattedMessage id="formandbasic-form.form.submit" />
+                {formatMessage({ id: 'Submit' })}
               </Button>
             </FormItem>
           </Form>

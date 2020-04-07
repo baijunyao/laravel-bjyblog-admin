@@ -18,7 +18,7 @@ import UpdateForm, { UpdateItem } from '../components/UpdateForm';
 import { StandardTableColumnProps } from '../components/StandardTable';
 import { TableListItem } from '../data.d';
 import { TableListPagination, TableListParams } from '@/models/data.d';
-import { FormattedMessage } from 'umi-plugin-react/locale';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 const FormItem = Form.Item;
 
@@ -73,7 +73,7 @@ class TableList extends Component<TableListProps, TableListState> {
 
   columns: StandardTableColumnProps[] = [
     {
-      title: '名称',
+      title: formatMessage({ id: 'Name' }),
       dataIndex: 'name',
     },
     {
@@ -81,10 +81,10 @@ class TableList extends Component<TableListProps, TableListState> {
       dataIndex: 'value',
     },
     {
-      title: '操作',
+      title: formatMessage({ id: 'Handle' }),
       render: (text, record) => (
           <Fragment>
-            <a onClick={() => this.handleUpdateModalVisible(true, record)}>修改</a>
+            <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
           </Fragment>
         ),
     },
@@ -144,7 +144,7 @@ class TableList extends Component<TableListProps, TableListState> {
       payload: fields,
     });
 
-    message.success('修改成功');
+    message.success(formatMessage({ id: 'Update Success' }));
     this.handleUpdateModalVisible();
   };
 
@@ -224,18 +224,18 @@ class TableList extends Component<TableListProps, TableListState> {
           <Form onSubmit={this.handleSubmit} hideRequiredMark style={{ marginTop: 8 }}>
             <FormItem
               {...formItemLayout}
-              label="类型"
+              label={formatMessage({ id: 'Type' })}
             >
               {getFieldDecorator('164', {
                 initialValue: data.list[164].value,
               })(<Checkbox.Group>
-                <Checkbox value="local">本地</Checkbox>
-                <Checkbox value="oss">阿里云 OSS</Checkbox>
+                <Checkbox value="local">{formatMessage({ id: 'Local' })}</Checkbox>
+                <Checkbox value="oss">{formatMessage({ id: 'Aliyun OSS' })}</Checkbox>
               </Checkbox.Group>)}
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="用于接收通知的邮箱"
+              label={formatMessage({ id: 'Notification Email' })}
             >
               {getFieldDecorator('165', {
                 rules: [
@@ -250,7 +250,7 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="MySQL Dump Path 所在目录"
+              label={formatMessage({ id: 'MySQL Dump Path' })}
             >
               {getFieldDecorator('159', {
                 rules: [
@@ -265,7 +265,7 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="阿里云 AccessKeyID"
+              label={formatMessage({ id: 'Aliyun AccessKeyID' })}
             >
               {getFieldDecorator('160', {
                 rules: [
@@ -280,7 +280,7 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="阿里云 AccessKeySecret"
+              label={formatMessage({ id: 'Aliyun AccessKeySecret' })}
             >
               {getFieldDecorator('161', {
                 rules: [
@@ -295,7 +295,7 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="阿里云 BUCKET"
+              label={formatMessage({ id: 'Aliyun BUCKET' })}
             >
               {getFieldDecorator('162', {
                 rules: [
@@ -310,7 +310,7 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="阿里云 ENDPOINT"
+              label={formatMessage({ id: 'Aliyun ENDPOINT' })}
             >
               {getFieldDecorator('163', {
                 rules: [
@@ -325,7 +325,7 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
               <Button type="primary" htmlType="submit">
-                <FormattedMessage id="formandbasic-form.form.submit" />
+                {formatMessage({ id: 'Submit' })}
               </Button>
             </FormItem>
           </Form>

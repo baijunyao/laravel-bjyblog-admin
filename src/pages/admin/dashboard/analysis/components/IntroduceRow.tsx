@@ -3,6 +3,8 @@ import { Col, Row } from 'antd';
 import React from 'react';
 import { ChartCard } from './Charts';
 import { Counts } from '../data.d';
+import { formatMessage } from 'umi-plugin-react/locale';
+
 
 const topColResponsiveProps = {
   xs: 24,
@@ -18,7 +20,7 @@ const IntroduceRow = ({ loading, visitData }: { loading: boolean; visitData: Cou
     <Col {...topColResponsiveProps}>
       <ChartCard
         bordered={false}
-        title="评论"
+        title={formatMessage({ id: 'Number of comments' })}
         loading={loading}
         total={() => visitData.comments}
         contentHeight={46}
@@ -29,7 +31,7 @@ const IntroduceRow = ({ loading, visitData }: { loading: boolean; visitData: Cou
     <Col {...topColResponsiveProps}>
       <ChartCard
         bordered={false}
-        title="用户"
+        title={formatMessage({ id: 'Number of Socialite users' })}
         loading={loading}
         total={() => visitData.socialite_users}
         contentHeight={46}
@@ -40,7 +42,7 @@ const IntroduceRow = ({ loading, visitData }: { loading: boolean; visitData: Cou
     <Col {...topColResponsiveProps}>
       <ChartCard
         bordered={false}
-        title="文章"
+        title={formatMessage({ id: 'Number of articles' })}
         loading={loading}
         total={() => visitData.articles}
         contentHeight={46}
@@ -51,7 +53,7 @@ const IntroduceRow = ({ loading, visitData }: { loading: boolean; visitData: Cou
     <Col {...topColResponsiveProps}>
       <ChartCard
         bordered={false}
-        title="随言碎语"
+        title={formatMessage({ id: 'Number of notes' })}
         loading={loading}
         total={() => visitData.notes}
         contentHeight={46}

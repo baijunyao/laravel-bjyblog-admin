@@ -2,10 +2,7 @@ import {
   Button,
   Card,
   Divider,
-  Dropdown,
   Form,
-  Icon,
-  Menu,
   message,
 } from 'antd';
 import React, { Component, Fragment } from 'react';
@@ -22,6 +19,7 @@ import UpdateForm, { UpdateItem } from './components/UpdateForm';
 import StandardTable, { StandardTableColumnProps } from './components/StandardTable';
 import { TableListItem } from './data.d';
 import { TableListPagination, TableListParams } from '@/models/data.d';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 import styles from './style.less';
 
@@ -90,11 +88,11 @@ class TableList extends Component<TableListProps, TableListState> {
 
   columns: StandardTableColumnProps[] = [
     {
-      title: '名称',
+      title: formatMessage({ id: 'Name' }),
       dataIndex: 'name',
     },
     {
-      title: '描述',
+      title: formatMessage({ id: 'Description' }),
       dataIndex: 'description',
     },
     {
@@ -102,11 +100,11 @@ class TableList extends Component<TableListProps, TableListState> {
       dataIndex: 'url',
     },
     {
-      title: '排序',
+      title: formatMessage({ id: 'Sort' }),
       dataIndex: 'sort',
     },
     {
-      title: '已审核',
+      title: formatMessage({ id: 'Audited' }),
       dataIndex: 'audit',
       filters: [
         {
@@ -123,7 +121,7 @@ class TableList extends Component<TableListProps, TableListState> {
       },
     },
     {
-      title: '状态',
+      title: formatMessage({ id: 'Status' }),
       dataIndex: 'deleted_at',
       filters: [
         {
@@ -140,30 +138,30 @@ class TableList extends Component<TableListProps, TableListState> {
       },
     },
     {
-      title: '创建时间',
+      title: formatMessage({ id: 'Created_at' }),
       dataIndex: 'created_at',
       sorter: true,
       render: (val: string) => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
     },
     {
-      title: '操作',
+      title: formatMessage({ id: 'Handle' }),
       render: (text, record) => {
         if (record.deleted_at === null) {
           return (
             <Fragment>
-              <a onClick={() => this.handleUpdateModalVisible(true, record)}>修改</a>
+              <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
               <Divider type="vertical" />
-              <a onClick={() => this.handleDestroy(record)}>删除</a>
+              <a onClick={() => this.handleDestroy(record)}>{formatMessage({ id: 'Delete' })}</a>
             </Fragment>
           )
         }
         return (
           <Fragment>
-            <a onClick={() => this.handleUpdateModalVisible(true, record)}>修改</a>
+            <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
             <Divider type="vertical" />
-            <a onClick={() => this.handleForceDelete(record)}>彻底删除</a>
+            <a onClick={() => this.handleForceDelete(record)}>{formatMessage({ id: 'Force Delete' })}</a>
             <Divider type="vertical" />
-            <a onClick={() => this.handleRestore(record)}>恢复</a>
+            <a onClick={() => this.handleRestore(record)}>{formatMessage({ id: 'Restore' })}</a>
           </Fragment>
         )
       },
@@ -264,7 +262,7 @@ class TableList extends Component<TableListProps, TableListState> {
       payload: fields,
     });
 
-    message.success('添加成功');
+    message.success(formatMessage({ id: 'Store Success' }));
     this.handleModalVisible();
   };
 
@@ -275,7 +273,7 @@ class TableList extends Component<TableListProps, TableListState> {
       payload: fields,
     });
 
-    message.success('修改成功');
+    message.success(formatMessage({ id: 'Update Success' }));
     this.handleUpdateModalVisible();
   };
 
@@ -286,7 +284,7 @@ class TableList extends Component<TableListProps, TableListState> {
       payload: fields,
     });
 
-    message.success('删除成功');
+    message.success(formatMessage({ id: 'Delete Success' }));
   };
 
   handleForceDelete = (fields: UpdateItem) => {
@@ -296,7 +294,7 @@ class TableList extends Component<TableListProps, TableListState> {
       payload: fields,
     });
 
-    message.success('删除成功');
+    message.success(formatMessage({ id: 'Force Delete Success' }));
   };
 
   handleRestore = (fields: UpdateItem) => {
@@ -306,7 +304,7 @@ class TableList extends Component<TableListProps, TableListState> {
       payload: fields,
     });
 
-    message.success('恢复成功');
+    message.success(formatMessage({ id: 'Restore Success' }));
   };
 
   render() {
@@ -317,12 +315,6 @@ class TableList extends Component<TableListProps, TableListState> {
     } = this.props;
 
     const { selectedRows, modalVisible, updateModalVisible, updateFormValues } = this.state;
-    const menu = (
-      <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
-        <Menu.Item key="remove">删除</Menu.Item>
-        <Menu.Item key="approval">批量审批</Menu.Item>
-      </Menu>
-    );
 
     const parentMethods = {
       handleAdd: this.handleAdd,
@@ -339,18 +331,8 @@ class TableList extends Component<TableListProps, TableListState> {
           <div className={styles.tableList}>
             <div className={styles.tableListOperator}>
               <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
-                新建
+                {formatMessage({ id: 'Add' })}
               </Button>
-              {selectedRows.length > 0 && (
-                <span>
-                  <Button>批量操作</Button>
-                  <Dropdown overlay={menu}>
-                    <Button>
-                      更多操作 <Icon type="down" />
-                    </Button>
-                  </Dropdown>
-                </span>
-              )}
             </div>
             <StandardTable
               selectedRows={selectedRows}

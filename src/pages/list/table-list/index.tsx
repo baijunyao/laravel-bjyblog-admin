@@ -97,7 +97,7 @@ class TableList extends Component<TableListProps, TableListState> {
       dataIndex: 'name',
     },
     {
-      title: '描述',
+      title: formatMessage({ id: 'Description' }),
       dataIndex: 'desc',
     },
     {
@@ -141,7 +141,7 @@ class TableList extends Component<TableListProps, TableListState> {
       render: (val: string) => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
     },
     {
-      title: '操作',
+      title: formatMessage({ id: 'Handle' }),
       render: (text, record) => (
         <Fragment>
           <a onClick={() => this.handleUpdateModalVisible(true, record)}>配置</a>
@@ -284,7 +284,7 @@ class TableList extends Component<TableListProps, TableListState> {
       },
     });
 
-    message.success('添加成功');
+    message.success(formatMessage({ id: 'Store Success' }));
     this.handleModalVisible();
   };
 
@@ -428,12 +428,6 @@ class TableList extends Component<TableListProps, TableListState> {
     } = this.props;
 
     const { selectedRows, modalVisible, updateModalVisible, stepFormValues } = this.state;
-    const menu = (
-      <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
-        <Menu.Item key="remove">删除</Menu.Item>
-        <Menu.Item key="approval">批量审批</Menu.Item>
-      </Menu>
-    );
 
     const parentMethods = {
       handleAdd: this.handleAdd,
@@ -450,18 +444,8 @@ class TableList extends Component<TableListProps, TableListState> {
             <div className={styles.tableListForm}>{this.renderForm()}</div>
             <div className={styles.tableListOperator}>
               <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
-                新建
+                {formatMessage({ id: 'Add' })}
               </Button>
-              {selectedRows.length > 0 && (
-                <span>
-                  <Button>批量操作</Button>
-                  <Dropdown overlay={menu}>
-                    <Button>
-                      更多操作 <Icon type="down" />
-                    </Button>
-                  </Dropdown>
-                </span>
-              )}
             </div>
             <StandardTable
               selectedRows={selectedRows}
