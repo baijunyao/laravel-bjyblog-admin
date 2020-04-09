@@ -45,10 +45,12 @@ const errorHandler = (error: { response: Response }): Response => {
       const errorText = codeMessage[response.status] || response.statusText;
       const { status, url } = response;
 
-      notification.error({
-        message: `请求错误 ${status}: ${url}`,
-        description: errorText,
-      });
+      if (url.slice(-17) !== 'socialiteUsers/me') {
+        notification.error({
+          message: `请求错误 ${status}: ${url}`,
+          description: errorText,
+        });
+      }
     }
   } else if (!response) {
     notification.error({
