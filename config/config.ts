@@ -318,6 +318,11 @@ export default {
               component: './admin/config/search',
             },
             {
+              name: 'licenses',
+              path: '/config/licenses',
+              component: './admin/config/licenses',
+            },
+            {
               name: 'otherSetting',
               path: '/config/otherSetting',
               component: './admin/config/otherSetting',

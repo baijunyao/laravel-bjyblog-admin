@@ -30,5 +30,6 @@ export default {
   'menu.config.socialShare': 'Поделиться в соцсетях',
   'menu.config.socialLink': 'Социальные ссылки',
   'menu.config.search': 'Поиск',
+  'menu.config.licenses': 'лицензии',
   'menu.config.otherSetting': 'Другие настройки',
 };

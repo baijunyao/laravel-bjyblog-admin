@@ -78,5 +78,6 @@ export default {
   'menu.config.socialShare': '社会化分享',
   'menu.config.socialLink': '社会化链接',
   'menu.config.search': '搜索',
+  'menu.config.licenses': '许可协议',
   'menu.config.otherSetting': '其他设置',
 };
