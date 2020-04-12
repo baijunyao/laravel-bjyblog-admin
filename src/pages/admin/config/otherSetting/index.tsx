@@ -236,6 +236,16 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
             <FormItem
               {...formItemLayout}
+              label={formatMessage({ id: 'Timezone' })}
+            >
+              {getFieldDecorator('195', {
+                initialValue: data.list[195].value,
+              })(
+                <Input />,
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
               label={formatMessage({ id: 'Logo Style' })}
             >
               {getFieldDecorator('171', {
