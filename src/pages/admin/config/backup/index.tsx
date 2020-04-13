@@ -238,11 +238,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label={formatMessage({ id: 'Notification Email' })}
             >
               {getFieldDecorator('165', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[165].value,
               })(
                 <Input />,
@@ -253,11 +248,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label={formatMessage({ id: 'MySQL Dump Path' })}
             >
               {getFieldDecorator('159', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[159].value,
               })(
                 <Input />,
@@ -268,11 +258,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label={formatMessage({ id: 'Aliyun AccessKeyID' })}
             >
               {getFieldDecorator('160', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[160].value,
               })(
                 <Input />,
@@ -283,11 +268,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label={formatMessage({ id: 'Aliyun AccessKeySecret' })}
             >
               {getFieldDecorator('161', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[161].value,
               })(
                 <Input />,
@@ -298,11 +278,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label={formatMessage({ id: 'Aliyun BUCKET' })}
             >
               {getFieldDecorator('162', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[162].value,
               })(
                 <Input />,
@@ -313,11 +288,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label={formatMessage({ id: 'Aliyun ENDPOINT' })}
             >
               {getFieldDecorator('163', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[163].value,
               })(
                 <Input />,

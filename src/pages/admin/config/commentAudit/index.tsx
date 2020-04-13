@@ -237,11 +237,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label="Baidu appid"
             >
               {getFieldDecorator('174', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[174].value,
               })(
                 <Input />,
@@ -252,11 +247,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label="Baidu appkey"
             >
               {getFieldDecorator('175', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[175].value,
               })(
                 <Input />,
@@ -267,11 +257,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label="Baidu secret"
             >
               {getFieldDecorator('176', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[176].value,
               })(
                 <Input />,

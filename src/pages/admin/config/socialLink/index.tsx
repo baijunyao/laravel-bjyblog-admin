@@ -222,11 +222,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label="github"
             >
               {getFieldDecorator('188', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[188].value,
               })(
                 <Input />,
@@ -237,11 +232,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label="gitee"
             >
               {getFieldDecorator('189', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[189].value,
               })(
                 <Input />,
@@ -252,11 +242,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label="zhihu"
             >
               {getFieldDecorator('190', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[190].value,
               })(
                 <Input />,
@@ -267,11 +252,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label="weibo"
             >
               {getFieldDecorator('191', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[191].value,
               })(
                 <Input />,
@@ -282,11 +262,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label="upyun"
             >
               {getFieldDecorator('192', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[192].value,
               })(
                 <Input />,

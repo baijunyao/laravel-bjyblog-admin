@@ -239,6 +239,7 @@ class TableList extends Component<TableListProps, TableListState> {
               label={formatMessage({ id: 'Timezone' })}
             >
               {getFieldDecorator('195', {
+                rules: [{ required: true }],
                 initialValue: data.list[195].value,
               })(
                 <Input />,
@@ -261,11 +262,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label={formatMessage({ id: 'ICP' })}
             >
               {getFieldDecorator('117', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[117].value,
               })(
                 <Input />,
@@ -291,11 +287,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label={formatMessage({ id: 'Article Copyright Word' })}
             >
               {getFieldDecorator('119', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[119].value,
               })(
                 <TextArea />,
@@ -306,11 +297,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label={formatMessage({ id: 'Image Alt Word' })}
             >
               {getFieldDecorator('141', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[141].value,
               })(
                 <Input />,
@@ -321,11 +307,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label={formatMessage({ id: 'Image Water Text' })}
             >
               {getFieldDecorator('107', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[107].value,
               })(
                 <Input />,
@@ -336,11 +317,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label={formatMessage({ id: 'Image Water Color' })}
             >
               {getFieldDecorator('110', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[110].value,
               })(
                 <Input />,
@@ -351,11 +327,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label={formatMessage({ id: 'Baidu Site URL' })}
             >
               {getFieldDecorator('128', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[128].value,
               })(
                 <Input />,
@@ -366,11 +337,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label={formatMessage({ id: 'Statistics Code' })}
             >
               {getFieldDecorator('123', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[123].value,
               })(
                 <TextArea />,
@@ -381,11 +347,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label={formatMessage({ id: 'Admin Email' })}
             >
               {getFieldDecorator('118', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[118].value,
               })(
                 <Input />,
@@ -396,11 +357,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label={formatMessage({ id: 'Notification Email' })}
             >
               {getFieldDecorator('148', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[148].value,
               })(
                 <Input />,
@@ -411,11 +367,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label={formatMessage({ id: 'Sentry DSN' })}
             >
               {getFieldDecorator('158', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[158].value,
               })(
                 <Input />,
@@ -426,11 +377,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label={formatMessage({ id: 'CDN Domain' })}
             >
               {getFieldDecorator('172', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[172].value,
               })(
                 <Input />,
@@ -441,11 +387,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label={formatMessage({ id: 'Cookie Domain' })}
             >
               {getFieldDecorator('185', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[185].value,
               })(
                 <Input />,

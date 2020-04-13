@@ -238,11 +238,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label="Elasticsearch prefix"
             >
               {getFieldDecorator('178', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[178].value,
               })(
                 <Input />,
@@ -253,11 +248,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label="Elasticsearch host"
             >
               {getFieldDecorator('179', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[179].value,
               })(
                 <Input />,
@@ -268,11 +258,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label="Elasticsearch port"
             >
               {getFieldDecorator('180', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[180].value,
               })(
                 <Input />,
@@ -283,11 +268,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label="Elasticsearch scheme"
             >
               {getFieldDecorator('181', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[181].value,
               })(
                 <Input />,
@@ -298,11 +278,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label="Elasticsearch user"
             >
               {getFieldDecorator('182', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[182].value,
               })(
                 <Input />,
@@ -313,11 +288,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label="Elasticsearch pass"
             >
               {getFieldDecorator('183', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[183].value,
               })(
                 <Input />,
@@ -328,11 +298,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label="Elasticsearch analyzer"
             >
               {getFieldDecorator('184', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[184].value,
               })(
                 <Input />,
@@ -343,11 +308,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label="Algolia id"
             >
               {getFieldDecorator('186', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[186].value,
               })(
                 <Input />,
@@ -358,11 +318,6 @@ class TableList extends Component<TableListProps, TableListState> {
               label="Algolia secret"
             >
               {getFieldDecorator('187', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
                 initialValue: data.list[187].value,
               })(
                 <Input />,
