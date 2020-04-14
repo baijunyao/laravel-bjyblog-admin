@@ -1,4 +1,4 @@
-import request, { convertPaginationResponse } from '@/utils/request';
+import request from '@/utils/request';
 import { TableListParams } from '@/models/data';
 import { UpdateItem } from '@/pages/admin/config/components/UpdateForm';
 import { TableListItem } from '@/pages/admin/config/data';
@@ -10,13 +10,13 @@ export async function queryRule(params: TableListParams) {
 
   const dataById: TableListItem[] = [];
 
-  response.data.forEach((config: TableListItem) => {
+  response.list.forEach((config: TableListItem) => {
     dataById[config.id] = config;
   })
 
-  response.data = dataById;
+  response.list = dataById;
 
-  return convertPaginationResponse(response);
+  return response;
 }
 
 export async function updateRule(params: UpdateItem) {

@@ -1,19 +1,15 @@
-import request, { convertPaginationResponse } from '@/utils/request';
+import request from '@/utils/request';
 import { TableListParams } from '@/models/data.d';
 import { UpdateItem } from './components/UpdateForm';
 
 export async function queryRule(params: TableListParams) {
-  const response = await request('/api/users', {
+  return request('/api/users', {
     params,
   });
-
-  return convertPaginationResponse(response);
 }
 
 export async function showUser(id: string|number) {
-  const response = await request(`/api/users/${id}`);
-
-  return convertPaginationResponse(response);
+  return request(`/api/users/${id}`);
 }
 
 export async function showCurrentUser() {

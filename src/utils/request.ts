@@ -4,7 +4,6 @@
  */
 import { extend } from 'umi-request';
 import { notification } from 'antd';
-import { TableListData, TableListPagination, LaravelPaginationResponse } from '@/models/data';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -80,38 +79,21 @@ request.use(async (ctx, next) => {
   }
 
   await next();
+
+  if (ctx.res.meta !== undefined) {
+    ctx.res.pagination = {
+      total: ctx.res.meta.total,
+      pageSize: ctx.res.meta.per_page,
+      current: ctx.res.meta.current_page,
+      showSizeChanger: false,
+    }
+
+    ctx.res.list = ctx.res.data;
+  }
 })
 
 export function getToken() {
   return localStorage.getItem('token') === undefined ? '' : `Bearer ${localStorage.getItem('token')}`;
-}
-
-// eslint-disable-next-line max-len
-export function convertPaginationResponse(laravelPaginationResponse: LaravelPaginationResponse): TableListData {
-  let pagination:TableListPagination;
-
-  if (laravelPaginationResponse.meta === undefined) {
-    pagination = {
-      total: 0,
-      pageSize: 0,
-      current: 0,
-      showSizeChanger: false,
-    };
-  } else {
-    pagination = {
-      total: laravelPaginationResponse.meta.total,
-      pageSize: laravelPaginationResponse.meta.per_page,
-      current: laravelPaginationResponse.meta.current_page,
-      showSizeChanger: false,
-    };
-  }
-
-  const tableListData: TableListData = {
-    list: laravelPaginationResponse.data,
-    pagination,
-  };
-
-  return tableListData;
 }
 
 export default request;

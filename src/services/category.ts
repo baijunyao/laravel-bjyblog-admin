@@ -1,14 +1,12 @@
-import request, { convertPaginationResponse } from '@/utils/request';
+import request from '@/utils/request';
 import { TableListParams } from '@/models/data.d';
 import { NewCategory } from '@/pages/admin/category/index/components/CreateForm'
 import { UpdateCategory } from '@/pages/admin/category/index/components/UpdateForm';
 
 export async function queryRule(params: TableListParams) {
-  const response = await request('/api/categories', {
+  return request('/api/categories', {
     params,
   });
-
-  return convertPaginationResponse(response);
 }
 
 export async function addRule(params: NewCategory) {

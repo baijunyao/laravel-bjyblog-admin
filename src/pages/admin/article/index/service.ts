@@ -1,14 +1,12 @@
-import request, { convertPaginationResponse } from '@/utils/request';
+import request from '@/utils/request';
 import { TableListParams } from '@/models/data.d';
 import { NewItem } from './components/CreateForm'
 import { UpdateItem } from './components/UpdateForm';
 
 export async function queryRule(params: TableListParams) {
-  const response = await request('/api/articles', {
+  return request('/api/articles', {
     params,
   });
-
-  return convertPaginationResponse(response);
 }
 
 export async function addRule(params: NewItem) {

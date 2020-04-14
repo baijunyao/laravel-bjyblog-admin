@@ -1,14 +1,12 @@
-import request, { convertPaginationResponse } from '@/utils/request';
+import request from '@/utils/request';
 import { TableListParams } from '@/models/data.d';
 import { NewItem } from '@/pages/admin/tag/index/components/CreateForm'
 import { UpdateItem } from '@/pages/admin/tag/index/components/UpdateForm';
 
 export async function queryRule(params: TableListParams) {
-  const response = await request('/api/tags', {
+  return request('/api/tags', {
     params,
   });
-
-  return convertPaginationResponse(response);
 }
 
 export async function addRule(params: NewItem) {
