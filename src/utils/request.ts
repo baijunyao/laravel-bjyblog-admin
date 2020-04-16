@@ -3,7 +3,8 @@
  * 更详细的 api 文档: https://github.com/umijs/umi-request
  */
 import { extend } from 'umi-request';
-import { notification } from 'antd';
+import { message, notification } from 'antd';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -89,6 +90,10 @@ request.use(async (ctx, next) => {
     }
 
     ctx.res.list = ctx.res.data;
+  }
+
+  if (ctx.req.options.method !== 'GET') {
+    message.success(formatMessage({ id: 'Success' }));
   }
 })
 

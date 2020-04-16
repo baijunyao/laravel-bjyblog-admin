@@ -3,7 +3,6 @@ import {
   Card,
   Divider,
   Form,
-  message,
 } from 'antd';
 import React, { Component, Fragment } from 'react';
 
@@ -236,8 +235,6 @@ class TableList extends Component<TableListProps, TableListState> {
       type: 'adminAndcategoryAndindex/add',
       payload: fields,
     });
-
-    message.success(formatMessage({ id: 'Store Success' }));
     this.handleModalVisible();
   };
 
@@ -247,8 +244,6 @@ class TableList extends Component<TableListProps, TableListState> {
       type: 'adminAndcategoryAndindex/update',
       payload: fields,
     });
-
-    message.success(formatMessage({ id: 'Update Success' }));
     this.handleUpdateModalVisible();
   };
 
@@ -258,8 +253,6 @@ class TableList extends Component<TableListProps, TableListState> {
       type: 'adminAndcategoryAndindex/destroy',
       payload: fields,
     });
-
-    message.success(formatMessage({ id: 'Delete Success' }));
   };
 
   handleForceDelete = (fields: UpdateCategory) => {
@@ -268,8 +261,6 @@ class TableList extends Component<TableListProps, TableListState> {
       type: 'adminAndcategoryAndindex/forceDelete',
       payload: fields,
     });
-
-    message.success(formatMessage({ id: 'Force Delete Success' }));
   };
 
   handleRestore = (fields: UpdateCategory) => {
@@ -278,8 +269,6 @@ class TableList extends Component<TableListProps, TableListState> {
       type: 'adminAndcategoryAndindex/restore',
       payload: fields,
     });
-
-    message.success(formatMessage({ id: 'Restore Success' }));
   };
 
   render() {

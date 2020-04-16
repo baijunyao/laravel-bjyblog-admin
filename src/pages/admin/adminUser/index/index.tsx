@@ -1,7 +1,6 @@
 import {
   Card,
   Form,
-  message,
 } from 'antd';
 import React, { Component, Fragment } from 'react';
 
@@ -213,7 +212,6 @@ class TableList extends Component<TableListProps, TableListState> {
       payload: fields,
     });
 
-    message.success(formatMessage({ id: 'Update Success' }));
     this.handleUpdateModalVisible();
   };
 

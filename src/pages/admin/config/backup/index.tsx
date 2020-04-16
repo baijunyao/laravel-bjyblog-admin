@@ -3,7 +3,6 @@ import {
   Card,
   Form,
   Input,
-  message,
   Checkbox,
 } from 'antd';
 import React, { Component, Fragment } from 'react';
@@ -143,8 +142,6 @@ class TableList extends Component<TableListProps, TableListState> {
       type: 'adminAndconfigAndindex/update',
       payload: fields,
     });
-
-    message.success(formatMessage({ id: 'Update Success' }));
     this.handleUpdateModalVisible();
   };
 

@@ -5,12 +5,10 @@ import {
   Col,
   DatePicker,
   Divider,
-  Dropdown,
   Form,
   Icon,
   Input,
   InputNumber,
-  Menu,
   Row,
   Select,
   message,
@@ -283,8 +281,6 @@ class TableList extends Component<TableListProps, TableListState> {
         desc: fields.desc,
       },
     });
-
-    message.success(formatMessage({ id: 'Store Success' }));
     this.handleModalVisible();
   };
 
