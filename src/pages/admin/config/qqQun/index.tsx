@@ -178,9 +178,6 @@ class TableList extends Component<TableListProps, TableListState> {
     e.preventDefault();
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('values');
-        console.log(values);
-        console.log(form.getFieldsValue());
         Object.keys(values).forEach((id) => {
           if (values[id] !== data.list[id].value) {
             dispatch({
@@ -230,9 +227,6 @@ class TableList extends Component<TableListProps, TableListState> {
       adminAndconfigAndindex: { data },
       form: { getFieldDecorator },
     } = this.props;
-
-    console.log('data');
-    console.log(data);
 
     const { updateModalVisible, updateFormValues } = this.state;
 

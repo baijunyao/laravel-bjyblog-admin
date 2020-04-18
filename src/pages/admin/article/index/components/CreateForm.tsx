@@ -26,7 +26,6 @@ const CreateForm: React.FC<CreateFormProps> = props => {
   const { modalVisible, form, handleAdd, handleModalVisible, adminAndcategoryAndindex, adminAndtagAndindex } = props;
   const okHandle = () => {
     form.validateFields((err, fieldsValue) => {
-      console.log(fieldsValue);
       if (err) return;
       form.resetFields();
       handleAdd(fieldsValue);

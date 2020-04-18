@@ -272,7 +272,6 @@ class TableList extends Component<TableListProps, TableListState> {
   };
 
   render() {
-    console.log(this.props);
     const {
       adminAndfriendshipLinkAndindex: { data },
       loading,

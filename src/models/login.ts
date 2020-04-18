@@ -42,7 +42,7 @@ const Model: LoginModelType = {
       // Login successfully
       if (response.access_token !== undefined) {
         localStorage.setItem('token', response.access_token);
-        window.location.href = '/'
+        window.location.href = '/ant'
       }
     },
 

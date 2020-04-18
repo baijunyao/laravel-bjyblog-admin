@@ -279,8 +279,6 @@ class TableList extends Component<TableListProps, TableListState> {
 
   handleUpdate = (fields: UpdateItem) => {
     const { dispatch } = this.props;
-    console.log('handleUpdate');
-    console.log(fields);
     dispatch({
       type: 'adminAndarticleAndindex/update',
       payload: fields,

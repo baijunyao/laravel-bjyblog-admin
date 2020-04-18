@@ -216,7 +216,6 @@ class TableList extends Component<TableListProps, TableListState> {
   };
 
   render() {
-    console.log(this.props);
     const {
       adminAnduserAndindex: { data },
       loading,

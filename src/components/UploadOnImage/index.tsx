@@ -25,9 +25,6 @@ export default class UploadOnImage extends Component {
   constructor(props: any) {
     super(props);
 
-    console.log('constructor.props');
-    console.log(props);
-
     this.state = {
       action: props.action,
       loading: false,
@@ -49,7 +46,6 @@ export default class UploadOnImage extends Component {
       return;
     }
     if (info.file.status === 'done') {
-      console.log(info);
 
       this.setState({
         imageUrl: info.file.response.url,
@@ -66,9 +62,6 @@ export default class UploadOnImage extends Component {
       </div>
     );
     const { imageUrl, fileList } = this.state;
-
-    console.log('this.state')
-    console.log(imageUrl)
 
     return (
       <Upload

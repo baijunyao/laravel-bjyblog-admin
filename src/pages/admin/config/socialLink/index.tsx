@@ -173,10 +173,6 @@ class TableList extends Component<TableListProps, TableListState> {
       form: { getFieldDecorator },
     } = this.props;
 
-    console.log('data');
-    console.log(data);
-    // console.log(data.list['101']);
-
     const { updateModalVisible, updateFormValues } = this.state;
 
     const updateMethods = {
