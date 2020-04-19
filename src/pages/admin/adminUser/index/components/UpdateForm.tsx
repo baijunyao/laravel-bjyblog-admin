@@ -56,6 +56,11 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
           initialValue: updateFormValues.email,
         })(<Input />)}
       </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label={formatMessage({ id: 'Password' })}>
+        {form.getFieldDecorator('password', {
+          rules: [{ required: true }],
+        })(<Input />)}
+      </FormItem>
     </Modal>
   );
 };
