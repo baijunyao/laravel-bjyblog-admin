@@ -45,9 +45,14 @@ const errorHandler = (error: { response: Response }): Response => {
       const errorText = codeMessage[response.status] || response.statusText;
       const { status, url } = response;
 
-      if (url.slice(-17) !== 'socialiteUsers/me') {
+      if (url.slice(-11) === 'oauth/token' && status === 400) {
         notification.error({
-          message: `请求错误 ${status}: ${url}`,
+          message: formatMessage({ id: 'Fail' }),
+          description: formatMessage({ id: 'The email or password is incorrect' }),
+        });
+      } else if (url.slice(-17) !== 'socialiteUsers/me') {
+        notification.error({
+          message: formatMessage({ id: 'Fail' }),
           description: errorText,
         });
       }

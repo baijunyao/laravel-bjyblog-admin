@@ -275,4 +275,6 @@ export default {
   'QQ group number': 'QQ 群账号',
   'QQ group code': 'QQ 群代码',
   'QQ group QR code': 'QQ 群二维码',
+
+  'The email or password is incorrect': '邮箱或密码错误',
 };

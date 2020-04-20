@@ -257,4 +257,5 @@ export default {
   'QQ group number': 'QQ номер группы',
   'QQ group code': 'QQ код группы',
   'QQ group QR code': 'QQ групповой QR код',
+  'The email or password is incorrect': 'Неверный адрес электронной почты или пароль',
 };
