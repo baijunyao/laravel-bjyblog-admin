@@ -75,6 +75,7 @@ const request = extend({
   credentials: 'include', // 默认请求是否带上cookie
   headers: {
     'Content-Type': 'application/json',
+    Accept: 'application/json',
     Authorization: getToken(),
   },
 });
