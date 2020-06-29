@@ -74,6 +74,7 @@ export default {
   'menu.config.commentAudit': '评论审核',
   'menu.config.qqQun': 'QQ 群',
   'menu.config.backup': '备份',
+  'menu.config.upload': '上传',
   'menu.config.seo': 'SEO',
   'menu.config.socialShare': '社会化分享',
   'menu.config.socialLink': '社会化链接',

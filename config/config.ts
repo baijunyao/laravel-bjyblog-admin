@@ -288,6 +288,11 @@ export default {
               component: './admin/config/backup',
             },
             {
+              name: 'upload',
+              path: '/config/upload',
+              component: './admin/config/upload',
+            },
+            {
               name: 'seo',
               path: '/config/seo',
               component: './admin/config/seo',

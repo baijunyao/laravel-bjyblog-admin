@@ -26,6 +26,7 @@ export default {
   'menu.config.commentAudit': 'Как проводить аудит',
   'menu.config.qqQun': 'QQ группа',
   'menu.config.backup': 'Резервное сохранение',
+  'menu.config.upload': 'Резервное сохранение',
   'menu.config.seo': 'SEO',
   'menu.config.socialShare': 'Поделиться в соцсетях',
   'menu.config.socialLink': 'Социальные ссылки',
