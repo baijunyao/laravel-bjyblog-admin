@@ -132,7 +132,7 @@ export default {
         },
         {
           name: 'category',
-          icon: 'highlight',
+          icon: 'icon-category',
           path: '/category',
           routes: [
             {
@@ -144,7 +144,7 @@ export default {
         },
         {
           name: 'tag',
-          icon: 'highlight',
+          icon: 'icon-tag',
           path: '/tag',
           routes: [
             {
@@ -156,7 +156,7 @@ export default {
         },
         {
           name: 'article',
-          icon: 'highlight',
+          icon: 'icon-article',
           path: '/article',
           routes: [
             {
@@ -168,7 +168,7 @@ export default {
         },
         {
           name: 'comment',
-          icon: 'highlight',
+          icon: 'icon-comment',
           path: '/comment',
           routes: [
             {
@@ -180,7 +180,7 @@ export default {
         },
         {
           name: 'adminUser',
-          icon: 'highlight',
+          icon: 'icon-admin-user',
           path: '/adminUser',
           routes: [
             {
@@ -192,7 +192,7 @@ export default {
         },
         {
           name: 'socialiteClient',
-          icon: 'highlight',
+          icon: 'icon-third-login',
           path: '/socialiteClient',
           routes: [
             {
@@ -204,7 +204,7 @@ export default {
         },
         {
           name: 'socialiteUser',
-          icon: 'highlight',
+          icon: 'icon-user',
           path: '/socialiteUser',
           routes: [
             {
@@ -216,7 +216,7 @@ export default {
         },
         {
           name: 'friendshipLink',
-          icon: 'highlight',
+          icon: 'icon-link',
           path: '/friendshipLink',
           routes: [
             {
@@ -228,7 +228,7 @@ export default {
         },
         {
           name: 'site',
-          icon: 'highlight',
+          icon: 'icon-blog',
           path: '/site',
           routes: [
             {
@@ -240,7 +240,7 @@ export default {
         },
         {
           name: 'note',
-          icon: 'highlight',
+          icon: 'icon-note',
           path: '/note',
           routes: [
             {
@@ -252,7 +252,7 @@ export default {
         },
         {
           name: 'openSource',
-          icon: 'highlight',
+          icon: 'icon-open-source',
           path: '/openSource',
           routes: [
             {
@@ -264,7 +264,7 @@ export default {
         },
         {
           name: 'config',
-          icon: 'highlight',
+          icon: 'icon-setting',
           path: '/config',
           routes: [
             {

@@ -56,5 +56,5 @@ export default {
   },
   title: 'laravel-bjyblog',
   pwa: false,
-  iconfontUrl: '',
+  iconfontUrl: '//at.alicdn.com/t/font_2013921_98od84wlcys.js',
 } as DefaultSettings;
