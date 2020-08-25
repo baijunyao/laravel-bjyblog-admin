@@ -157,7 +157,7 @@ const CreateForm: React.FC<CreateFormProps> = props => {
         {getFieldDecorator('cover', {
           rules: [],
         })(
-          <UploadOnImage action="/api/articleCover" />,
+          <UploadOnImage action="/api/articleImages" />,
         )}
       </FormItem>
 

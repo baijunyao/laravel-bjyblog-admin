@@ -65,7 +65,7 @@ export default class UploadOnImage extends Component {
 
     return (
       <Upload
-        name="cover"
+        name="image"
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
