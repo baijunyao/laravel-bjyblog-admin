@@ -81,7 +81,7 @@ class TableList extends Component<TableListProps, TableListState> {
     {
       title: formatMessage({ id: 'Content' }),
       dataIndex: 'content',
-      render: (val: string) => <div dangerouslySetInnerHTML={{ __html: val }} />,
+      render: (content, record) => <a href={`/article/${record.article.id}#comment-${record.id}`} target="_blank" rel="noopener noreferrer"><div dangerouslySetInnerHTML={{ __html: content }} /></a>,
     },
     {
       title: formatMessage({ id: 'Article' }),

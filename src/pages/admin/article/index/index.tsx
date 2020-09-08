@@ -113,6 +113,7 @@ class TableList extends Component<TableListProps, TableListState> {
     {
       title: formatMessage({ id: 'Title' }),
       dataIndex: 'title',
+      render: (title, record) => <a href={`/article/${record.id}`} target="_blank" rel="noopener noreferrer">{title}</a>,
     },
     {
       title: formatMessage({ id: 'Click Counts' }),

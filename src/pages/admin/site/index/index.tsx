@@ -97,6 +97,7 @@ class TableList extends Component<TableListProps, TableListState> {
     {
       title: 'URL',
       dataIndex: 'url',
+      render: url => <a href={url} target="_blank" rel="noopener noreferrer">{url}</a>,
     },
     {
       title: formatMessage({ id: 'Sort' }),
