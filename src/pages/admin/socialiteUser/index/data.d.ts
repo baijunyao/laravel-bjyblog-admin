@@ -12,6 +12,7 @@ export interface TableListItem {
   email: string;
   avatar: string;
   is_admin: number;
+  is_blocked: number;
   login_times: number;
   socialite_client: SocialiteClient;
   created_at: string;

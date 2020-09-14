@@ -108,6 +108,23 @@ class TableList extends Component<TableListProps, TableListState> {
       },
     },
     {
+      title: formatMessage({ id: 'Is Blocked' }),
+      dataIndex: 'is_blocked',
+      filters: [
+        {
+          text: status[0],
+          value: '0',
+        },
+        {
+          text: status[1],
+          value: '1',
+        },
+      ],
+      render(val: number) {
+        return val === 1 ? status[0] : status[1];
+      },
+    },
+    {
       title: formatMessage({ id: 'Created_at' }),
       dataIndex: 'created_at',
       sorter: true,

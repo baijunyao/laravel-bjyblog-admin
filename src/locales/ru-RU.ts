@@ -130,6 +130,7 @@ export default {
   Password: 'Пароль',
   Type: 'Тип',
   'Is Administrator': 'Администратор?',
+  'Is Blocked': 'Заблокирован?',
   'Login times': 'Время входа',
   'Last login': 'Последний вход',
   'First login': 'Первый вход',

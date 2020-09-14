@@ -148,6 +148,7 @@ export default {
   Password: '密码',
   Type: '类型',
   'Is Administrator': '是否是管理员?',
+  'Is Blocked': '是否被拉黑?',
   'Login times': '登录次数',
   'Last login': '最近一次登录',
   'First login': '第一次登录',

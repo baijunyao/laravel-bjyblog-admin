@@ -5,7 +5,7 @@ import React from 'react';
 import { TableListItem } from '@/pages/admin/socialiteUser/index/data';
 import { formatMessage } from 'umi-plugin-react/locale';
 
-export type UpdateItem = Pick<TableListItem, 'id' | 'name' | 'email' | 'is_admin'>
+export type UpdateItem = Pick<TableListItem, 'id' | 'name' | 'email' | 'is_admin' | 'is_blocked'>
 
 const FormItem = Form.Item;
 
@@ -60,6 +60,15 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
         {form.getFieldDecorator('is_admin', {
           rules: [{ required: true }],
           initialValue: updateFormValues.is_admin,
+        })(<Radio.Group>
+          <Radio value={1}>{formatMessage({ id: 'Yes' })}</Radio>
+          <Radio value={0}>{formatMessage({ id: 'No' })}</Radio>
+        </Radio.Group>)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label={formatMessage({ id: 'Is Blocked' })}>
+        {form.getFieldDecorator('is_blocked', {
+          rules: [{ required: true }],
+          initialValue: updateFormValues.is_blocked,
         })(<Radio.Group>
           <Radio value={1}>{formatMessage({ id: 'Yes' })}</Radio>
           <Radio value={0}>{formatMessage({ id: 'No' })}</Radio>
