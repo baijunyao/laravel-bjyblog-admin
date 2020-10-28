@@ -81,8 +81,20 @@ const request = extend({
 });
 
 request.use(async (ctx, next) => {
-  if (ctx.req.options.params.currentPage !== undefined) {
-    ctx.req.options.params.page = ctx.req.options.params.currentPage;
+  const { params } = ctx.req.options;
+
+  params['filter[trashed]'] = 'with';
+
+  if (params.currentPage !== undefined) {
+    params.page = params.currentPage;
+  }
+
+  if (params.sorter !== undefined) {
+    const sorterArray = params.sorter.split('_');
+    const direction = sorterArray[sorterArray.length - 1];
+    const field = params.sorter.replace(`_${direction}`, '');
+
+    params.sort = (direction === 'ascend' ? '' : '-') + field;
   }
 
   await next();
