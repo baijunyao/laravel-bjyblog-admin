@@ -82,21 +82,30 @@ const request = extend({
   },
 });
 
+interface Params {
+  currentPage: number;
+  page: number;
+  sorter: string;
+  sort: string;
+}
+
 request.use(async (ctx, next) => {
-  const { params } = ctx.req.options;
+  const params = ctx.req.options.params as Params;
 
-  params['filter[trashed]'] = 'with';
+  if (params !== undefined) {
+    params['filter[trashed]'] = 'with';
 
-  if (params.currentPage !== undefined) {
-    params.page = params.currentPage;
-  }
+    if (params.currentPage !== undefined) {
+      params.page = params.currentPage;
+    }
 
-  if (params.sorter !== undefined) {
-    const sorterArray = params.sorter.split('_');
-    const direction = sorterArray[sorterArray.length - 1];
-    const field = params.sorter.replace(`_${direction}`, '');
+    if (params.sorter !== undefined) {
+      const sorterArray = params.sorter.split('_');
+      const direction = sorterArray[sorterArray.length - 1];
+      const field = params.sorter.replace(`_${direction}`, '');
 
-    params.sort = (direction === 'ascend' ? '' : '-') + field;
+      params.sort = (direction === 'ascend' ? '' : '-') + field;
+    }
   }
 
   await next();
