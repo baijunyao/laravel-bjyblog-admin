@@ -90,21 +90,23 @@ interface Params {
 }
 
 request.use(async (ctx, next) => {
-  const params = ctx.req.options.params as Params;
+  if (ctx.req.options.method === 'get') {
+    const params = ctx.req.options.params as Params;
 
-  if (params !== undefined) {
-    params['filter[trashed]'] = 'with';
+    if (params !== undefined) {
+      params['filter[trashed]'] = 'with';
 
-    if (params.currentPage !== undefined) {
-      params.page = params.currentPage;
-    }
+      if (params.currentPage !== undefined) {
+        params.page = params.currentPage;
+      }
 
-    if (params.sorter !== undefined) {
-      const sorterArray = params.sorter.split('_');
-      const direction = sorterArray[sorterArray.length - 1];
-      const field = params.sorter.replace(`_${direction}`, '');
+      if (params.sorter !== undefined) {
+        const sorterArray = params.sorter.split('_');
+        const direction = sorterArray[sorterArray.length - 1];
+        const field = params.sorter.replace(`_${direction}`, '');
 
-      params.sort = (direction === 'ascend' ? '' : '-') + field;
+        params.sort = (direction === 'ascend' ? '' : '-') + field;
+      }
     }
   }
 
