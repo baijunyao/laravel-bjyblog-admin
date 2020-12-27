@@ -171,7 +171,7 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
           rules: [],
           initialValue: updateFormValues.cover,
         })(
-          <UploadOnImage action="/api/articleCover" imageUrl={updateFormValues.cover} />,
+          <UploadOnImage action="/api/articleImages" imageUrl={updateFormValues.cover} />,
         )}
       </FormItem>
 
