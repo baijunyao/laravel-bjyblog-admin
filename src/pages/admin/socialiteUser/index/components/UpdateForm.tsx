@@ -52,7 +52,6 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label={formatMessage({ id: 'Email' })}>
         {form.getFieldDecorator('email', {
-          rules: [{ required: true }],
           initialValue: updateFormValues.email,
         })(<Input />)}
       </FormItem>
