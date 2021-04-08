@@ -103,7 +103,7 @@ class Analysis extends Component<AnalysisProps, AnalysisState> {
                       <List.Item>
                         <List.Item.Meta
                           avatar={<Avatar src={ item.socialite_user.avatar } />}
-                          title={<a href="https://ant.design">{item.article.title}</a>}
+                          title={<a href={`/article/${item.article.id}#comment-${item.id}`} target="_blank" rel="noopener noreferrer">{item.article.title}</a>}
                           description={ `${item.socialite_user.name} : ${item.content}` }
                         />
                       </List.Item>
