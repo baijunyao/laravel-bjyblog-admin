@@ -129,7 +129,7 @@ class TableList extends Component<TableListProps, TableListState> {
       title: formatMessage({ id: 'Created_at' }),
       dataIndex: 'created_at',
       sorter: true,
-      render: (val: string) => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
+      render: (val: string) => <span>{moment(val).format('YYYY-MM-DD')}</span>,
     },
     {
       title: formatMessage({ id: 'Handle' }),

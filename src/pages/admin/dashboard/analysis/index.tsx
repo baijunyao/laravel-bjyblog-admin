@@ -62,11 +62,9 @@ class Analysis extends Component<AnalysisProps, AnalysisState> {
 
   render() {
     const { dashboardAndanalysis, loading } = this.props;
-    const version = [];
+    const version:string[] = [];
 
-    for (const name:string in dashboardAndanalysis.versions) {
-      version.push(`${name}: ${dashboardAndanalysis.versions[name]}`)
-    }
+    Object.keys(dashboardAndanalysis.versions).map((name) => (version.push(`${name}: ${dashboardAndanalysis.versions[name]}`)))
 
     return (
       <GridContent>
