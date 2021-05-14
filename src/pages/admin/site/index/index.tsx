@@ -122,6 +122,7 @@ class TableList extends Component<TableListProps, TableListState> {
     },
     {
       title: formatMessage({ id: 'Status' }),
+      width: 80,
       dataIndex: 'deleted_at',
       filters: [
         {
@@ -139,12 +140,14 @@ class TableList extends Component<TableListProps, TableListState> {
     },
     {
       title: formatMessage({ id: 'Created_at' }),
+      width: 115,
       dataIndex: 'created_at',
       sorter: true,
       render: (val: string) => <span>{moment(val).format('YYYY-MM-DD')}</span>,
     },
     {
       title: formatMessage({ id: 'Handle' }),
+      width: 110,
       render: (text, record) => {
         if (record.deleted_at === null) {
           return (

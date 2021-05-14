@@ -82,6 +82,7 @@ class TableList extends Component<TableListProps, TableListState> {
     },
     {
       title: formatMessage({ id: 'Handle' }),
+      width: 110,
       render: (text, record) => (
           <Fragment>
             <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
