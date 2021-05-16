@@ -38,3 +38,18 @@ export interface TableListParams {
   pageSize: number;
   currentPage: number;
 }
+
+export interface TagType {
+  id: number;
+  name: string;
+  slug: string;
+  keywords: string;
+  description: string;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string | null;
+}
+
+export interface TagListType extends TableListData{
+  list: TagType[];
+}

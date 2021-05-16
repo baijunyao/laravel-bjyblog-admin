@@ -1,11 +1,10 @@
 import { AnyAction, Reducer } from 'redux';
 import { EffectsCommandMap } from 'dva';
-import { addRule, queryRule, removeRule, updateRule, forceDeleteRule, restoreRule } from '@/services/tag';
-
-import { TableListData } from './data.d';
+import { addTag, queryTags, removeTag, updateTag, forceDeleteTag, restoreTag } from '@/services/tag';
+import { TagListType } from './data.d';
 
 export interface StateType {
-  data: TableListData;
+  data: TagListType;
 }
 
 export type Effect = (
@@ -33,7 +32,7 @@ export interface ModelType {
 }
 
 const Model: ModelType = {
-  namespace: 'adminAndtagAndindex',
+  namespace: 'adminTag',
 
   state: {
     data: {
@@ -44,7 +43,7 @@ const Model: ModelType = {
 
   effects: {
     *fetch({ payload }, { call, put }) {
-      const response = yield call(queryRule, payload);
+      const response = yield call(queryTags, payload);
       yield put({
         type: 'save',
         payload: response,
@@ -52,7 +51,7 @@ const Model: ModelType = {
     },
 
     *add({ payload, callback }, { call, put }) {
-      const response = yield call(addRule, payload);
+      const response = yield call(addTag, payload);
       yield put({
         type: 'new',
         payload: response,
@@ -61,7 +60,7 @@ const Model: ModelType = {
     },
 
     *update({ payload, callback }, { call, put }) {
-      const response = yield call(updateRule, payload);
+      const response = yield call(updateTag, payload);
       yield put({
         type: 'edit',
         payload: response,
@@ -70,7 +69,7 @@ const Model: ModelType = {
     },
 
     *destroy({ payload, callback }, { call, put }) {
-      const response = yield call(removeRule, payload);
+      const response = yield call(removeTag, payload);
       yield put({
         type: 'edit',
         payload: response,
@@ -79,7 +78,7 @@ const Model: ModelType = {
     },
 
     *forceDelete({ payload, callback }, { call, put }) {
-      yield call(forceDeleteRule, payload);
+      yield call(forceDeleteTag, payload);
       yield put({
         type: 'remove',
         payload: payload.id,
@@ -88,7 +87,7 @@ const Model: ModelType = {
     },
 
     *restore({ payload, callback }, { call, put }) {
-      const response = yield call(restoreRule, payload);
+      const response = yield call(restoreTag, payload);
       yield put({
         type: 'edit',
         payload: response,
