@@ -53,3 +53,21 @@ export interface TagType {
 export interface TagListType extends TableListData{
   list: TagType[];
 }
+
+export interface CategoryType {
+  id: number;
+  name: string;
+  slug: string;
+  keywords: string;
+  description: string;
+  sort: number;
+  pid: number;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string | null;
+}
+
+export interface CategoryListType extends TableListData{
+  list: CategoryType[];
+}
+
