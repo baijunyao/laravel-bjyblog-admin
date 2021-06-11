@@ -12,13 +12,12 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { SorterResult } from 'antd/es/table';
 import { connect } from 'dva';
 import moment from 'moment';
+import { formatMessage } from 'umi-plugin-react/locale';
+import { router } from 'umi';
 import { StateType } from './model';
-import CreateForm, { NewItem } from './components/CreateForm';
-import UpdateForm, { UpdateItem } from './components/UpdateForm';
 import StandardTable, { StandardTableColumnProps } from './components/StandardTable';
 import { TableListItem } from './data.d';
-import { TableListPagination, TableListParams } from '@/models/data.d';
-import { formatMessage } from 'umi-plugin-react/locale';
+import { ArticleType, TableListPagination, TableListParams } from '@/models/data.d';
 
 import styles from './style.less';
 
@@ -32,14 +31,10 @@ const status = ['√', '×'];
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch<
     Action<
-      | 'adminAndarticleAndindex/add'
       | 'adminAndarticleAndindex/fetch'
-      | 'adminAndarticleAndindex/update'
       | 'adminAndarticleAndindex/destroy'
       | 'adminAndarticleAndindex/forceDelete'
       | 'adminAndarticleAndindex/restore'
-      | 'adminAndcategoryAndindex/fetch'
-      | 'adminAndtagAndindex/fetch'
     >
   >;
   loading: boolean;
@@ -53,7 +48,6 @@ interface TableListState {
   updateModalVisible: boolean;
   selectedRows: TableListItem[];
   formValues: { [key: string]: string };
-  updateFormValues: UpdateItem;
 }
 
 /* eslint react/no-multi-comp:0 */
@@ -81,24 +75,8 @@ interface TableListState {
 )
 class TableList extends Component<TableListProps, TableListState> {
   state: TableListState = {
-    modalVisible: false,
-    updateModalVisible: false,
     selectedRows: [],
     formValues: {},
-    updateFormValues: {
-      id: 0,
-      category_id: 0,
-      title: '',
-      slug: '',
-      author: '',
-      markdown: '',
-      description: '',
-      keywords: '',
-      cover: '',
-      is_top: 0,
-      tags: [],
-      category: {},
-    },
   };
 
   columns: StandardTableColumnProps[] = [
@@ -151,7 +129,7 @@ class TableList extends Component<TableListProps, TableListState> {
         if (record.deleted_at === null) {
           return (
             <Fragment>
-              <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
+              <a onClick={() => this.handleRedirectToEditPage(record)}>{formatMessage({ id: 'Edit' })}</a>
               <Divider type="vertical" />
               <a onClick={() => this.handleDestroy(record)}>{formatMessage({ id: 'Delete' })}</a>
             </Fragment>
@@ -159,7 +137,7 @@ class TableList extends Component<TableListProps, TableListState> {
         }
         return (
           <Fragment>
-            <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
+            <a onClick={() => this.handleRedirectToEditPage(record)}>{formatMessage({ id: 'Edit' })}</a>
             <Divider type="vertical" />
             <a onClick={() => this.handleForceDelete(record)}>{formatMessage({ id: 'Force Delete' })}</a>
             <Divider type="vertical" />
@@ -245,53 +223,15 @@ class TableList extends Component<TableListProps, TableListState> {
     });
   };
 
-  handleModalVisible = (flag?: boolean) => {
-    this.setState({
-      modalVisible: !!flag,
-    });
+  handleRedirectToCreatePage = () => {
+    router.push('/article/create');
   };
 
-  handleUpdateModalVisible = (flag?: boolean, record?: UpdateItem) => {
-    this.setState({
-      updateModalVisible: !!flag,
-      updateFormValues: record || {
-        id: 0,
-        category_id: 0,
-        title: '',
-        slug: '',
-        author: '',
-        markdown: '',
-        description: '',
-        keywords: '',
-        cover: '',
-        is_top: 0,
-        tags: [],
-        category: {},
-      },
-    });
+  handleRedirectToEditPage = (record: ArticleType) => {
+    router.push(`/article/edit/${record.id}`);
   };
 
-  handleAdd = (fields: NewItem) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminAndarticleAndindex/add',
-      payload: fields,
-    });
-
-    this.handleModalVisible();
-  };
-
-  handleUpdate = (fields: UpdateItem) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminAndarticleAndindex/update',
-      payload: fields,
-    });
-
-    this.handleUpdateModalVisible();
-  };
-
-  handleDestroy = (fields: UpdateItem) => {
+  handleDestroy = (fields: ArticleType) => {
     const { dispatch } = this.props;
     dispatch({
       type: 'adminAndarticleAndindex/destroy',
@@ -299,7 +239,7 @@ class TableList extends Component<TableListProps, TableListState> {
     });
   };
 
-  handleForceDelete = (fields: UpdateItem) => {
+  handleForceDelete = (fields: ArticleType) => {
     const { dispatch } = this.props;
     dispatch({
       type: 'adminAndarticleAndindex/forceDelete',
@@ -307,7 +247,7 @@ class TableList extends Component<TableListProps, TableListState> {
     });
   };
 
-  handleRestore = (fields: UpdateItem) => {
+  handleRestore = (fields: ArticleType) => {
     const { dispatch } = this.props;
     dispatch({
       type: 'adminAndarticleAndindex/restore',
@@ -321,29 +261,14 @@ class TableList extends Component<TableListProps, TableListState> {
       loading,
     } = this.props;
 
-    const { selectedRows, modalVisible, updateModalVisible, updateFormValues } = this.state;
-
-    const parentMethods = {
-      handleAdd: this.handleAdd,
-      handleModalVisible: this.handleModalVisible,
-    };
-
-    const parentDatas = {
-      adminAndcategoryAndindex: this.props.adminAndcategoryAndindex,
-      adminAndtagAndindex: this.props.adminAndtagAndindex,
-    };
-
-    const updateMethods = {
-      handleUpdateModalVisible: this.handleUpdateModalVisible,
-      handleUpdate: this.handleUpdate,
-    };
+    const { selectedRows } = this.state;
 
     return (
       <PageHeaderWrapper>
         <Card bordered={false}>
           <div className={styles.tableList}>
             <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
+              <Button icon="plus" type="primary" onClick={this.handleRedirectToCreatePage}>
                 {formatMessage({ id: 'Add' })}
               </Button>
             </div>
@@ -357,17 +282,6 @@ class TableList extends Component<TableListProps, TableListState> {
             />
           </div>
         </Card>
-        <CreateForm
-          {...parentMethods}
-          modalVisible={modalVisible}
-          {...parentDatas}
-        />
-        <UpdateForm
-          {...updateMethods}
-          updateModalVisible={updateModalVisible}
-          updateFormValues={ updateFormValues }
-          {...parentDatas}
-        />
       </PageHeaderWrapper>
     );
   }
