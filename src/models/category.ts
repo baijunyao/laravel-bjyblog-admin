@@ -4,18 +4,18 @@ import { addCategory, queryCategory, removeCategory, updateCategory, forceDelete
 
 import { TableListData } from './data.d';
 
-export interface StateType {
+export interface CategoryStateType {
   data: TableListData;
 }
 
 export type Effect = (
   action: AnyAction,
-  effects: EffectsCommandMap & { select: <T>(func: (state: StateType) => T) => T },
+  effects: EffectsCommandMap & { select: <T>(func: (state: CategoryStateType) => T) => T },
 ) => void;
 
 export interface ModelType {
   namespace: string;
-  state: StateType;
+  state: CategoryStateType;
   effects: {
     fetch: Effect;
     add: Effect;
@@ -25,10 +25,10 @@ export interface ModelType {
     restore: Effect;
   };
   reducers: {
-    save: Reducer<StateType>;
-    new: Reducer<StateType>;
-    edit: Reducer<StateType>;
-    remove: Reducer<StateType>;
+    save: Reducer<CategoryStateType>;
+    new: Reducer<CategoryStateType>;
+    edit: Reducer<CategoryStateType>;
+    remove: Reducer<CategoryStateType>;
   };
 }
 

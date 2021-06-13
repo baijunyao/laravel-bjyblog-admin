@@ -10,8 +10,8 @@ const { Option } = Select;
 
 interface ArticleCategoriesPropsType extends FormComponentProps {
   dispatch: Dispatch<Action<'adminCategory/fetch'>>;
-  selectedCategory: CategoryType | undefined;
-  onCategoryChange: (selectedCategoryId: number) => void;
+  value: number | undefined;
+  onChange: (selectedCategoryId: number | string) => void;
   categories: CategoryType[];
 }
 
@@ -23,11 +23,6 @@ interface ArticleCategoriesPropsType extends FormComponentProps {
   }),
 )
 class ArticleCategories extends Component<ArticleCategoriesPropsType> {
-  constructor(props: ArticleCategoriesPropsType) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-  }
-
   componentDidMount() {
     const { dispatch } = this.props;
 
@@ -36,27 +31,25 @@ class ArticleCategories extends Component<ArticleCategoriesPropsType> {
     })
   }
 
-  handleChange(selectedCategoryId: number) {
-    this.props.onCategoryChange(selectedCategoryId);
-  }
-
   render() {
-    const { categories, selectedCategory } = this.props;
+    const { categories, value } = this.props;
 
-    let defaultValue: string | undefined;
+    let defaultValue = '';
 
-    if (selectedCategory !== undefined) {
-      defaultValue = selectedCategory.name;
-    }
+    categories.forEach((category: CategoryType) => {
+      if (category.id === value) {
+        defaultValue = category.name;
+      }
+    })
 
     return (
+      categories.length !== 0 &&
       <Select
         style={{ width: '100%' }}
         defaultValue={defaultValue}
-        onChange={this.handleChange}
+        onChange={(selectedCategoryId: number | string) => this.props.onChange(selectedCategoryId)}
       >
-        {categories &&
-        categories.map((category: CategoryType) => (
+        {categories.map((category: CategoryType) => (
           <Option key={category.id}>{category.name}</Option>
         ))}
       </Select>

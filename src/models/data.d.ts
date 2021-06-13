@@ -71,3 +71,26 @@ export interface CategoryListType extends TableListData{
   list: CategoryType[];
 }
 
+export interface ArticleType {
+  id: number;
+  category_id: number;
+  title: string;
+  slug: string;
+  author: string;
+  markdown: string;
+  html: string;
+  description: string;
+  keywords: string;
+  cover: string;
+  is_top: number;
+  views: number;
+  tags: TagType[],
+  category: CategoryType;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string | null;
+}
+
+export interface ArticleListType extends TableListData{
+  list: ArticleType[];
+}

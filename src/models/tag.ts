@@ -3,18 +3,18 @@ import { EffectsCommandMap } from 'dva';
 import { addTag, queryTags, removeTag, updateTag, forceDeleteTag, restoreTag } from '@/services/tag';
 import { TagListType } from './data.d';
 
-export interface StateType {
+export interface TagStateType {
   data: TagListType;
 }
 
 export type Effect = (
   action: AnyAction,
-  effects: EffectsCommandMap & { select: <T>(func: (state: StateType) => T) => T },
+  effects: EffectsCommandMap & { select: <T>(func: (state: TagStateType) => T) => T },
 ) => void;
 
 export interface ModelType {
   namespace: string;
-  state: StateType;
+  state: TagStateType;
   effects: {
     fetch: Effect;
     add: Effect;
@@ -24,10 +24,10 @@ export interface ModelType {
     restore: Effect;
   };
   reducers: {
-    save: Reducer<StateType>;
-    new: Reducer<StateType>;
-    edit: Reducer<StateType>;
-    remove: Reducer<StateType>;
+    save: Reducer<TagStateType>;
+    new: Reducer<TagStateType>;
+    edit: Reducer<TagStateType>;
+    remove: Reducer<TagStateType>;
   };
 }
 

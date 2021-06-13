@@ -4,30 +4,24 @@ import { Checkbox } from 'antd';
 import { connect } from 'dva';
 import { FormComponentProps } from 'antd/es/form';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
-import { TagType, TagListType } from '@/models/data';
+import { TagType } from '@/models/data';
+import { TagStateType } from '@/models/tag';
 
 interface ArticleTagPropsType extends FormComponentProps {
   dispatch: Dispatch<Action<'adminTag/fetch'>>;
-  checkedTagIds: number[];
-  onTagsChange: (checkedTagIds: CheckboxValueType[]) => void;
-  adminTag: {
-    data: TagListType
-  };
+  onChange: (checkedTagIds: CheckboxValueType[]) => void;
+  value: number[];
+  tags: TagType[];
 }
 
 @connect(
   ({ adminTag }: {
-    adminTag: TagListType
+    adminTag: TagStateType
   }) => ({
-    adminTag,
+    tags: adminTag.data.list,
   }),
 )
 class ArticleTags extends Component<ArticleTagPropsType> {
-  constructor(props: ArticleTagPropsType) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-  }
-
   componentDidMount() {
     const { dispatch } = this.props;
 
@@ -36,26 +30,18 @@ class ArticleTags extends Component<ArticleTagPropsType> {
     })
   }
 
-  handleChange(checkedTagIds: CheckboxValueType[]) {
-    this.props.onTagsChange(checkedTagIds);
-  }
-
   render() {
-    const { checkedTagIds } = this.props;
-
-    const options = this.props.adminTag.data.list.map((tag: TagType) => ({
+    const options = this.props.tags.map((tag: TagType) => ({
       label: tag.name,
       value: tag.id,
     }));
 
     return (
-      <>
-        <Checkbox.Group
-          options={options}
-          defaultValue={checkedTagIds}
-          onChange={this.handleChange}
-        />
-      </>
+      <Checkbox.Group
+        options={options}
+        defaultValue={this.props.value}
+        onChange={(checkedTagIds: CheckboxValueType[]) => this.props.onChange(checkedTagIds)}
+      />
     )
   }
 }

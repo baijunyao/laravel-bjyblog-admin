@@ -12,7 +12,7 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { SorterResult } from 'antd/es/table';
 import { connect } from 'dva';
 import moment from 'moment';
-import { StateType } from '@/models/category';
+import { CategoryStateType } from '@/models/category';
 import CreateForm, { NewCategory } from './components/CreateForm';
 import UpdateForm, { UpdateCategory } from './components/UpdateForm';
 import StandardTable, { StandardTableColumnProps } from './components/StandardTable';
@@ -41,7 +41,7 @@ interface TableListProps extends FormComponentProps {
     >
   >;
   loading: boolean;
-  adminAndcategoryAndindex: StateType;
+  adminAndcategoryAndindex: CategoryStateType;
 }
 
 interface TableListState {
@@ -58,7 +58,7 @@ interface TableListState {
     adminAndcategoryAndindex,
     loading,
   }: {
-    adminAndcategoryAndindex: StateType;
+    adminAndcategoryAndindex: CategoryStateType;
     loading: {
       models: {
         [key: string]: boolean;

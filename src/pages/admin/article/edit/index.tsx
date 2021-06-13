@@ -1,4 +1,4 @@
-import { Button, Card, Form, Input, Radio } from 'antd';
+import { Button, Card, Form, Input, Radio, Skeleton } from 'antd';
 import React, { Component } from 'react';
 
 import { Dispatch, Action } from 'redux';
@@ -10,9 +10,10 @@ import { ArticleType } from '@/models/data.d';
 import ArticleTags from '@/components/ArticleTags';
 import ArticleCategories from '@/components/ArticleCategories';
 import { CategoryStateType } from '@/models/category';
-import { ArticleStateType } from '@/models/article';
+import { ArticleStateType } from '@/pages/admin/article/index/model';
 import Markdown from '@/components/Markdown';
 import UploadOnImage from '@/components/UploadOnImage';
+import { formItemLayout } from '@/pages/admin/global'
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -20,7 +21,7 @@ const { TextArea } = Input;
 interface ArticleEditPageProps extends FormComponentProps {
   dispatch: Dispatch<
     Action<
-      | 'adminArticle/show'
+      | 'adminArticle/fetchOne'
       | 'adminArticle/update'
     >
   >;
@@ -38,18 +39,11 @@ interface ArticleEditPageProps extends FormComponentProps {
   }),
 )
 class EditPage extends Component<ArticleEditPageProps> {
-  constructor(props: ArticleEditPageProps) {
-    super(props);
-
-    this.handleTagChange = this.handleTagChange.bind(this);
-    this.handleCategoryChange = this.handleCategoryChange.bind(this);
-  }
-
   componentDidMount() {
     const { dispatch, match } = this.props;
 
     dispatch({
-      type: 'adminArticle/show',
+      type: 'adminArticle/fetchOne',
       payload: match.params.id,
     });
   }
@@ -64,37 +58,12 @@ class EditPage extends Component<ArticleEditPageProps> {
     });
   };
 
-  handleTagChange(checkedTagIds: number[]) {
-    this.props.form.setFieldsValue({
-      tag_ids: checkedTagIds,
-    });
-  }
-
-  handleCategoryChange(selectedCategoryId: number) {
-    this.props.form.setFieldsValue({
-      category_id: selectedCategoryId,
-    });
-  }
-
   render() {
     const { form } = this.props;
     const { getFieldDecorator } = form;
 
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 7 },
-        md: { span: 2 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-        md: { span: 20 },
-      },
-    };
-
     return (
-      this.props.article &&
+      this.props.article ?
       <PageHeaderWrapper>
         <Card bordered={false}>
           <FormItem
@@ -109,7 +78,7 @@ class EditPage extends Component<ArticleEditPageProps> {
               ],
               initialValue: this.props.article.category_id,
             })(
-              <ArticleCategories onCategoryChange={this.handleCategoryChange} selectedCategory={this.props.article.category}/>,
+              <ArticleCategories />,
             )}
           </FormItem>
 
@@ -169,7 +138,7 @@ class EditPage extends Component<ArticleEditPageProps> {
               rules: [],
               initialValue: this.props.article.tags.map(tag => tag.id),
             })(
-              <ArticleTags checkedTags={this.props.article.tags} onTagsChange={this.handleTagChange} antForm={this.props.form} />,
+              <ArticleTags />,
             )}
           </FormItem>
 
@@ -233,6 +202,8 @@ class EditPage extends Component<ArticleEditPageProps> {
           </FormItem>
         </Card>
       </PageHeaderWrapper>
+      :
+      <Skeleton />
     );
   }
 }

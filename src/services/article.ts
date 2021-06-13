@@ -1,43 +1,45 @@
 import request from '@/utils/request';
-import { TableListParams } from '@/models/data.d';
-import { NewItem } from './components/CreateForm'
-import { UpdateItem } from './components/UpdateForm';
+import { ArticleType, ArticleListType } from '@/models/data';
 
-export async function queryRule(params: TableListParams) {
+export async function queryArticle(id: number) {
+  return request(`/api/articles/${id}`);
+}
+
+export async function queryArticles(params: ArticleListType) {
   return request('/api/articles', {
     params,
   });
 }
 
-export async function addRule(params: NewItem) {
+export async function addArticle(params: ArticleType) {
   return request('/api/articles', {
     method: 'POST',
     data: params,
   });
 }
 
-export async function updateRule(params: UpdateItem) {
+export async function updateArticle(params: ArticleType) {
   return request(`/api/articles/${params.id}`, {
     method: 'PUT',
     data: params,
   });
 }
 
-export async function removeRule(params: UpdateItem) {
+export async function removeArticle(params: ArticleType) {
   return request(`/api/articles/${params.id}`, {
     method: 'DELETE',
     data: params,
   });
 }
 
-export async function forceDeleteRule(params: UpdateItem) {
+export async function forceDeleteArticle(params: ArticleType) {
   return request(`/api/articles/${params.id}/forceDelete`, {
     method: 'DELETE',
     data: params,
   });
 }
 
-export async function restoreRule(params: UpdateItem) {
+export async function restoreArticle(params: ArticleType) {
   return request(`/api/articles/${params.id}/restore`, {
     method: 'PATCH',
     data: params,

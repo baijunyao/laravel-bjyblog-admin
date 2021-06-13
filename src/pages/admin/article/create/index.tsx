@@ -10,9 +10,9 @@ import { ArticleType } from '@/models/data.d';
 import ArticleTags from '@/components/ArticleTags';
 import ArticleCategories from '@/components/ArticleCategories';
 import { CategoryStateType } from '@/models/category';
-import { ArticleStateType } from '@/models/article';
-import Markdown from "@/components/Markdown";
-import UploadOnImage from "@/components/UploadOnImage";
+import { ArticleStateType } from '@/pages/admin/article/index/model';
+import Markdown from '@/components/Markdown';
+import UploadOnImage from '@/components/UploadOnImage';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -60,7 +60,6 @@ class EditPage extends Component<ArticleEditPageProps> {
   }
 
   handleCategoryChange(selectedCategoryId: number) {
-
     this.props.form.setFieldsValue({
       category_id: selectedCategoryId,
     });
