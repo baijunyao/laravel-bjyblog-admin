@@ -28,8 +28,7 @@ export interface ArticleModelType {
   reducers: {
     listDataSave: Reducer;
     currentDataSave: Reducer;
-    listDataNew: Reducer;
-    listDataUpdate: Reducer;
+    listDataReplace: Reducer;
     listDataRemove: Reducer;
   };
 }
@@ -82,10 +81,12 @@ const ArticleModel: ArticleModelType = {
     },
 
     *destroy({ payload, callback }, { call, put }) {
-      const response = yield call(removeArticle, payload);
+      yield call(removeArticle, payload);
+      const response = yield call(queryArticle, payload.id);
+
       yield put({
-        type: 'listDataUpdate',
-        payload: response,
+        type: 'listDataReplace',
+        payload: response.data,
       });
       if (callback) callback();
     },
@@ -94,7 +95,7 @@ const ArticleModel: ArticleModelType = {
       yield call(forceDeleteArticle, payload);
       yield put({
         type: 'listDataRemove',
-        payload: payload.id,
+        payload,
       });
       if (callback) callback();
     },
@@ -102,8 +103,8 @@ const ArticleModel: ArticleModelType = {
     *restore({ payload, callback }, { call, put }) {
       const response = yield call(restoreArticle, payload);
       yield put({
-        type: 'listDataUpdate',
-        payload: response,
+        type: 'listDataReplace',
+        payload: response.data,
       });
       if (callback) callback();
     },
@@ -123,44 +124,39 @@ const ArticleModel: ArticleModelType = {
       };
     },
 
-    listDataNew(state, action) {
-      if (state !== undefined) {
-        state.data.list.push(action.payload.data);
-      }
+    listDataReplace(state, action) {
+      const { list } = state.list_data;
+
+      list.forEach((value: ArticleType, key:number) => {
+        if (value.id === action.payload.id) {
+          list[key] = action.payload
+        }
+      })
 
       return {
-        data: action.payload,
-        ...state,
-      };
-    },
-
-    listDataUpdate(state, action) {
-      if (state !== undefined) {
-        state.data.list.forEach((value: ArticleType, key:number) => {
-          if (value.id === action.payload.data.id) {
-            state.data.list[key] = action.payload.data
-          }
-        })
-      }
-
-      return {
-        data: action.payload,
-        ...state,
+        current_data: state.current_data,
+        list_data: {
+          ...state.list_data,
+          list,
+        },
       };
     },
 
     listDataRemove(state, action) {
-      if (state !== undefined) {
-        state.data.list.forEach((value: ArticleType, key:number) => {
-          if (value.id === action.payload) {
-            state.data.list.splice(key, 1);
-          }
-        })
-      }
+      const { list } = state.list_data;
+
+      list.forEach((value: ArticleType, key:number) => {
+        if (value.id === action.payload.id) {
+          list.splice(key, 1);
+        }
+      })
 
       return {
-        data: action.payload,
-        ...state,
+        current_data: state.current_data,
+        list_data: {
+          ...state.list_data,
+          list,
+        },
       };
     },
   },

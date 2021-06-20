@@ -14,11 +14,10 @@ import { connect } from 'dva';
 import moment from 'moment';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { router } from 'umi';
-import { StateType } from './model';
 import StandardTable, { StandardTableColumnProps } from './components/StandardTable';
 import { TableListItem } from './data.d';
-import { ArticleType, TableListPagination, TableListParams } from '@/models/data.d';
-
+import { ArticleListType, ArticleType, TableListPagination, TableListParams } from '@/models/data.d';
+import { ArticleStateType } from '@/models/article';
 import styles from './style.less';
 
 const getValue = (obj: { [x: string]: string[] }) =>
@@ -31,54 +30,30 @@ const status = ['√', '×'];
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch<
     Action<
-      | 'adminAndarticleAndindex/fetch'
-      | 'adminAndarticleAndindex/destroy'
-      | 'adminAndarticleAndindex/forceDelete'
-      | 'adminAndarticleAndindex/restore'
+      | 'adminArticle/fetchAll'
+      | 'adminArticle/destroy'
+      | 'adminArticle/forceDelete'
+      | 'adminArticle/restore'
     >
   >;
-  loading: boolean;
-  adminAndarticleAndindex: StateType;
-  adminAndcategoryAndindex: StateType;
-  adminAndtagAndindex: StateType;
+  articles: ArticleListType;
 }
 
 interface TableListState {
-  modalVisible: boolean;
-  updateModalVisible: boolean;
   selectedRows: TableListItem[];
   formValues: { [key: string]: string };
 }
 
-/* eslint react/no-multi-comp:0 */
 @connect(
   ({
-     adminAndarticleAndindex,
-     adminAndcategoryAndindex,
-     adminAndtagAndindex,
-    loading,
+     adminArticle,
   }: {
-    adminAndarticleAndindex: StateType;
-    adminAndcategoryAndindex: StateType;
-    adminAndtagAndindex: StateType;
-    loading: {
-      models: {
-        [key: string]: boolean;
-      };
-    };
+    adminArticle: ArticleStateType;
   }) => ({
-    adminAndarticleAndindex,
-    adminAndcategoryAndindex,
-    adminAndtagAndindex,
-    loading: loading.models.adminAndarticleAndindex,
+    articles: adminArticle.list_data,
   }),
 )
 class TableList extends Component<TableListProps, TableListState> {
-  state: TableListState = {
-    selectedRows: [],
-    formValues: {},
-  };
-
   columns: StandardTableColumnProps[] = [
     {
       title: 'id',
@@ -151,15 +126,7 @@ class TableList extends Component<TableListProps, TableListState> {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndarticleAndindex/fetch',
-    });
-
-    dispatch({
-      type: 'adminAndcategoryAndindex/fetch',
-    });
-
-    dispatch({
-      type: 'adminAndtagAndindex/fetch',
+      type: 'adminArticle/fetchAll',
     });
   }
 
@@ -188,38 +155,8 @@ class TableList extends Component<TableListProps, TableListState> {
     }
 
     dispatch({
-      type: 'adminAndarticleAndindex/fetch',
+      type: 'adminArticle/fetchAll',
       payload: params,
-    });
-  };
-
-  handleMenuClick = (e: { key: string }) => {
-    const { dispatch } = this.props;
-    const { selectedRows } = this.state;
-
-    if (!selectedRows) return;
-    switch (e.key) {
-      case 'remove':
-        dispatch({
-          type: 'adminAndarticleAndindex/destroy',
-          payload: {
-            key: selectedRows.map(row => row.id),
-          },
-          callback: () => {
-            this.setState({
-              selectedRows: [],
-            });
-          },
-        });
-        break;
-      default:
-        break;
-    }
-  };
-
-  handleSelectRows = (rows: TableListItem[]) => {
-    this.setState({
-      selectedRows: rows,
     });
   };
 
@@ -234,7 +171,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleDestroy = (fields: ArticleType) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndarticleAndindex/destroy',
+      type: 'adminArticle/destroy',
       payload: fields,
     });
   };
@@ -242,7 +179,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleForceDelete = (fields: ArticleType) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndarticleAndindex/forceDelete',
+      type: 'adminArticle/forceDelete',
       payload: fields,
     });
   };
@@ -250,19 +187,12 @@ class TableList extends Component<TableListProps, TableListState> {
   handleRestore = (fields: ArticleType) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndarticleAndindex/restore',
+      type: 'adminArticle/restore',
       payload: fields,
     });
   };
 
   render() {
-    const {
-      adminAndarticleAndindex: { data },
-      loading,
-    } = this.props;
-
-    const { selectedRows } = this.state;
-
     return (
       <PageHeaderWrapper>
         <Card bordered={false}>
@@ -273,12 +203,11 @@ class TableList extends Component<TableListProps, TableListState> {
               </Button>
             </div>
             <StandardTable
-              selectedRows={selectedRows}
-              loading={loading}
-              data={data}
+              data={this.props.articles}
               columns={this.columns}
-              onSelectRow={this.handleSelectRows}
               onChange={this.handleStandardTableChange}
+              selectedRows={[]}
+              onSelectRow={() => {}}
             />
           </div>
         </Card>
