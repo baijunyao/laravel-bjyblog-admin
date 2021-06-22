@@ -5,15 +5,15 @@ import 'react-markdown-editor-lite/lib/index.css';
 import axios from 'axios';
 import { getToken } from '@/utils/request';
 
-const mdParser = new MarkdownIt(/* Markdown-it options */);
+const mdParser = new MarkdownIt();
 
 function handleImageUpload(file: File): Promise<string> {
   return new Promise(resolve => {
     const formData = new FormData();
     formData.append('image', file);
+
     axios.post('/api/articleImages', formData, { headers: { Authorization: getToken() } })
-      .then((response) => {
-        console.log(response)
+      .then(response => {
         resolve(response.data.url);
       });
   });
@@ -23,13 +23,18 @@ interface ArticleMarkdownPropType {
   value: string;
   onChange: (text: string) => void;
 }
-class ArticleMarkdown extends Component<ArticleMarkdownPropType> {
-  handleEditorChange({ html, text }: {html: string, text: string}) {
+class Markdown extends Component<ArticleMarkdownPropType> {
+  constructor(props: ArticleMarkdownPropType) {
+    super(props);
+
+    this.handleEditorChange = this.handleEditorChange.bind(this);
+  }
+
+  handleEditorChange({ text }: {html: string, text: string}) {
     this.props.onChange(text)
   }
 
   render() {
-    return <div>test</div>;
     return <MdEditor
       value={this.props.value}
       renderHTML={text => mdParser.render(text)}
@@ -39,4 +44,4 @@ class ArticleMarkdown extends Component<ArticleMarkdownPropType> {
   }
 }
 
-export default ArticleMarkdown;
+export default Markdown;

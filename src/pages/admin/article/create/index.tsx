@@ -96,7 +96,7 @@ class EditPage extends Component<ArticleEditPageProps> {
                 },
               ],
             })(
-              <ArticleCategories onCategoryChange={this.handleCategoryChange}/>,
+              <ArticleCategories />,
             )}
           </FormItem>
 
@@ -152,7 +152,7 @@ class EditPage extends Component<ArticleEditPageProps> {
             {getFieldDecorator('tag_ids', {
               rules: [],
             })(
-              <ArticleTags onTagsChange={this.handleTagChange} />,
+              <ArticleTags />,
             )}
           </FormItem>
 
@@ -189,7 +189,7 @@ class EditPage extends Component<ArticleEditPageProps> {
                 },
               ],
             })(
-              <Markdown antForm={form} />,
+              <Markdown />,
             )}
           </FormItem>
 

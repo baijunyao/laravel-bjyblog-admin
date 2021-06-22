@@ -178,7 +178,7 @@ class EditPage extends Component<ArticleEditPageProps> {
               ],
               initialValue: this.props.article.markdown,
             })(
-              <Markdown antForm={form} value={this.props.article.markdown}/>,
+              <Markdown />,
             )}
           </FormItem>
 
