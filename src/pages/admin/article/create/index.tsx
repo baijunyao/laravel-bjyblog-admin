@@ -12,7 +12,8 @@ import ArticleCategories from '@/components/ArticleCategories';
 import { CategoryStateType } from '@/models/category';
 import { ArticleStateType } from '@/models/article';
 import Markdown from '@/components/Markdown';
-import UploadOnImage from '@/components/UploadOnImage';
+import UploadImage from '@/components/UploadImage';
+import { formItemLayout } from '@/pages/admin/global'
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -37,13 +38,6 @@ interface ArticleEditPageProps extends FormComponentProps {
   }),
 )
 class EditPage extends Component<ArticleEditPageProps> {
-  constructor(props: ArticleEditPageProps) {
-    super(props);
-
-    this.handleTagChange = this.handleTagChange.bind(this);
-    this.handleCategoryChange = this.handleCategoryChange.bind(this);
-  }
-
   handleStore = () => {
     const { dispatch } = this.props;
 
@@ -53,34 +47,9 @@ class EditPage extends Component<ArticleEditPageProps> {
     });
   };
 
-  handleTagChange(checkedTagIds: number[]) {
-    this.props.form.setFieldsValue({
-      tag_ids: checkedTagIds,
-    });
-  }
-
-  handleCategoryChange(selectedCategoryId: number) {
-    this.props.form.setFieldsValue({
-      category_id: selectedCategoryId,
-    });
-  }
-
   render() {
     const { form } = this.props;
     const { getFieldDecorator } = form;
-
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 7 },
-        md: { span: 2 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-        md: { span: 20 },
-      },
-    };
 
     return (
       <PageHeaderWrapper>
@@ -163,7 +132,7 @@ class EditPage extends Component<ArticleEditPageProps> {
             {getFieldDecorator('cover', {
               rules: [],
             })(
-              <UploadOnImage action="/api/articleImages" />,
+              <UploadImage apiUrl="/api/articleImages" />,
             )}
           </FormItem>
 

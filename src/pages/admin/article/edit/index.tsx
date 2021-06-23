@@ -12,7 +12,7 @@ import ArticleCategories from '@/components/ArticleCategories';
 import { CategoryStateType } from '@/models/category';
 import { ArticleStateType } from '@/models/article';
 import Markdown from '@/components/Markdown';
-import UploadOnImage from '@/components/UploadOnImage';
+import UploadImage from '@/components/UploadImage';
 import { formItemLayout } from '@/pages/admin/global'
 
 const FormItem = Form.Item;
@@ -150,7 +150,7 @@ class EditPage extends Component<ArticleEditPageProps> {
               rules: [],
               initialValue: this.props.article.cover,
             })(
-              <UploadOnImage action="/api/articleImages" imageUrl={this.props.article.cover} />,
+              <UploadImage apiUrl="/api/articleImages" />,
             )}
           </FormItem>
 
