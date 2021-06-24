@@ -6,7 +6,8 @@ import { FormComponentProps } from 'antd/es/form';
 import { connect } from 'dva';
 import { StateType } from '@/models/login';
 import LoginComponents from './components/Login';
-import styles from './style.less';
+
+import styles from '@/utils/style.less';
 
 const { Tab, Email, Password, Submit } = LoginComponents;
 

@@ -18,7 +18,7 @@ import StandardTable, { StandardTableColumnProps } from './components/StandardTa
 import { TableListItem } from './data.d';
 import { ArticleListType, ArticleType, TableListPagination, TableListParams } from '@/models/data.d';
 import { ArticleStateType } from '@/models/article';
-import styles from './style.less';
+import styles from '@/utils/style.less';
 
 const getValue = (obj: { [x: string]: string[] }) =>
   Object.keys(obj)

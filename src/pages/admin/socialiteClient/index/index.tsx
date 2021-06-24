@@ -16,7 +16,7 @@ import { TableListItem } from './data.d';
 import { TableListPagination, TableListParams } from '@/models/data.d';
 import { formatMessage } from 'umi-plugin-react/locale';
 
-import styles from './style.less';
+import styles from '@/utils/style.less';
 
 const getValue = (obj: { [x: string]: string[] }) =>
   Object.keys(obj)
