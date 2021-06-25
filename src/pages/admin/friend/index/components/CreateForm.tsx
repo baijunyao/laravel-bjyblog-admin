@@ -2,68 +2,53 @@ import { Form, Input, Modal } from 'antd';
 
 import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
-import { TableListItem } from '@/pages/admin/friendshipLink/index/data';
+import { TableListItem } from '@/pages/admin/friend/index/data';
 import { formatMessage } from 'umi-plugin-react/locale';
 
-export type UpdateItem = Pick<TableListItem, 'id' | 'name' | 'url' | 'sort'>
+export type NewItem = Pick<TableListItem, 'name' | 'url' | 'sort'>
 
 const FormItem = Form.Item;
 
-interface UpdateFormProps extends FormComponentProps {
-  updateModalVisible: boolean;
-  handleUpdate: (fieldsValue: UpdateItem) => void;
-  handleUpdateModalVisible: () => void;
-  updateFormValues: UpdateItem;
+interface CreateFormProps extends FormComponentProps {
+  modalVisible: boolean;
+  handleAdd: (fieldsValue: NewItem) => void;
+  handleModalVisible: () => void;
 }
 
-const UpdateForm: React.FC<UpdateFormProps> = props => {
-  const {
-    updateModalVisible,
-    form,
-    handleUpdate,
-    handleUpdateModalVisible,
-    updateFormValues,
-  } = props;
+const CreateForm: React.FC<CreateFormProps> = props => {
+  const { modalVisible, form, handleAdd, handleModalVisible } = props;
   const okHandle = () => {
     form.validateFields((err, fieldsValue) => {
       if (err) return;
       form.resetFields();
-      handleUpdate(fieldsValue);
+      handleAdd(fieldsValue);
     });
   };
-
   return (
     <Modal
       destroyOnClose
-      title={formatMessage({ id: 'Edit' })}
-      visible={updateModalVisible}
+      title={formatMessage({ id: 'Add' })}
+      visible={modalVisible}
       onOk={okHandle}
-      onCancel={() => handleUpdateModalVisible()}
+      onCancel={() => handleModalVisible()}
     >
-      {form.getFieldDecorator('id', {
-        rules: [{ required: true }],
-        initialValue: updateFormValues.id,
-      })(<Input type="hidden" />)}
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label={formatMessage({ id: 'Name' })}>
         {form.getFieldDecorator('name', {
           rules: [{ required: true }],
-          initialValue: updateFormValues.name,
         })(<Input />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="URL">
         {form.getFieldDecorator('url', {
           rules: [{ required: true }],
-          initialValue: updateFormValues.url,
         })(<Input />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label={formatMessage({ id: 'Sort' })}>
         {form.getFieldDecorator('sort', {
           rules: [{ required: true }],
-          initialValue: updateFormValues.sort,
         })(<Input />)}
       </FormItem>
     </Modal>
   );
 };
 
-export default Form.create<UpdateFormProps>()(UpdateForm);
+export default Form.create<CreateFormProps>()(CreateForm);
