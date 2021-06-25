@@ -33,16 +33,16 @@ const status:string[] = ['√', '×'];
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch<
     Action<
-      | 'adminAndopenSourceAndindex/add'
-      | 'adminAndopenSourceAndindex/fetch'
-      | 'adminAndopenSourceAndindex/update'
-      | 'adminAndopenSourceAndindex/destroy'
-      | 'adminAndopenSourceAndindex/forceDelete'
-      | 'adminAndopenSourceAndindex/restore'
+      | 'adminOpenSource/add'
+      | 'adminOpenSource/fetch'
+      | 'adminOpenSource/update'
+      | 'adminOpenSource/destroy'
+      | 'adminOpenSource/forceDelete'
+      | 'adminOpenSource/restore'
     >
   >;
   loading: boolean;
-  adminAndopenSourceAndindex: StateType;
+  adminOpenSource: StateType;
 }
 
 interface TableListState {
@@ -56,18 +56,18 @@ interface TableListState {
 /* eslint react/no-multi-comp:0 */
 @connect(
   ({
-    adminAndopenSourceAndindex,
+    adminOpenSource,
     loading,
   }: {
-    adminAndopenSourceAndindex: StateType;
+    adminOpenSource: StateType;
     loading: {
       models: {
         [key: string]: boolean;
       };
     };
   }) => ({
-    adminAndopenSourceAndindex,
-    loading: loading.models.adminAndopenSourceAndindex,
+    adminOpenSource,
+    loading: loading.models.adminOpenSource,
   }),
 )
 class TableList extends Component<TableListProps, TableListState> {
@@ -164,7 +164,7 @@ class TableList extends Component<TableListProps, TableListState> {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndopenSourceAndindex/fetch',
+      type: 'adminOpenSource/fetch',
     });
   }
 
@@ -193,7 +193,7 @@ class TableList extends Component<TableListProps, TableListState> {
     }
 
     dispatch({
-      type: 'adminAndopenSourceAndindex/fetch',
+      type: 'adminOpenSource/fetch',
       payload: params,
     });
   };
@@ -206,7 +206,7 @@ class TableList extends Component<TableListProps, TableListState> {
     switch (e.key) {
       case 'remove':
         dispatch({
-          type: 'adminAndopenSourceAndindex/destroy',
+          type: 'adminOpenSource/destroy',
           payload: {
             key: selectedRows.map(row => row.id),
           },
@@ -249,7 +249,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleAdd = (fields: NewItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndopenSourceAndindex/add',
+      type: 'adminOpenSource/add',
       payload: fields,
     });
     this.handleModalVisible();
@@ -258,7 +258,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleUpdate = (fields: UpdateItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndopenSourceAndindex/update',
+      type: 'adminOpenSource/update',
       payload: fields,
     });
     this.handleUpdateModalVisible();
@@ -267,7 +267,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleDestroy = (fields: UpdateItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndopenSourceAndindex/destroy',
+      type: 'adminOpenSource/destroy',
       payload: fields,
     });
   };
@@ -275,7 +275,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleForceDelete = (fields: UpdateItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndopenSourceAndindex/forceDelete',
+      type: 'adminOpenSource/forceDelete',
       payload: fields,
     });
   };
@@ -283,14 +283,14 @@ class TableList extends Component<TableListProps, TableListState> {
   handleRestore = (fields: UpdateItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndopenSourceAndindex/restore',
+      type: 'adminOpenSource/restore',
       payload: fields,
     });
   };
 
   render() {
     const {
-      adminAndopenSourceAndindex: { data },
+      adminOpenSource: { data },
       loading,
     } = this.props;
 

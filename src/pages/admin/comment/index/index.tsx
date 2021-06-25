@@ -30,15 +30,15 @@ const status = ['√', '×'];
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch<
     Action<
-      | 'adminAndcommentAndindex/fetch'
-      | 'adminAndcommentAndindex/update'
-      | 'adminAndcommentAndindex/destroy'
-      | 'adminAndcommentAndindex/forceDelete'
-      | 'adminAndcommentAndindex/restore'
+      | 'adminComment/fetch'
+      | 'adminComment/update'
+      | 'adminComment/destroy'
+      | 'adminComment/forceDelete'
+      | 'adminComment/restore'
     >
   >;
   loading: boolean;
-  adminAndcommentAndindex: StateType;
+  adminComment: StateType;
 }
 
 interface TableListState {
@@ -51,18 +51,18 @@ interface TableListState {
 /* eslint react/no-multi-comp:0 */
 @connect(
   ({
-    adminAndcommentAndindex,
+    adminComment,
     loading,
   }: {
-    adminAndcommentAndindex: StateType;
+    adminComment: StateType;
     loading: {
       models: {
         [key: string]: boolean;
       };
     };
   }) => ({
-    adminAndcommentAndindex,
-    loading: loading.models.adminAndcommentAndindex,
+    adminComment,
+    loading: loading.models.adminComment,
   }),
 )
 class TableList extends Component<TableListProps, TableListState> {
@@ -162,7 +162,7 @@ class TableList extends Component<TableListProps, TableListState> {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndcommentAndindex/fetch',
+      type: 'adminComment/fetch',
     });
   }
 
@@ -191,7 +191,7 @@ class TableList extends Component<TableListProps, TableListState> {
     }
 
     dispatch({
-      type: 'adminAndcommentAndindex/fetch',
+      type: 'adminComment/fetch',
       payload: params,
     });
   };
@@ -204,7 +204,7 @@ class TableList extends Component<TableListProps, TableListState> {
     switch (e.key) {
       case 'remove':
         dispatch({
-          type: 'adminAndcommentAndindex/destroy',
+          type: 'adminComment/destroy',
           payload: {
             key: selectedRows.map(row => row.id),
           },
@@ -240,7 +240,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleUpdate = (fields: UpdateItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndcommentAndindex/update',
+      type: 'adminComment/update',
       payload: fields,
     });
     this.handleUpdateModalVisible();
@@ -249,7 +249,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleDestroy = (fields: UpdateItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndcommentAndindex/destroy',
+      type: 'adminComment/destroy',
       payload: fields,
     });
   };
@@ -257,7 +257,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleForceDelete = (fields: UpdateItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndcommentAndindex/forceDelete',
+      type: 'adminComment/forceDelete',
       payload: fields,
     });
   };
@@ -265,14 +265,14 @@ class TableList extends Component<TableListProps, TableListState> {
   handleRestore = (fields: UpdateItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndcommentAndindex/restore',
+      type: 'adminComment/restore',
       payload: fields,
     });
   };
 
   render() {
     const {
-      adminAndcommentAndindex: { data },
+      adminComment: { data },
       loading,
     } = this.props;
 

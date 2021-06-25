@@ -32,16 +32,16 @@ const status = ['√', '×'];
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch<
     Action<
-      | 'adminAndcategoryAndindex/add'
-      | 'adminAndcategoryAndindex/fetch'
-      | 'adminAndcategoryAndindex/update'
-      | 'adminAndcategoryAndindex/destroy'
-      | 'adminAndcategoryAndindex/forceDelete'
-      | 'adminAndcategoryAndindex/restore'
+      | 'adminTag/add'
+      | 'adminTag/fetch'
+      | 'adminTag/update'
+      | 'adminTag/destroy'
+      | 'adminTag/forceDelete'
+      | 'adminTag/restore'
     >
   >;
   loading: boolean;
-  adminAndcategoryAndindex: CategoryStateType;
+  adminTag: CategoryStateType;
 }
 
 interface TableListState {
@@ -55,18 +55,18 @@ interface TableListState {
 /* eslint react/no-multi-comp:0 */
 @connect(
   ({
-    adminAndcategoryAndindex,
+    adminTag,
     loading,
   }: {
-    adminAndcategoryAndindex: CategoryStateType;
+    adminTag: CategoryStateType;
     loading: {
       models: {
         [key: string]: boolean;
       };
     };
   }) => ({
-    adminAndcategoryAndindex,
-    loading: loading.models.adminAndcategoryAndindex,
+    adminTag,
+    loading: loading.models.adminTag,
   }),
 )
 class TableList extends Component<TableListProps, TableListState> {
@@ -151,7 +151,7 @@ class TableList extends Component<TableListProps, TableListState> {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndcategoryAndindex/fetch',
+      type: 'adminTag/fetch',
     });
   }
 
@@ -180,7 +180,7 @@ class TableList extends Component<TableListProps, TableListState> {
     }
 
     dispatch({
-      type: 'adminAndcategoryAndindex/fetch',
+      type: 'adminTag/fetch',
       payload: params,
     });
   };
@@ -193,7 +193,7 @@ class TableList extends Component<TableListProps, TableListState> {
     switch (e.key) {
       case 'remove':
         dispatch({
-          type: 'adminAndcategoryAndindex/destroy',
+          type: 'adminTag/destroy',
           payload: {
             key: selectedRows.map(row => row.id),
           },
@@ -236,7 +236,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleAdd = (fields: NewCategory) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndcategoryAndindex/add',
+      type: 'adminTag/add',
       payload: fields,
     });
     this.handleModalVisible();
@@ -245,7 +245,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleUpdate = (fields: UpdateCategory) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndcategoryAndindex/update',
+      type: 'adminTag/update',
       payload: fields,
     });
     this.handleUpdateModalVisible();
@@ -254,7 +254,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleDestroy = (fields: UpdateCategory) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndcategoryAndindex/destroy',
+      type: 'adminTag/destroy',
       payload: fields,
     });
   };
@@ -262,7 +262,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleForceDelete = (fields: UpdateCategory) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndcategoryAndindex/forceDelete',
+      type: 'adminTag/forceDelete',
       payload: fields,
     });
   };
@@ -270,14 +270,14 @@ class TableList extends Component<TableListProps, TableListState> {
   handleRestore = (fields: UpdateCategory) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndcategoryAndindex/restore',
+      type: 'adminTag/restore',
       payload: fields,
     });
   };
 
   render() {
     const {
-      adminAndcategoryAndindex: { data },
+      adminTag: { data },
       loading,
     } = this.props;
 

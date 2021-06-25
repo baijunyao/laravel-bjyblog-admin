@@ -26,13 +26,13 @@ const getValue = (obj: { [x: string]: string[] }) =>
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch<
     Action<
-      | 'adminAndsocialiteClientAndindex/fetch'
-      | 'adminAndsocialiteClientAndindex/update'
-      | 'adminAndsocialiteClientAndindex/destroy'
+      | 'adminSocialiteClient/fetch'
+      | 'adminSocialiteClient/update'
+      | 'adminSocialiteClient/destroy'
     >
   >;
   loading: boolean;
-  adminAndsocialiteClientAndindex: StateType;
+  adminSocialiteClient: StateType;
 }
 
 interface TableListState {
@@ -45,18 +45,18 @@ interface TableListState {
 /* eslint react/no-multi-comp:0 */
 @connect(
   ({
-    adminAndsocialiteClientAndindex,
+    adminSocialiteClient,
     loading,
   }: {
-    adminAndsocialiteClientAndindex: StateType;
+    adminSocialiteClient: StateType;
     loading: {
       models: {
         [key: string]: boolean;
       };
     };
   }) => ({
-    adminAndsocialiteClientAndindex,
-    loading: loading.models.adminAndsocialiteClientAndindex,
+    adminSocialiteClient,
+    loading: loading.models.adminSocialiteClient,
   }),
 )
 class TableList extends Component<TableListProps, TableListState> {
@@ -94,7 +94,7 @@ class TableList extends Component<TableListProps, TableListState> {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndsocialiteClientAndindex/fetch',
+      type: 'adminSocialiteClient/fetch',
     });
   }
 
@@ -123,7 +123,7 @@ class TableList extends Component<TableListProps, TableListState> {
     }
 
     dispatch({
-      type: 'adminAndsocialiteClientAndindex/fetch',
+      type: 'adminSocialiteClient/fetch',
       payload: params,
     });
   };
@@ -136,7 +136,7 @@ class TableList extends Component<TableListProps, TableListState> {
     switch (e.key) {
       case 'remove':
         dispatch({
-          type: 'adminAndsocialiteClientAndindex/destroy',
+          type: 'adminSocialiteClient/destroy',
           payload: {
             key: selectedRows.map(row => row.id),
           },
@@ -172,7 +172,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleUpdate = (fields: UpdateItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndsocialiteClientAndindex/update',
+      type: 'adminSocialiteClient/update',
       payload: fields,
     });
     this.handleUpdateModalVisible();
@@ -180,7 +180,7 @@ class TableList extends Component<TableListProps, TableListState> {
 
   render() {
     const {
-      adminAndsocialiteClientAndindex: { data },
+      adminSocialiteClient: { data },
       loading,
     } = this.props;
 

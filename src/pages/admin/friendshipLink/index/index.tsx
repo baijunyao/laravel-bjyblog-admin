@@ -32,16 +32,16 @@ const status = ['√', '×'];
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch<
     Action<
-      | 'adminAndfriendshipLinkAndindex/add'
-      | 'adminAndfriendshipLinkAndindex/fetch'
-      | 'adminAndfriendshipLinkAndindex/update'
-      | 'adminAndfriendshipLinkAndindex/destroy'
-      | 'adminAndfriendshipLinkAndindex/forceDelete'
-      | 'adminAndfriendshipLinkAndindex/restore'
+      | 'adminFriendship/add'
+      | 'adminFriendship/fetch'
+      | 'adminFriendship/update'
+      | 'adminFriendship/destroy'
+      | 'adminFriendship/forceDelete'
+      | 'adminFriendship/restore'
     >
   >;
   loading: boolean;
-  adminAndfriendshipLinkAndindex: StateType;
+  adminFriendship: StateType;
 }
 
 interface TableListState {
@@ -55,18 +55,18 @@ interface TableListState {
 /* eslint react/no-multi-comp:0 */
 @connect(
   ({
-    adminAndfriendshipLinkAndindex,
+    adminFriendship,
     loading,
   }: {
-    adminAndfriendshipLinkAndindex: StateType;
+    adminFriendship: StateType;
     loading: {
       models: {
         [key: string]: boolean;
       };
     };
   }) => ({
-    adminAndfriendshipLinkAndindex,
-    loading: loading.models.adminAndfriendshipLinkAndindex,
+    adminFriendship,
+    loading: loading.models.adminFriendship,
   }),
 )
 class TableList extends Component<TableListProps, TableListState> {
@@ -151,7 +151,7 @@ class TableList extends Component<TableListProps, TableListState> {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndfriendshipLinkAndindex/fetch',
+      type: 'adminFriendship/fetch',
     });
   }
 
@@ -180,7 +180,7 @@ class TableList extends Component<TableListProps, TableListState> {
     }
 
     dispatch({
-      type: 'adminAndfriendshipLinkAndindex/fetch',
+      type: 'adminFriendship/fetch',
       payload: params,
     });
   };
@@ -193,7 +193,7 @@ class TableList extends Component<TableListProps, TableListState> {
     switch (e.key) {
       case 'remove':
         dispatch({
-          type: 'adminAndfriendshipLinkAndindex/destroy',
+          type: 'adminFriendship/destroy',
           payload: {
             key: selectedRows.map(row => row.id),
           },
@@ -236,7 +236,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleAdd = (fields: NewItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndfriendshipLinkAndindex/add',
+      type: 'adminFriendship/add',
       payload: fields,
     });
     this.handleModalVisible();
@@ -245,7 +245,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleUpdate = (fields: UpdateItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndfriendshipLinkAndindex/update',
+      type: 'adminFriendship/update',
       payload: fields,
     });
     this.handleUpdateModalVisible();
@@ -254,7 +254,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleDestroy = (fields: UpdateItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndfriendshipLinkAndindex/destroy',
+      type: 'adminFriendship/destroy',
       payload: fields,
     });
   };
@@ -262,7 +262,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleForceDelete = (fields: UpdateItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndfriendshipLinkAndindex/forceDelete',
+      type: 'adminFriendship/forceDelete',
       payload: fields,
     });
   };
@@ -270,14 +270,14 @@ class TableList extends Component<TableListProps, TableListState> {
   handleRestore = (fields: UpdateItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndfriendshipLinkAndindex/restore',
+      type: 'adminFriendship/restore',
       payload: fields,
     });
   };
 
   render() {
     const {
-      adminAndfriendshipLinkAndindex: { data },
+      adminFriendship: { data },
       loading,
     } = this.props;
 

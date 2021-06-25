@@ -28,12 +28,12 @@ const getValue = (obj: { [x: string]: string[] }) =>
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch<
     Action<
-      | 'adminAndconfigAndindex/fetch'
-      | 'adminAndconfigAndindex/update'
+      | 'adminConfig/fetch'
+      | 'adminConfig/update'
       >
     >;
   loading: boolean;
-  adminAndconfigAndindex: StateType;
+  adminConfig: StateType;
 }
 
 interface TableListState {
@@ -45,18 +45,18 @@ interface TableListState {
 /* eslint react/no-multi-comp:0 */
 @connect(
   ({
-     adminAndconfigAndindex,
+     adminConfig,
      loading,
    }: {
-    adminAndconfigAndindex: StateType;
+    adminConfig: StateType;
     loading: {
       models: {
         [key: string]: boolean;
       };
     };
   }) => ({
-    adminAndconfigAndindex,
-    loading: loading.models.adminAndconfigAndindex,
+    adminConfig,
+    loading: loading.models.adminConfig,
   }),
 )
 class TableList extends Component<TableListProps, TableListState> {
@@ -92,7 +92,7 @@ class TableList extends Component<TableListProps, TableListState> {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndconfigAndindex/fetch',
+      type: 'adminConfig/fetch',
     });
   }
 
@@ -121,7 +121,7 @@ class TableList extends Component<TableListProps, TableListState> {
     }
 
     dispatch({
-      type: 'adminAndconfigAndindex/fetch',
+      type: 'adminConfig/fetch',
       payload: params,
     });
   };
@@ -139,7 +139,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleUpdate = (fields: UpdateItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndconfigAndindex/update',
+      type: 'adminConfig/update',
       payload: fields,
     });
 
@@ -148,7 +148,7 @@ class TableList extends Component<TableListProps, TableListState> {
 
   handleSubmit = (e: React.FormEvent) => {
     const {
-      adminAndconfigAndindex: { data },
+      adminConfig: { data },
       dispatch,
       form,
     } = this.props;
@@ -158,7 +158,7 @@ class TableList extends Component<TableListProps, TableListState> {
         Object.keys(values).forEach((id) => {
           if (values[id] !== data.list[id].value) {
             dispatch({
-              type: 'adminAndconfigAndindex/update',
+              type: 'adminConfig/update',
               payload: {
                 id,
                 value: values[id],
@@ -172,7 +172,7 @@ class TableList extends Component<TableListProps, TableListState> {
 
   render() {
     const {
-      adminAndconfigAndindex: { data },
+      adminConfig: { data },
       form: { getFieldDecorator },
     } = this.props;
 

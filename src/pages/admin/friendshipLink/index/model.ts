@@ -33,7 +33,7 @@ export interface ModelType {
 }
 
 const Model: ModelType = {
-  namespace: 'adminAndfriendshipLinkAndindex',
+  namespace: 'adminFriendship',
 
   state: {
     data: {

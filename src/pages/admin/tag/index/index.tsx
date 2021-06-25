@@ -12,7 +12,7 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { SorterResult } from 'antd/es/table';
 import { connect } from 'dva';
 import moment from 'moment';
-import { StateType } from '@/models/tag';
+import { TagStateType } from '@/models/tag';
 import CreateForm, { NewItem } from './components/CreateForm';
 import UpdateForm, { UpdateItem } from './components/UpdateForm';
 import StandardTable, { StandardTableColumnProps } from './components/StandardTable';
@@ -32,16 +32,16 @@ const status = ['√', '×'];
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch<
     Action<
-      | 'adminAndtagAndindex/add'
-      | 'adminAndtagAndindex/fetch'
-      | 'adminAndtagAndindex/update'
-      | 'adminAndtagAndindex/destroy'
-      | 'adminAndtagAndindex/forceDelete'
-      | 'adminAndtagAndindex/restore'
+      | 'adminTag/add'
+      | 'adminTag/fetch'
+      | 'adminTag/update'
+      | 'adminTag/destroy'
+      | 'adminTag/forceDelete'
+      | 'adminTag/restore'
     >
   >;
   loading: boolean;
-  adminAndtagAndindex: StateType;
+  adminTag: TagStateType;
 }
 
 interface TableListState {
@@ -52,21 +52,20 @@ interface TableListState {
   updateFormValues: UpdateItem;
 }
 
-/* eslint react/no-multi-comp:0 */
 @connect(
   ({
-    adminAndtagAndindex,
+    adminTag,
     loading,
   }: {
-    adminAndtagAndindex: StateType;
+    adminTag: TagStateType;
     loading: {
       models: {
         [key: string]: boolean;
       };
     };
   }) => ({
-    adminAndtagAndindex,
-    loading: loading.models.adminAndtagAndindex,
+    adminTag,
+    loading: loading.models.adminTag,
   }),
 )
 class TableList extends Component<TableListProps, TableListState> {
@@ -151,7 +150,7 @@ class TableList extends Component<TableListProps, TableListState> {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndtagAndindex/fetch',
+      type: 'adminTag/fetch',
     });
   }
 
@@ -180,33 +179,9 @@ class TableList extends Component<TableListProps, TableListState> {
     }
 
     dispatch({
-      type: 'adminAndtagAndindex/fetch',
+      type: 'adminTag/fetch',
       payload: params,
     });
-  };
-
-  handleMenuClick = (e: { key: string }) => {
-    const { dispatch } = this.props;
-    const { selectedRows } = this.state;
-
-    if (!selectedRows) return;
-    switch (e.key) {
-      case 'remove':
-        dispatch({
-          type: 'adminAndtagAndindex/destroy',
-          payload: {
-            key: selectedRows.map(row => row.id),
-          },
-          callback: () => {
-            this.setState({
-              selectedRows: [],
-            });
-          },
-        });
-        break;
-      default:
-        break;
-    }
   };
 
   handleSelectRows = (rows: TableListItem[]) => {
@@ -236,7 +211,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleAdd = (fields: NewItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndtagAndindex/add',
+      type: 'adminTag/add',
       payload: fields,
     });
     this.handleModalVisible();
@@ -245,7 +220,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleUpdate = (fields: UpdateItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndtagAndindex/update',
+      type: 'adminTag/update',
       payload: fields,
     });
     this.handleUpdateModalVisible();
@@ -254,7 +229,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleDestroy = (fields: UpdateItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndtagAndindex/destroy',
+      type: 'adminTag/destroy',
       payload: fields,
     });
   };
@@ -262,7 +237,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleForceDelete = (fields: UpdateItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndtagAndindex/forceDelete',
+      type: 'adminTag/forceDelete',
       payload: fields,
     });
   };
@@ -270,14 +245,14 @@ class TableList extends Component<TableListProps, TableListState> {
   handleRestore = (fields: UpdateItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndtagAndindex/restore',
+      type: 'adminTag/restore',
       payload: fields,
     });
   };
 
   render() {
     const {
-      adminAndtagAndindex: { data },
+      adminTag: { data },
       loading,
     } = this.props;
 
