@@ -2,7 +2,7 @@ import { Table } from 'antd';
 import { ColumnProps, TableProps } from 'antd/es/table';
 import React, { Component } from 'react';
 
-import { TableListItem } from '../../data.d';
+import { SocialiteClientType } from '../../data.d';
 import styles from './index.less';
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
@@ -10,14 +10,14 @@ type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export interface StandardTableProps<T> extends Omit<TableProps<T>, 'columns'> {
   columns: StandardTableColumnProps[];
   data: {
-    list: TableListItem[];
-    pagination: StandardTableProps<TableListItem>['pagination'];
+    list: SocialiteClientType[];
+    pagination: StandardTableProps<SocialiteClientType>['pagination'];
   };
-  selectedRows: TableListItem[];
+  selectedRows: SocialiteClientType[];
   onSelectRow: (rows: any) => void;
 }
 
-export interface StandardTableColumnProps extends ColumnProps<TableListItem> {
+export interface StandardTableColumnProps extends ColumnProps<SocialiteClientType> {
   needTotal?: boolean;
   total?: number;
 }
@@ -40,8 +40,8 @@ interface StandardTableState {
   needTotalList: StandardTableColumnProps[];
 }
 
-class StandardTable extends Component<StandardTableProps<TableListItem>, StandardTableState> {
-  static getDerivedStateFromProps(nextProps: StandardTableProps<TableListItem>) {
+class StandardTable extends Component<StandardTableProps<SocialiteClientType>, StandardTableState> {
+  static getDerivedStateFromProps(nextProps: StandardTableProps<SocialiteClientType>) {
     // clean state
     if (nextProps.selectedRows.length === 0) {
       const needTotalList = initTotalList(nextProps.columns);
@@ -53,7 +53,7 @@ class StandardTable extends Component<StandardTableProps<TableListItem>, Standar
     return null;
   }
 
-  handleTableChange: TableProps<TableListItem>['onChange'] = (
+  handleTableChange: TableProps<SocialiteClientType>['onChange'] = (
     pagination,
     filters,
     sorter,

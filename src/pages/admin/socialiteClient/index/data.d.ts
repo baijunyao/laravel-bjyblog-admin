@@ -1,6 +1,6 @@
-import { TableListData as BaseTableListData } from '@/models/data'
+import { TableListData } from '@/models/data'
 
-export interface TableListItem {
+export interface SocialiteClientType {
   id: number;
   name: string;
   icon: string;
@@ -11,6 +11,6 @@ export interface TableListItem {
   deleted_at: string | null;
 }
 
-export interface TableListData extends BaseTableListData{
-  list: TableListItem[];
+export interface SocialiteClientListType extends TableListData{
+  list: SocialiteClientType[];
 }

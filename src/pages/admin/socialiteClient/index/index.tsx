@@ -12,7 +12,7 @@ import { connect } from 'dva';
 import { StateType } from './model';
 import UpdateForm, { UpdateItem } from './components/UpdateForm';
 import StandardTable, { StandardTableColumnProps } from './components/StandardTable';
-import { TableListItem } from './data.d';
+import { SocialiteClientType } from './data.d';
 import { TableListPagination, TableListParams } from '@/models/data.d';
 import { formatMessage } from 'umi-plugin-react/locale';
 
@@ -37,7 +37,7 @@ interface TableListProps extends FormComponentProps {
 
 interface TableListState {
   updateModalVisible: boolean;
-  selectedRows: TableListItem[];
+  selectedRows: SocialiteClientType[];
   formValues: { [key: string]: string };
   updateFormValues: UpdateItem;
 }
@@ -73,6 +73,10 @@ class TableList extends Component<TableListProps, TableListState> {
 
   columns: StandardTableColumnProps[] = [
     {
+      title: 'name',
+      dataIndex: 'name',
+    },
+    {
       title: 'client id',
       dataIndex: 'client_id',
     },
@@ -100,8 +104,8 @@ class TableList extends Component<TableListProps, TableListState> {
 
   handleStandardTableChange = (
     pagination: Partial<TableListPagination>,
-    filtersArg: Record<keyof TableListItem, string[]>,
-    sorter: SorterResult<TableListItem>,
+    filtersArg: Record<keyof SocialiteClientType, string[]>,
+    sorter: SorterResult<SocialiteClientType>,
   ) => {
     const { dispatch } = this.props;
     const { formValues } = this.state;
@@ -152,7 +156,7 @@ class TableList extends Component<TableListProps, TableListState> {
     }
   };
 
-  handleSelectRows = (rows: TableListItem[]) => {
+  handleSelectRows = (rows: SocialiteClientType[]) => {
     this.setState({
       selectedRows: rows,
     });
