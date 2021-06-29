@@ -1,38 +1,44 @@
 import { AnyAction, Reducer } from 'redux';
 
 import { EffectsCommandMap } from 'dva';
-import {AnalysisData, Counts, LatestComments, Versions} from './data.d';
+import { DashboardType } from './data.d';
 import { analysis } from './service';
-import {TableListItem as SocialiteUser} from "@/pages/admin/socialiteUser/index/data";
 
 export type Effect = (
   action: AnyAction,
-  effects: EffectsCommandMap & { select: <T>(func: (state: AnalysisData) => T) => T },
+  effects: EffectsCommandMap & { select: <T>(func: (state: DashboardType) => T) => T },
 ) => void;
 
 export interface ModelType {
   namespace: string;
-  state: AnalysisData;
+  state: DashboardType;
   effects: {
     fetch: Effect;
   };
   reducers: {
-    save: Reducer<AnalysisData>;
-    clear: Reducer<AnalysisData>;
+    save: Reducer<DashboardType>;
   };
 }
 
-const initState = {
-  latest_socialite_users: [],
-  latest_comments: [],
-  versions: {},
-  counts: {},
-};
-
 const Model: ModelType = {
-  namespace: 'dashboardAndanalysis',
+  namespace: 'adminDashboard',
 
-  state: initState,
+  state: {
+    latest_socialite_users: [],
+    latest_comments: [],
+    versions: {
+      system: '',
+      web_server: '',
+      php: '',
+      mysql: '',
+    },
+    counts: {
+      articles: '',
+      comments: '',
+      notes: '',
+      socialite_users: '',
+    },
+  },
 
   effects: {
     *fetch(_, { call, put }) {
@@ -50,9 +56,6 @@ const Model: ModelType = {
         ...state,
         ...payload,
       };
-    },
-    clear() {
-      return initState;
     },
   },
 };

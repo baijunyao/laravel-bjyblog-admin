@@ -21,7 +21,7 @@ export interface Counts {
   socialite_users: string;
 }
 
-export interface AnalysisData {
+export interface DashboardType {
   latest_socialite_users: SocialiteUser[];
   latest_comments: LatestComments[];
   versions: Versions;
