@@ -10,14 +10,14 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { SorterResult } from 'antd/es/table';
 import { connect } from 'dva';
 import moment from 'moment';
+import { formatMessage } from 'umi-plugin-react/locale';
 import { StateType } from './model';
 import UpdateForm, { UpdateItem } from './components/UpdateForm';
 import StandardTable, { StandardTableColumnProps } from './components/StandardTable';
 import { TableListItem } from './data.d';
 import { TableListPagination, TableListParams } from '@/models/data.d';
-import { formatMessage } from 'umi-plugin-react/locale';
 
-import styles from './style.less';
+import styles from '@/utils/style.less';
 
 const getValue = (obj: { [x: string]: string[] }) =>
   Object.keys(obj)
@@ -29,15 +29,15 @@ const status = ['√', '×'];
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch<
     Action<
-      | 'adminAnduserAndindex/fetch'
-      | 'adminAnduserAndindex/update'
-      | 'adminAnduserAndindex/destroy'
-      | 'adminAnduserAndindex/forceDelete'
-      | 'adminAnduserAndindex/restore'
+      | 'adminUser/fetch'
+      | 'adminUser/update'
+      | 'adminUser/destroy'
+      | 'adminUser/forceDelete'
+      | 'adminUser/restore'
     >
   >;
   loading: boolean;
-  adminAnduserAndindex: StateType;
+  adminUser: StateType;
 }
 
 interface TableListState {
@@ -50,18 +50,18 @@ interface TableListState {
 /* eslint react/no-multi-comp:0 */
 @connect(
   ({
-    adminAnduserAndindex,
+    adminUser,
     loading,
   }: {
-    adminAnduserAndindex: StateType;
+    adminUser: StateType;
     loading: {
       models: {
         [key: string]: boolean;
       };
     };
   }) => ({
-    adminAnduserAndindex,
-    loading: loading.models.adminAnduserAndindex,
+    adminUser,
+    loading: loading.models.adminUser,
   }),
 )
 class TableList extends Component<TableListProps, TableListState> {
@@ -133,7 +133,7 @@ class TableList extends Component<TableListProps, TableListState> {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAnduserAndindex/fetch',
+      type: 'adminUser/fetch',
     });
   }
 
@@ -162,7 +162,7 @@ class TableList extends Component<TableListProps, TableListState> {
     }
 
     dispatch({
-      type: 'adminAnduserAndindex/fetch',
+      type: 'adminUser/fetch',
       payload: params,
     });
   };
@@ -175,7 +175,7 @@ class TableList extends Component<TableListProps, TableListState> {
     switch (e.key) {
       case 'remove':
         dispatch({
-          type: 'adminAnduserAndindex/destroy',
+          type: 'adminUser/destroy',
           payload: {
             key: selectedRows.map(row => row.id),
           },
@@ -211,7 +211,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleUpdate = (fields: UpdateItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAnduserAndindex/update',
+      type: 'adminUser/update',
       payload: fields,
     });
 
@@ -220,7 +220,7 @@ class TableList extends Component<TableListProps, TableListState> {
 
   render() {
     const {
-      adminAnduserAndindex: { data },
+      adminUser: { data },
       loading,
     } = this.props;
 

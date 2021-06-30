@@ -164,6 +164,14 @@ export default {
               path: '/article/index',
               component: './admin/article/index',
             },
+            {
+              path: '/article/create',
+              component: './admin/article/create',
+            },
+            {
+              path: '/article/edit/:id',
+              component: './admin/article/edit',
+            },
           ],
         },
         {
@@ -215,14 +223,14 @@ export default {
           ],
         },
         {
-          name: 'friendshipLink',
+          name: 'friend',
           icon: 'icon-link',
-          path: '/friendshipLink',
+          path: '/friend',
           routes: [
             {
               name: 'index',
-              path: '/friendshipLink/index',
-              component: './admin/friendshipLink/index',
+              path: '/friend/index',
+              component: './admin/friend/index',
             },
           ],
         },

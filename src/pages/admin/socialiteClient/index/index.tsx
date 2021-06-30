@@ -12,11 +12,11 @@ import { connect } from 'dva';
 import { StateType } from './model';
 import UpdateForm, { UpdateItem } from './components/UpdateForm';
 import StandardTable, { StandardTableColumnProps } from './components/StandardTable';
-import { TableListItem } from './data.d';
+import { SocialiteClientType } from './data.d';
 import { TableListPagination, TableListParams } from '@/models/data.d';
 import { formatMessage } from 'umi-plugin-react/locale';
 
-import styles from './style.less';
+import styles from '@/utils/style.less';
 
 const getValue = (obj: { [x: string]: string[] }) =>
   Object.keys(obj)
@@ -26,18 +26,18 @@ const getValue = (obj: { [x: string]: string[] }) =>
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch<
     Action<
-      | 'adminAndsocialiteClientAndindex/fetch'
-      | 'adminAndsocialiteClientAndindex/update'
-      | 'adminAndsocialiteClientAndindex/destroy'
+      | 'adminSocialiteClient/fetch'
+      | 'adminSocialiteClient/update'
+      | 'adminSocialiteClient/destroy'
     >
   >;
   loading: boolean;
-  adminAndsocialiteClientAndindex: StateType;
+  adminSocialiteClient: StateType;
 }
 
 interface TableListState {
   updateModalVisible: boolean;
-  selectedRows: TableListItem[];
+  selectedRows: SocialiteClientType[];
   formValues: { [key: string]: string };
   updateFormValues: UpdateItem;
 }
@@ -45,18 +45,18 @@ interface TableListState {
 /* eslint react/no-multi-comp:0 */
 @connect(
   ({
-    adminAndsocialiteClientAndindex,
+    adminSocialiteClient,
     loading,
   }: {
-    adminAndsocialiteClientAndindex: StateType;
+    adminSocialiteClient: StateType;
     loading: {
       models: {
         [key: string]: boolean;
       };
     };
   }) => ({
-    adminAndsocialiteClientAndindex,
-    loading: loading.models.adminAndsocialiteClientAndindex,
+    adminSocialiteClient,
+    loading: loading.models.adminSocialiteClient,
   }),
 )
 class TableList extends Component<TableListProps, TableListState> {
@@ -72,6 +72,10 @@ class TableList extends Component<TableListProps, TableListState> {
   };
 
   columns: StandardTableColumnProps[] = [
+    {
+      title: 'name',
+      dataIndex: 'name',
+    },
     {
       title: 'client id',
       dataIndex: 'client_id',
@@ -94,14 +98,14 @@ class TableList extends Component<TableListProps, TableListState> {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndsocialiteClientAndindex/fetch',
+      type: 'adminSocialiteClient/fetch',
     });
   }
 
   handleStandardTableChange = (
     pagination: Partial<TableListPagination>,
-    filtersArg: Record<keyof TableListItem, string[]>,
-    sorter: SorterResult<TableListItem>,
+    filtersArg: Record<keyof SocialiteClientType, string[]>,
+    sorter: SorterResult<SocialiteClientType>,
   ) => {
     const { dispatch } = this.props;
     const { formValues } = this.state;
@@ -123,7 +127,7 @@ class TableList extends Component<TableListProps, TableListState> {
     }
 
     dispatch({
-      type: 'adminAndsocialiteClientAndindex/fetch',
+      type: 'adminSocialiteClient/fetch',
       payload: params,
     });
   };
@@ -136,7 +140,7 @@ class TableList extends Component<TableListProps, TableListState> {
     switch (e.key) {
       case 'remove':
         dispatch({
-          type: 'adminAndsocialiteClientAndindex/destroy',
+          type: 'adminSocialiteClient/destroy',
           payload: {
             key: selectedRows.map(row => row.id),
           },
@@ -152,7 +156,7 @@ class TableList extends Component<TableListProps, TableListState> {
     }
   };
 
-  handleSelectRows = (rows: TableListItem[]) => {
+  handleSelectRows = (rows: SocialiteClientType[]) => {
     this.setState({
       selectedRows: rows,
     });
@@ -172,7 +176,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleUpdate = (fields: UpdateItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndsocialiteClientAndindex/update',
+      type: 'adminSocialiteClient/update',
       payload: fields,
     });
     this.handleUpdateModalVisible();
@@ -180,7 +184,7 @@ class TableList extends Component<TableListProps, TableListState> {
 
   render() {
     const {
-      adminAndsocialiteClientAndindex: { data },
+      adminSocialiteClient: { data },
       loading,
     } = this.props;
 

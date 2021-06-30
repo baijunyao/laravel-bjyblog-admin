@@ -17,7 +17,7 @@ import { TableListItem } from './data.d';
 import { TableListPagination, TableListParams } from '@/models/data.d';
 import { formatMessage } from 'umi-plugin-react/locale';
 
-import styles from './style.less';
+import styles from '@/utils/style.less';
 
 const getValue = (obj: { [x: string]: string[] }) =>
   Object.keys(obj)
@@ -29,15 +29,15 @@ const status = ['√', '×'];
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch<
     Action<
-      | 'adminAndsocialiteUserAndindex/fetch'
-      | 'adminAndsocialiteUserAndindex/update'
-      | 'adminAndsocialiteUserAndindex/destroy'
-      | 'adminAndsocialiteUserAndindex/forceDelete'
-      | 'adminAndsocialiteUserAndindex/restore'
+      | 'adminSocialiteUser/fetch'
+      | 'adminSocialiteUser/update'
+      | 'adminSocialiteUser/destroy'
+      | 'adminSocialiteUser/forceDelete'
+      | 'adminSocialiteUser/restore'
       >
     >;
   loading: boolean;
-  adminAndsocialiteUserAndindex: StateType;
+  adminSocialiteUser: StateType;
 }
 
 interface TableListState {
@@ -50,18 +50,18 @@ interface TableListState {
 /* eslint react/no-multi-comp:0 */
 @connect(
   ({
-     adminAndsocialiteUserAndindex,
+     adminSocialiteUser,
      loading,
    }: {
-    adminAndsocialiteUserAndindex: StateType;
+    adminSocialiteUser: StateType;
     loading: {
       models: {
         [key: string]: boolean;
       };
     };
   }) => ({
-    adminAndsocialiteUserAndindex,
-    loading: loading.models.adminAndsocialiteUserAndindex,
+    adminSocialiteUser,
+    loading: loading.models.adminSocialiteUser,
   }),
 )
 class TableList extends Component<TableListProps, TableListState> {
@@ -154,7 +154,7 @@ class TableList extends Component<TableListProps, TableListState> {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndsocialiteUserAndindex/fetch',
+      type: 'adminSocialiteUser/fetch',
     });
   }
 
@@ -183,7 +183,7 @@ class TableList extends Component<TableListProps, TableListState> {
     }
 
     dispatch({
-      type: 'adminAndsocialiteUserAndindex/fetch',
+      type: 'adminSocialiteUser/fetch',
       payload: params,
     });
   };
@@ -196,7 +196,7 @@ class TableList extends Component<TableListProps, TableListState> {
     switch (e.key) {
       case 'remove':
         dispatch({
-          type: 'adminAndsocialiteUserAndindex/destroy',
+          type: 'adminSocialiteUser/destroy',
           payload: {
             key: selectedRows.map(row => row.id),
           },
@@ -233,7 +233,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleUpdate = (fields: UpdateItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndsocialiteUserAndindex/update',
+      type: 'adminSocialiteUser/update',
       payload: fields,
     });
     this.handleUpdateModalVisible();
@@ -241,7 +241,7 @@ class TableList extends Component<TableListProps, TableListState> {
 
   render() {
     const {
-      adminAndsocialiteUserAndindex: { data },
+      adminSocialiteUser: { data },
       loading,
     } = this.props;
 

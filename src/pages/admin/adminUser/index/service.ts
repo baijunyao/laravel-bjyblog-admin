@@ -15,7 +15,7 @@ export async function showUser(id: string|number) {
 export async function showCurrentUser() {
   const response = await request('/api/users/me');
 
-  return response.data === undefined ? {
+  return response !== undefined && response.data === undefined ? {
     name: undefined,
     avatar: undefined,
   } : {

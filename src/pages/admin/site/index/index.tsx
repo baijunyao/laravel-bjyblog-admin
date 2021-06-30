@@ -20,7 +20,7 @@ import { TableListItem } from './data.d';
 import { TableListPagination, TableListParams } from '@/models/data.d';
 import { formatMessage } from 'umi-plugin-react/locale';
 
-import styles from './style.less';
+import styles from '@/utils/style.less';
 
 const getValue = (obj: { [x: string]: string[] }) =>
   Object.keys(obj)
@@ -32,16 +32,16 @@ const status = ['√', '×'];
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch<
     Action<
-      | 'adminAndsiteAndindex/add'
-      | 'adminAndsiteAndindex/fetch'
-      | 'adminAndsiteAndindex/update'
-      | 'adminAndsiteAndindex/destroy'
-      | 'adminAndsiteAndindex/forceDelete'
-      | 'adminAndsiteAndindex/restore'
+      | 'adminSite/add'
+      | 'adminSite/fetch'
+      | 'adminSite/update'
+      | 'adminSite/destroy'
+      | 'adminSite/forceDelete'
+      | 'adminSite/restore'
     >
   >;
   loading: boolean;
-  adminAndsiteAndindex: StateType;
+  adminSite: StateType;
 }
 
 interface TableListState {
@@ -55,18 +55,18 @@ interface TableListState {
 /* eslint react/no-multi-comp:0 */
 @connect(
   ({
-    adminAndsiteAndindex,
+    adminSite,
     loading,
   }: {
-    adminAndsiteAndindex: StateType;
+    adminSite: StateType;
     loading: {
       models: {
         [key: string]: boolean;
       };
     };
   }) => ({
-    adminAndsiteAndindex,
-    loading: loading.models.adminAndsiteAndindex,
+    adminSite,
+    loading: loading.models.adminSite,
   }),
 )
 class TableList extends Component<TableListProps, TableListState> {
@@ -174,7 +174,7 @@ class TableList extends Component<TableListProps, TableListState> {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndsiteAndindex/fetch',
+      type: 'adminSite/fetch',
     });
   }
 
@@ -203,7 +203,7 @@ class TableList extends Component<TableListProps, TableListState> {
     }
 
     dispatch({
-      type: 'adminAndsiteAndindex/fetch',
+      type: 'adminSite/fetch',
       payload: params,
     });
   };
@@ -216,7 +216,7 @@ class TableList extends Component<TableListProps, TableListState> {
     switch (e.key) {
       case 'remove':
         dispatch({
-          type: 'adminAndsiteAndindex/destroy',
+          type: 'adminSite/destroy',
           payload: {
             key: selectedRows.map(row => row.id),
           },
@@ -261,7 +261,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleAdd = (fields: NewItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndsiteAndindex/add',
+      type: 'adminSite/add',
       payload: fields,
     });
     this.handleModalVisible();
@@ -270,7 +270,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleUpdate = (fields: UpdateItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndsiteAndindex/update',
+      type: 'adminSite/update',
       payload: fields,
     });
     this.handleUpdateModalVisible();
@@ -279,7 +279,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleDestroy = (fields: UpdateItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndsiteAndindex/destroy',
+      type: 'adminSite/destroy',
       payload: fields,
     });
   };
@@ -287,7 +287,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleForceDelete = (fields: UpdateItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndsiteAndindex/forceDelete',
+      type: 'adminSite/forceDelete',
       payload: fields,
     });
   };
@@ -295,14 +295,14 @@ class TableList extends Component<TableListProps, TableListState> {
   handleRestore = (fields: UpdateItem) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndsiteAndindex/restore',
+      type: 'adminSite/restore',
       payload: fields,
     });
   };
 
   render() {
     const {
-      adminAndsiteAndindex: { data },
+      adminSite: { data },
       loading,
     } = this.props;
 

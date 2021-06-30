@@ -12,15 +12,13 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { SorterResult } from 'antd/es/table';
 import { connect } from 'dva';
 import moment from 'moment';
-import { StateType } from './model';
-import CreateForm, { NewItem } from './components/CreateForm';
-import UpdateForm, { UpdateItem } from './components/UpdateForm';
+import { formatMessage } from 'umi-plugin-react/locale';
+import { router } from 'umi';
 import StandardTable, { StandardTableColumnProps } from './components/StandardTable';
 import { TableListItem } from './data.d';
-import { TableListPagination, TableListParams } from '@/models/data.d';
-import { formatMessage } from 'umi-plugin-react/locale';
-
-import styles from './style.less';
+import { ArticleListType, ArticleType, TableListPagination, TableListParams } from '@/models/data.d';
+import { ArticleStateType } from '@/models/article';
+import styles from '@/utils/style.less';
 
 const getValue = (obj: { [x: string]: string[] }) =>
   Object.keys(obj)
@@ -32,75 +30,30 @@ const status = ['√', '×'];
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch<
     Action<
-      | 'adminAndarticleAndindex/add'
-      | 'adminAndarticleAndindex/fetch'
-      | 'adminAndarticleAndindex/update'
-      | 'adminAndarticleAndindex/destroy'
-      | 'adminAndarticleAndindex/forceDelete'
-      | 'adminAndarticleAndindex/restore'
-      | 'adminAndcategoryAndindex/fetch'
-      | 'adminAndtagAndindex/fetch'
+      | 'adminArticle/fetchAll'
+      | 'adminArticle/destroy'
+      | 'adminArticle/forceDelete'
+      | 'adminArticle/restore'
     >
   >;
-  loading: boolean;
-  adminAndarticleAndindex: StateType;
-  adminAndcategoryAndindex: StateType;
-  adminAndtagAndindex: StateType;
+  articles: ArticleListType;
 }
 
 interface TableListState {
-  modalVisible: boolean;
-  updateModalVisible: boolean;
   selectedRows: TableListItem[];
   formValues: { [key: string]: string };
-  updateFormValues: UpdateItem;
 }
 
-/* eslint react/no-multi-comp:0 */
 @connect(
   ({
-     adminAndarticleAndindex,
-     adminAndcategoryAndindex,
-     adminAndtagAndindex,
-    loading,
+     adminArticle,
   }: {
-    adminAndarticleAndindex: StateType;
-    adminAndcategoryAndindex: StateType;
-    adminAndtagAndindex: StateType;
-    loading: {
-      models: {
-        [key: string]: boolean;
-      };
-    };
+    adminArticle: ArticleStateType;
   }) => ({
-    adminAndarticleAndindex,
-    adminAndcategoryAndindex,
-    adminAndtagAndindex,
-    loading: loading.models.adminAndarticleAndindex,
+    articles: adminArticle.list_data,
   }),
 )
 class TableList extends Component<TableListProps, TableListState> {
-  state: TableListState = {
-    modalVisible: false,
-    updateModalVisible: false,
-    selectedRows: [],
-    formValues: {},
-    updateFormValues: {
-      id: 0,
-      category_id: 0,
-      title: '',
-      slug: '',
-      author: '',
-      markdown: '',
-      description: '',
-      keywords: '',
-      cover: '',
-      is_top: 0,
-      tags: [],
-      category: {},
-    },
-  };
-
   columns: StandardTableColumnProps[] = [
     {
       title: 'id',
@@ -151,7 +104,7 @@ class TableList extends Component<TableListProps, TableListState> {
         if (record.deleted_at === null) {
           return (
             <Fragment>
-              <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
+              <a onClick={() => this.handleRedirectToEditPage(record)}>{formatMessage({ id: 'Edit' })}</a>
               <Divider type="vertical" />
               <a onClick={() => this.handleDestroy(record)}>{formatMessage({ id: 'Delete' })}</a>
             </Fragment>
@@ -159,7 +112,7 @@ class TableList extends Component<TableListProps, TableListState> {
         }
         return (
           <Fragment>
-            <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
+            <a onClick={() => this.handleRedirectToEditPage(record)}>{formatMessage({ id: 'Edit' })}</a>
             <Divider type="vertical" />
             <a onClick={() => this.handleForceDelete(record)}>{formatMessage({ id: 'Force Delete' })}</a>
             <Divider type="vertical" />
@@ -173,15 +126,7 @@ class TableList extends Component<TableListProps, TableListState> {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndarticleAndindex/fetch',
-    });
-
-    dispatch({
-      type: 'adminAndcategoryAndindex/fetch',
-    });
-
-    dispatch({
-      type: 'adminAndtagAndindex/fetch',
+      type: 'adminArticle/fetchAll',
     });
   }
 
@@ -210,164 +155,62 @@ class TableList extends Component<TableListProps, TableListState> {
     }
 
     dispatch({
-      type: 'adminAndarticleAndindex/fetch',
+      type: 'adminArticle/fetchAll',
       payload: params,
     });
   };
 
-  handleMenuClick = (e: { key: string }) => {
-    const { dispatch } = this.props;
-    const { selectedRows } = this.state;
-
-    if (!selectedRows) return;
-    switch (e.key) {
-      case 'remove':
-        dispatch({
-          type: 'adminAndarticleAndindex/destroy',
-          payload: {
-            key: selectedRows.map(row => row.id),
-          },
-          callback: () => {
-            this.setState({
-              selectedRows: [],
-            });
-          },
-        });
-        break;
-      default:
-        break;
-    }
+  handleRedirectToCreatePage = () => {
+    router.push('/article/create');
   };
 
-  handleSelectRows = (rows: TableListItem[]) => {
-    this.setState({
-      selectedRows: rows,
-    });
+  handleRedirectToEditPage = (record: ArticleType) => {
+    router.push(`/article/edit/${record.id}`);
   };
 
-  handleModalVisible = (flag?: boolean) => {
-    this.setState({
-      modalVisible: !!flag,
-    });
-  };
-
-  handleUpdateModalVisible = (flag?: boolean, record?: UpdateItem) => {
-    this.setState({
-      updateModalVisible: !!flag,
-      updateFormValues: record || {
-        id: 0,
-        category_id: 0,
-        title: '',
-        slug: '',
-        author: '',
-        markdown: '',
-        description: '',
-        keywords: '',
-        cover: '',
-        is_top: 0,
-        tags: [],
-        category: {},
-      },
-    });
-  };
-
-  handleAdd = (fields: NewItem) => {
+  handleDestroy = (fields: ArticleType) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndarticleAndindex/add',
-      payload: fields,
-    });
-
-    this.handleModalVisible();
-  };
-
-  handleUpdate = (fields: UpdateItem) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminAndarticleAndindex/update',
-      payload: fields,
-    });
-
-    this.handleUpdateModalVisible();
-  };
-
-  handleDestroy = (fields: UpdateItem) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminAndarticleAndindex/destroy',
+      type: 'adminArticle/destroy',
       payload: fields,
     });
   };
 
-  handleForceDelete = (fields: UpdateItem) => {
+  handleForceDelete = (fields: ArticleType) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndarticleAndindex/forceDelete',
+      type: 'adminArticle/forceDelete',
       payload: fields,
     });
   };
 
-  handleRestore = (fields: UpdateItem) => {
+  handleRestore = (fields: ArticleType) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndarticleAndindex/restore',
+      type: 'adminArticle/restore',
       payload: fields,
     });
   };
 
   render() {
-    const {
-      adminAndarticleAndindex: { data },
-      loading,
-    } = this.props;
-
-    const { selectedRows, modalVisible, updateModalVisible, updateFormValues } = this.state;
-
-    const parentMethods = {
-      handleAdd: this.handleAdd,
-      handleModalVisible: this.handleModalVisible,
-    };
-
-    const parentDatas = {
-      adminAndcategoryAndindex: this.props.adminAndcategoryAndindex,
-      adminAndtagAndindex: this.props.adminAndtagAndindex,
-    };
-
-    const updateMethods = {
-      handleUpdateModalVisible: this.handleUpdateModalVisible,
-      handleUpdate: this.handleUpdate,
-    };
-
     return (
       <PageHeaderWrapper>
         <Card bordered={false}>
           <div className={styles.tableList}>
             <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
+              <Button icon="plus" type="primary" onClick={this.handleRedirectToCreatePage}>
                 {formatMessage({ id: 'Add' })}
               </Button>
             </div>
             <StandardTable
-              selectedRows={selectedRows}
-              loading={loading}
-              data={data}
+              data={this.props.articles}
               columns={this.columns}
-              onSelectRow={this.handleSelectRows}
               onChange={this.handleStandardTableChange}
+              selectedRows={[]}
+              onSelectRow={() => {}}
             />
           </div>
         </Card>
-        <CreateForm
-          {...parentMethods}
-          modalVisible={modalVisible}
-          {...parentDatas}
-        />
-        <UpdateForm
-          {...updateMethods}
-          updateModalVisible={updateModalVisible}
-          updateFormValues={ updateFormValues }
-          {...parentDatas}
-        />
       </PageHeaderWrapper>
     );
   }

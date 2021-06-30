@@ -1,76 +1,46 @@
 import { Col, Row, Card, List, Avatar } from 'antd';
 import React, { Component, Suspense } from 'react';
-
 import { Dispatch } from 'redux';
 import { GridContent } from '@ant-design/pro-layout';
-import { RangePickerValue } from 'antd/es/date-picker/interface';
 import { connect } from 'dva';
-import PageLoading from './components/PageLoading';
-import { AnalysisData } from './data.d';
 import { formatMessage } from 'umi-plugin-react/locale';
-
-const IntroduceRow = React.lazy(() => import('./components/IntroduceRow'));
+import PageLoading from './components/PageLoading';
+import IntroduceRow from './components/IntroduceRow';
+import { DashboardType } from './data.d';
 
 interface AnalysisProps {
-  dashboardAndanalysis: AnalysisData;
+  adminDashboard: DashboardType;
   dispatch: Dispatch<any>;
   loading: boolean;
 }
 
-interface AnalysisState {
-  salesType: 'all' | 'online' | 'stores';
-  currentTabKey: string;
-  rangePickerValue: RangePickerValue;
-}
-
 @connect(
   ({
-    dashboardAndanalysis,
-    loading,
+    adminDashboard,
   }: {
-    dashboardAndanalysis: any;
-    loading: {
-      effects: { [key: string]: boolean };
-    };
+    adminDashboard: any;
   }) => ({
-    dashboardAndanalysis,
-    loading: loading.effects['dashboardAndanalysis/fetch'],
+    adminDashboard,
   }),
 )
-class Analysis extends Component<AnalysisProps, AnalysisState> {
-  reqRef: number = 0;
-
-  timeoutId: number = 0;
-
+class Analysis extends Component<AnalysisProps> {
   componentDidMount() {
-    const { dispatch } = this.props;
-    this.reqRef = requestAnimationFrame(() => {
-      dispatch({
-        type: 'dashboardAndanalysis/fetch',
-      });
+    this.props.dispatch({
+      type: 'adminDashboard/fetch',
     });
-  }
-
-  componentWillUnmount() {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'dashboardAndanalysis/clear',
-    });
-    cancelAnimationFrame(this.reqRef);
-    clearTimeout(this.timeoutId);
   }
 
   render() {
-    const { dashboardAndanalysis, loading } = this.props;
+    const { adminDashboard } = this.props;
     const version:string[] = [];
 
-    Object.keys(dashboardAndanalysis.versions).map((name) => (version.push(`${name}: ${dashboardAndanalysis.versions[name]}`)))
+    Object.keys(adminDashboard.versions).map(name => (version.push(`${name}: ${adminDashboard.versions[name]}`)))
 
     return (
       <GridContent>
         <React.Fragment>
           <Suspense fallback={<PageLoading />}>
-            <IntroduceRow loading={loading} visitData={dashboardAndanalysis.counts} />
+            <IntroduceRow visitData={adminDashboard.counts} />
           </Suspense>
           <div style={{ background: '#ECECEC', padding: '30px' }}>
             <Row gutter={16}>
@@ -78,7 +48,7 @@ class Analysis extends Component<AnalysisProps, AnalysisState> {
                 <Card title={ formatMessage({ id: 'Latest logged in users' }) } bordered={false}>
                   <List
                     size="large"
-                    dataSource={dashboardAndanalysis.latest_socialite_users}
+                    dataSource={adminDashboard.latest_socialite_users}
                     renderItem={item => (
                       <List.Item>
                         <List.Item.Meta
@@ -96,7 +66,7 @@ class Analysis extends Component<AnalysisProps, AnalysisState> {
                 <Card title={ formatMessage({ id: 'Recent Comments' }) } bordered={false}>
                   <List
                     size="large"
-                    dataSource={dashboardAndanalysis.latest_comments}
+                    dataSource={adminDashboard.latest_comments}
                     renderItem={item => (
                       <List.Item>
                         <List.Item.Meta

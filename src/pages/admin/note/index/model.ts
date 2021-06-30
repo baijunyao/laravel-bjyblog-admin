@@ -33,7 +33,7 @@ export interface ModelType {
 }
 
 const Model: ModelType = {
-  namespace: 'adminAndnoteAndindex',
+  namespace: 'adminNote',
 
   state: {
     data: {

@@ -36,7 +36,6 @@ function initTotalList(columns: StandardTableColumnProps[]) {
 }
 
 interface StandardTableState {
-  selectedRowKeys: string[];
   needTotalList: StandardTableColumnProps[];
 }
 
@@ -66,25 +65,20 @@ class StandardTable extends Component<StandardTableProps<TableListItem>, Standar
   };
 
   render() {
-    const { data, rowKey, ...rest } = this.props;
-    const { list = [], pagination = false } = data || {};
-
-    const paginationProps = pagination
-      ? {
-          showSizeChanger: true,
-          showQuickJumper: true,
-          ...pagination,
-        }
-      : false;
+    const paginationProps = {
+      showSizeChanger: true,
+      showQuickJumper: true,
+      ...this.props.data.pagination,
+    };
 
     return (
       <div className={styles.standardTable}>
         <Table
-          rowKey={rowKey || 'key'}
-          dataSource={list}
+          rowKey={record => record.id.toString()}
+          dataSource={this.props.data.list}
           pagination={paginationProps}
           onChange={this.handleTableChange}
-          {...rest}
+          columns={this.props.columns}
         />
       </div>
     );
