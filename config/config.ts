@@ -388,11 +388,11 @@ export default {
   chainWebpack: webpackPlugin,
   proxy: {
     '/oauth/*': {
-      target: 'http://laravel-bjyblog.test/',
+      target: 'http://development.baijunyao.com/',
       changeOrigin: true,
     },
     '/api/*': {
-      target: 'http://laravel-bjyblog.test/',
+      target: 'http://development.baijunyao.com/',
       changeOrigin: true,
     },
   },
