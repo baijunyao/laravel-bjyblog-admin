@@ -87,6 +87,8 @@ interface Params {
   page: number;
   sorter: string;
   sort: string;
+  deleted_at: string;
+  filter: any
 }
 
 request.use(async (ctx, next) => {
@@ -94,7 +96,13 @@ request.use(async (ctx, next) => {
     const params = ctx.req.options.params as Params;
 
     if (params !== undefined) {
-      params['filter[trashed]'] = 'with';
+      if (params.deleted_at === undefined) {
+        params['filter[trashed]'] = 'with';
+      } else if (params.deleted_at === '1') {
+        params['filter[trashed]'] = 'only';
+      } else if (params.deleted_at !== '0') {
+        params['filter[trashed]'] = 'with';
+      }
 
       if (params.currentPage !== undefined) {
         params.page = params.currentPage;
