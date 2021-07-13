@@ -7,21 +7,14 @@ import React, { Component, Fragment } from 'react';
 import { Dispatch, Action } from 'redux';
 import { FormComponentProps } from 'antd/es/form';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import { SorterResult } from 'antd/es/table';
 import { connect } from 'dva';
+import { formatMessage } from 'umi-plugin-react/locale';
 import { StateType } from './model';
 import UpdateForm, { UpdateItem } from './components/UpdateForm';
-import StandardTable, { StandardTableColumnProps } from './components/StandardTable';
+import StandardTable from '@/pages/admin/components/StandardTable';
 import { SocialiteClientType } from './data.d';
-import { TableListPagination, TableListParams } from '@/models/data.d';
-import { formatMessage } from 'umi-plugin-react/locale';
 
 import styles from '@/utils/style.less';
-
-const getValue = (obj: { [x: string]: string[] }) =>
-  Object.keys(obj)
-    .map(key => obj[key])
-    .join(',');
 
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch<
@@ -37,12 +30,9 @@ interface TableListProps extends FormComponentProps {
 
 interface TableListState {
   updateModalVisible: boolean;
-  selectedRows: SocialiteClientType[];
-  formValues: { [key: string]: string };
   updateFormValues: UpdateItem;
 }
 
-/* eslint react/no-multi-comp:0 */
 @connect(
   ({
     adminSocialiteClient,
@@ -62,8 +52,6 @@ interface TableListState {
 class TableList extends Component<TableListProps, TableListState> {
   state: TableListState = {
     updateModalVisible: false,
-    selectedRows: [],
-    formValues: {},
     updateFormValues: {
       id: 0,
       client_id: '',
@@ -71,7 +59,7 @@ class TableList extends Component<TableListProps, TableListState> {
     },
   };
 
-  columns: StandardTableColumnProps[] = [
+  columns = [
     {
       title: 'name',
       dataIndex: 'name',
@@ -87,80 +75,13 @@ class TableList extends Component<TableListProps, TableListState> {
     {
       title: formatMessage({ id: 'Handle' }),
       width: 110,
-      render: (text, record) => (
+      render: (text: string, record: SocialiteClientType) => (
           <Fragment>
             <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
           </Fragment>
         ),
     },
   ];
-
-  componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminSocialiteClient/fetch',
-    });
-  }
-
-  handleStandardTableChange = (
-    pagination: Partial<TableListPagination>,
-    filtersArg: Record<keyof SocialiteClientType, string[]>,
-    sorter: SorterResult<SocialiteClientType>,
-  ) => {
-    const { dispatch } = this.props;
-    const { formValues } = this.state;
-
-    const filters = Object.keys(filtersArg).reduce((obj, key) => {
-      const newObj = { ...obj };
-      newObj[key] = getValue(filtersArg[key]);
-      return newObj;
-    }, {});
-
-    const params: Partial<TableListParams> = {
-      currentPage: pagination.current,
-      pageSize: pagination.pageSize,
-      ...formValues,
-      ...filters,
-    };
-    if (sorter.field) {
-      params.sorter = `${sorter.field}_${sorter.order}`;
-    }
-
-    dispatch({
-      type: 'adminSocialiteClient/fetch',
-      payload: params,
-    });
-  };
-
-  handleMenuClick = (e: { key: string }) => {
-    const { dispatch } = this.props;
-    const { selectedRows } = this.state;
-
-    if (!selectedRows) return;
-    switch (e.key) {
-      case 'remove':
-        dispatch({
-          type: 'adminSocialiteClient/destroy',
-          payload: {
-            key: selectedRows.map(row => row.id),
-          },
-          callback: () => {
-            this.setState({
-              selectedRows: [],
-            });
-          },
-        });
-        break;
-      default:
-        break;
-    }
-  };
-
-  handleSelectRows = (rows: SocialiteClientType[]) => {
-    this.setState({
-      selectedRows: rows,
-    });
-  };
 
   handleUpdateModalVisible = (flag?: boolean, record?: UpdateItem) => {
     this.setState({
@@ -183,12 +104,7 @@ class TableList extends Component<TableListProps, TableListState> {
   };
 
   render() {
-    const {
-      adminSocialiteClient: { data },
-      loading,
-    } = this.props;
-
-    const { selectedRows, updateModalVisible, updateFormValues } = this.state;
+    const { updateModalVisible, updateFormValues } = this.state;
 
     const updateMethods = {
       handleUpdateModalVisible: this.handleUpdateModalVisible,
@@ -200,12 +116,8 @@ class TableList extends Component<TableListProps, TableListState> {
         <Card bordered={false}>
           <div className={styles.tableList}>
             <StandardTable
-              selectedRows={selectedRows}
-              loading={loading}
-              data={data}
               columns={this.columns}
-              onSelectRow={this.handleSelectRows}
-              onChange={this.handleStandardTableChange}
+              model="adminSocialiteClient"
             />
           </div>
         </Card>

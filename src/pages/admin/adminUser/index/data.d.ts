@@ -1,6 +1,6 @@
 import { TableListData as BaseTableListData } from '@/models/data'
 
-export interface TableListItem {
+export interface AdminUserType {
   id: number;
   name: string;
   email: string;
@@ -11,5 +11,5 @@ export interface TableListItem {
 }
 
 export interface TableListData extends BaseTableListData{
-  list: TableListItem[];
+  list: AdminUserType[];
 }

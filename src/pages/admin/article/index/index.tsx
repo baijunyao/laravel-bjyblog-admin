@@ -9,28 +9,19 @@ import React, { Component, Fragment } from 'react';
 import { Dispatch, Action } from 'redux';
 import { FormComponentProps } from 'antd/es/form';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import { SorterResult } from 'antd/es/table';
-import { connect } from 'dva';
 import moment from 'moment';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { router } from 'umi';
-import StandardTable, { StandardTableColumnProps } from './components/StandardTable';
+import StandardTable from '@/pages/admin/components/StandardTable';
 import { TableListItem } from './data.d';
-import { ArticleListType, ArticleType, TableListPagination, TableListParams } from '@/models/data.d';
-import { ArticleStateType } from '@/models/article';
+import { ArticleListType, ArticleType } from '@/models/data.d';
 import styles from '@/utils/style.less';
-
-const getValue = (obj: { [x: string]: string[] }) =>
-  Object.keys(obj)
-    .map(key => obj[key])
-    .join(',');
 
 const status = ['√', '×'];
 
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch<
     Action<
-      | 'adminArticle/fetchAll'
       | 'adminArticle/destroy'
       | 'adminArticle/forceDelete'
       | 'adminArticle/restore'
@@ -44,17 +35,8 @@ interface TableListState {
   formValues: { [key: string]: string };
 }
 
-@connect(
-  ({
-     adminArticle,
-  }: {
-    adminArticle: ArticleStateType;
-  }) => ({
-    articles: adminArticle.list_data,
-  }),
-)
 class TableList extends Component<TableListProps, TableListState> {
-  columns: StandardTableColumnProps[] = [
+  columns = [
     {
       title: 'id',
       dataIndex: 'id',
@@ -66,7 +48,7 @@ class TableList extends Component<TableListProps, TableListState> {
     {
       title: formatMessage({ id: 'Title' }),
       dataIndex: 'title',
-      render: (title, record) => <a href={`/article/${record.id}`} target="_blank" rel="noopener noreferrer">{title}</a>,
+      render: (title: string, record: ArticleType) => <a href={`/article/${record.id}`} target="_blank" rel="noopener noreferrer">{title}</a>,
     },
     {
       title: formatMessage({ id: 'Click Counts' }),
@@ -100,7 +82,7 @@ class TableList extends Component<TableListProps, TableListState> {
     {
       title: formatMessage({ id: 'Handle' }),
       width: 110,
-      render: (text, record) => {
+      render: (text: string, record: ArticleType) => {
         if (record.deleted_at === null) {
           return (
             <Fragment>
@@ -122,43 +104,6 @@ class TableList extends Component<TableListProps, TableListState> {
       },
     },
   ];
-
-  componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminArticle/fetchAll',
-    });
-  }
-
-  handleStandardTableChange = (
-    pagination: Partial<TableListPagination>,
-    filtersArg: Record<keyof TableListItem, string[]>,
-    sorter: SorterResult<TableListItem>,
-  ) => {
-    const { dispatch } = this.props;
-    const { formValues } = this.state;
-
-    const filters = Object.keys(filtersArg).reduce((obj, key) => {
-      const newObj = { ...obj };
-      newObj[key] = getValue(filtersArg[key]);
-      return newObj;
-    }, {});
-
-    const params: Partial<TableListParams> = {
-      currentPage: pagination.current,
-      pageSize: pagination.pageSize,
-      ...formValues,
-      ...filters,
-    };
-    if (sorter.field) {
-      params.sorter = `${sorter.field}_${sorter.order}`;
-    }
-
-    dispatch({
-      type: 'adminArticle/fetchAll',
-      payload: params,
-    });
-  };
 
   handleRedirectToCreatePage = () => {
     router.push('/article/create');
@@ -203,11 +148,8 @@ class TableList extends Component<TableListProps, TableListState> {
               </Button>
             </div>
             <StandardTable
-              data={this.props.articles}
               columns={this.columns}
-              onChange={this.handleStandardTableChange}
-              selectedRows={[]}
-              onSelectRow={() => {}}
+              model="adminArticle"
             />
           </div>
         </Card>

@@ -1,10 +1,14 @@
 import { AnyAction, Reducer } from 'redux';
 import { EffectsCommandMap } from 'dva';
 import { queryArticle, queryArticles, addArticle, updateArticle, removeArticle, forceDeleteArticle, restoreArticle } from '@/services/article';
-import { ArticleType, ArticleListType } from '@/models/data.d';
+import { ArticleType, TableListPagination } from '@/models/data.d';
 
 export interface ArticleStateType {
-  list_data: ArticleListType;
+  data: {
+    list: ArticleType[];
+    pagination: Partial<TableListPagination>;
+  };
+
   current_data: ArticleType | null;
 }
 
@@ -18,7 +22,7 @@ export interface ArticleModelType {
   state: ArticleStateType;
   effects: {
     fetchOne: Effect,
-    fetchAll: Effect,
+    fetch: Effect,
     add: Effect,
     update: Effect,
     destroy: Effect,
@@ -37,7 +41,7 @@ const ArticleModel: ArticleModelType = {
   namespace: 'adminArticle',
 
   state: {
-    list_data: {
+    data: {
       list: [],
       pagination: {},
     },
@@ -52,7 +56,7 @@ const ArticleModel: ArticleModelType = {
       });
     },
 
-    *fetchAll({ payload }, { call, put }) {
+    *fetch({ payload }, { call, put }) {
       const response = yield call(queryArticles, payload);
       yield put({
         type: 'listDataSave',
@@ -113,7 +117,7 @@ const ArticleModel: ArticleModelType = {
     listDataSave(state, action) {
       return {
         ...state,
-        list_data: action.payload,
+        data: action.payload,
       };
     },
 
@@ -125,7 +129,7 @@ const ArticleModel: ArticleModelType = {
     },
 
     listDataReplace(state, action) {
-      const { list } = state.list_data;
+      const { list } = state.data;
 
       list.forEach((value: ArticleType, key:number) => {
         if (value.id === action.payload.id) {
@@ -135,15 +139,15 @@ const ArticleModel: ArticleModelType = {
 
       return {
         current_data: state.current_data,
-        list_data: {
-          ...state.list_data,
+        data: {
           list,
+          pagination: state.data.pagination,
         },
       };
     },
 
     listDataRemove(state, action) {
-      const { list } = state.list_data;
+      const { list } = state.data;
 
       list.forEach((value: ArticleType, key:number) => {
         if (value.id === action.payload.id) {
@@ -153,9 +157,9 @@ const ArticleModel: ArticleModelType = {
 
       return {
         current_data: state.current_data,
-        list_data: {
-          ...state.list_data,
+        data: {
           list,
+          pagination: state.data.pagination,
         },
       };
     },

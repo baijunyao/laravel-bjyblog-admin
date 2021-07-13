@@ -1,14 +1,12 @@
 import { Table } from 'antd';
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Dispatch } from 'redux';
 import styles from './index.less';
 import { TableListParams } from '@/models/data';
 
 interface StandardTablePropType {
   columns: any;
   model: string;
-  dispatch: Dispatch;
 }
 
 const getValue = (obj: { [x: string]: string[] }) =>
@@ -51,6 +49,7 @@ class StandardTable extends Component<StandardTablePropType> {
   };
 
   render() {
+    console.log(this.props)
     return (
       <div className={styles.standardTable}>
         <Table
