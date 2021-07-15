@@ -1,6 +1,6 @@
-import { TableListData as BaseTableListData } from '@/models/data'
+import { TableListPaginationType } from '@/models/data'
 
-export interface TableListItem {
+export interface SiteType {
   id: number;
   name: string;
   description: string;
@@ -12,6 +12,6 @@ export interface TableListItem {
   deleted_at: string | null;
 }
 
-export interface TableListData extends BaseTableListData{
-  list: TableListItem[];
+export interface SiteListPaginationType extends TableListPaginationType{
+  list: SiteType[];
 }

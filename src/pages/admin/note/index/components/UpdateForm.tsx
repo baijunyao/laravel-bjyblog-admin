@@ -1,10 +1,10 @@
 import { Form, Input, Modal } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
-import { TableListItem } from '@/pages/admin/note/index/data';
+import { NoteType } from '@/pages/admin/note/index/data';
 import { formatMessage } from 'umi-plugin-react/locale';
 
-export type UpdateItem = Pick<TableListItem, 'id' | 'content'>
+export type UpdateItem = Pick<NoteType, 'id' | 'content'>
 
 const FormItem = Form.Item;
 const { TextArea } = Input;

@@ -2,10 +2,10 @@ import {Form, Input, Modal, Radio} from 'antd';
 
 import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
-import { TableListItem } from '@/pages/admin/site/index/data';
+import { SiteType } from '@/pages/admin/site/index/data';
 import { formatMessage } from 'umi-plugin-react/locale';
 
-export type NewItem = Pick<TableListItem, 'name' | 'description' | 'url' | 'sort' | 'audit'>
+export type NewItem = Pick<SiteType, 'name' | 'description' | 'url' | 'sort' | 'audit'>
 
 const FormItem = Form.Item;
 

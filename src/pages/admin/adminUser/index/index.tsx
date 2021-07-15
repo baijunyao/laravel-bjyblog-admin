@@ -6,7 +6,7 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
 import moment from 'moment';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { StateType } from './model';
+import { AdminUserStateType } from './model';
 import UpdateForm, { UpdateItem } from './components/UpdateForm';
 import StandardTable from '@/pages/admin/components/StandardTable';
 import { AdminUserType } from './data.d';
@@ -24,7 +24,7 @@ interface TableListProps extends FormComponentProps {
     >
   >;
   loading: boolean;
-  adminUser: StateType;
+  adminUser: AdminUserStateType;
 }
 
 interface TableListState {
@@ -37,7 +37,7 @@ interface TableListState {
     adminUser,
     loading,
   }: {
-    adminUser: StateType;
+    adminUser: AdminUserStateType;
     loading: {
       models: {
         [key: string]: boolean;

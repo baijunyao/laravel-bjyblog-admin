@@ -1,10 +1,10 @@
-import {AnyAction, Reducer} from 'redux';
+import { AnyAction, Reducer } from 'redux';
 import { EffectsCommandMap } from 'dva';
 import { queryRule, updateRule } from '@/pages/admin/config/service';
-import { TableListData } from './data.d';
+import { ConfigListPaginationType } from './data.d';
 
 export interface StateType {
-  data: TableListData;
+  data: ConfigListPaginationType;
 }
 
 export type Effect = (

@@ -2,10 +2,10 @@ import { Form, Input, Radio, Modal } from 'antd';
 
 import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
-import { TableListItem } from '@/pages/admin/comment/index/data';
+import { CommentType } from '@/pages/admin/comment/index/data';
 import { formatMessage } from 'umi-plugin-react/locale';
 
-export type UpdateItem = Pick<TableListItem, 'id' | 'content' | 'is_audited'>
+export type UpdateItem = Pick<CommentType, 'id' | 'content' | 'is_audited'>
 
 const FormItem = Form.Item;
 

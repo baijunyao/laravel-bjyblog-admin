@@ -2,10 +2,10 @@ import { Form, Input, Modal } from 'antd';
 
 import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
-import { TableListItem } from '@/pages/admin/config/data';
+import { ConfigType } from '@/pages/admin/config/data';
 import { formatMessage } from 'umi-plugin-react/locale';
 
-export type UpdateItem = Pick<TableListItem, 'id' | 'value'>
+export type UpdateItem = Pick<ConfigType, 'id' | 'value'>
 
 const FormItem = Form.Item;
 

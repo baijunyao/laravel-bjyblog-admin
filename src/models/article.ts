@@ -1,12 +1,12 @@
 import { AnyAction, Reducer } from 'redux';
 import { EffectsCommandMap } from 'dva';
 import { queryArticle, queryArticles, addArticle, updateArticle, removeArticle, forceDeleteArticle, restoreArticle } from '@/services/article';
-import { ArticleType, TableListPagination } from '@/models/data.d';
+import { ArticleType, ArticleListPaginationType } from '@/models/data.d';
 
 export interface ArticleStateType {
   data: {
     list: ArticleType[];
-    pagination: Partial<TableListPagination>;
+    pagination: Partial<ArticleListPaginationType>;
   };
 
   current_data: ArticleType | null;

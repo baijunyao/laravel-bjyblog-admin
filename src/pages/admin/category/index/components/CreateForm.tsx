@@ -2,10 +2,10 @@ import { Form, Input, Modal } from 'antd';
 
 import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
-import { TableListItem } from '@/pages/admin/category/index/data';
 import { formatMessage } from 'umi-plugin-react/locale';
+import { CategoryType } from '@/models/data.d'
 
-export type NewCategory = Pick<TableListItem, 'name' | 'keywords' | 'description'>
+export type NewCategory = Pick<CategoryType, 'name' | 'keywords' | 'description'>
 
 const FormItem = Form.Item;
 

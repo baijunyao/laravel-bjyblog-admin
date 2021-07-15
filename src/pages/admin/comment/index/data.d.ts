@@ -1,26 +1,19 @@
-import { TableListData as BaseTableListData } from '@/models/data'
+import { TableListPaginationType } from '@/models/data'
 
-export interface SocialiteUser {
-  id: number;
-  name: string;
-}
+import { SocialiteUserType } from '@/pages/admin/socialiteUser/index/data.d'
+import { ArticleType } from '@/models/data.d'
 
-export interface Article {
-  id: number;
-  title: string;
-}
-
-export interface TableListItem {
+export interface CommentType {
   id: number;
   content: string;
   is_audited: number;
-  socialite_user: SocialiteUser;
-  article: Article;
+  socialite_user: SocialiteUserType;
+  article: ArticleType;
   created_at: string;
   updated_at: string;
   deleted_at: string | null;
 }
 
-export interface TableListData extends BaseTableListData{
-  list: TableListItem[];
+export interface CommentListPaginationType extends TableListPaginationType{
+  list: CommentType[];
 }

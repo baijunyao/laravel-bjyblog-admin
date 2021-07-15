@@ -2,10 +2,10 @@ import { AnyAction, Reducer } from 'redux';
 import { EffectsCommandMap } from 'dva';
 import { addCategory, queryCategory, removeCategory, updateCategory, forceDeleteCategory, restoreCategory } from '@/services/category';
 
-import { TableListData } from './data.d';
+import { CategoryListPaginationType } from './data.d';
 
 export interface CategoryStateType {
-  data: TableListData;
+  data: CategoryListPaginationType;
 }
 
 export type Effect = (

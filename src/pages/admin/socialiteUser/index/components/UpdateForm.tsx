@@ -2,10 +2,10 @@ import { Form, Input, Modal, Radio } from 'antd';
 
 import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
-import { TableListItem } from '@/pages/admin/socialiteUser/index/data';
+import { SocialiteUserType } from '@/pages/admin/socialiteUser/index/data';
 import { formatMessage } from 'umi-plugin-react/locale';
 
-export type UpdateItem = Pick<TableListItem, 'id' | 'name' | 'email' | 'is_admin' | 'is_blocked'>
+export type UpdateItem = Pick<SocialiteUserType, 'id' | 'name' | 'email' | 'is_admin' | 'is_blocked'>
 
 const FormItem = Form.Item;
 

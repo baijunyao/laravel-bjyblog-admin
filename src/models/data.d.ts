@@ -19,16 +19,16 @@ export interface LaravelPaginationResponse {
   links: LaravelLinks
 }
 
-export interface TableListPagination {
+export interface TablePagination {
   total: number;
   pageSize: number;
   current: number;
   showSizeChanger: boolean;
 }
 
-export interface TableListData {
+export interface TableListPaginationType {
   list: any[];
-  pagination: Partial<TableListPagination>;
+  pagination: Partial<TablePagination>;
 }
 
 export interface TableListParams {
@@ -50,7 +50,7 @@ export interface TagType {
   deleted_at: string | null;
 }
 
-export interface TagListType extends TableListData{
+export interface TagListPaginationType extends TableListPaginationType{
   list: TagType[];
 }
 
@@ -67,7 +67,7 @@ export interface CategoryType {
   deleted_at: string | null;
 }
 
-export interface CategoryListType extends TableListData{
+export interface CategoryListPaginationType extends TableListPaginationType{
   list: CategoryType[];
 }
 
@@ -91,6 +91,6 @@ export interface ArticleType {
   deleted_at: string | null;
 }
 
-export interface ArticleListType extends TableListData{
+export interface ArticleListPaginationType extends TableListPaginationType{
   list: ArticleType[];
 }

@@ -13,8 +13,7 @@ import moment from 'moment';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { router } from 'umi';
 import StandardTable from '@/pages/admin/components/StandardTable';
-import { TableListItem } from './data.d';
-import { ArticleListType, ArticleType } from '@/models/data.d';
+import { ArticleListPaginationType, ArticleType } from '@/models/data.d';
 import styles from '@/utils/style.less';
 
 const status = ['√', '×'];
@@ -27,11 +26,11 @@ interface TableListProps extends FormComponentProps {
       | 'adminArticle/restore'
     >
   >;
-  articles: ArticleListType;
+  articles: ArticleListPaginationType;
 }
 
 interface TableListState {
-  selectedRows: TableListItem[];
+  selectedRows: ArticleType[];
   formValues: { [key: string]: string };
 }
 

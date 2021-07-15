@@ -2,10 +2,10 @@ import { Form, Input, Modal } from 'antd';
 
 import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
-import { TableListItem } from '@/pages/admin/friend/index/data';
+import { FriendType } from '@/pages/admin/friend/index/data';
 import { formatMessage } from 'umi-plugin-react/locale';
 
-export type NewItem = Pick<TableListItem, 'name' | 'url' | 'sort'>
+export type NewItem = Pick<FriendType, 'name' | 'url' | 'sort'>
 
 const FormItem = Form.Item;
 

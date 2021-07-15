@@ -1,10 +1,10 @@
 import { AnyAction, Reducer } from 'redux';
 import { EffectsCommandMap } from 'dva';
 import { addTag, queryTags, removeTag, updateTag, forceDeleteTag, restoreTag } from '@/services/tag';
-import { TagListType } from './data.d';
+import { TagListPaginationType } from './data.d';
 
 export interface TagStateType {
-  data: TagListType;
+  data: TagListPaginationType;
 }
 
 export type Effect = (

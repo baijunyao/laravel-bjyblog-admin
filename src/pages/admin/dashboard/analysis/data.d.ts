@@ -1,10 +1,10 @@
-import { TableListItem as SocialiteUser } from '@/pages/admin/socialiteUser/index/data'
-import { TableListItem as Comment } from '@/pages/admin/comment/index/data'
-import { TableListItem as Article } from '@/pages/admin/article/index/data'
+import { SocialiteUserType } from '@/pages/admin/socialiteUser/index/data'
+import { CommentType as Comment } from '@/pages/admin/comment/index/data'
+import { ArticleType } from '@/models/data.d'
 
 export interface LatestComments extends Comment {
-  article: Article;
-  socialite_user: SocialiteUser;
+  article: ArticleType;
+  socialite_user: SocialiteUserType;
 }
 
 export interface Versions {
@@ -22,7 +22,7 @@ export interface Counts {
 }
 
 export interface DashboardType {
-  latest_socialite_users: SocialiteUser[];
+  latest_socialite_users: SocialiteUserType[];
   latest_comments: LatestComments[];
   versions: Versions;
   counts: Counts;

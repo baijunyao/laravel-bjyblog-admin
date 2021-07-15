@@ -1,4 +1,4 @@
-import { TableListData as BaseTableListData } from '@/models/data'
+import { TableListPaginationType } from '@/models/data'
 
 export interface AdminUserType {
   id: number;
@@ -10,6 +10,6 @@ export interface AdminUserType {
   deleted_at: string | null;
 }
 
-export interface TableListData extends BaseTableListData{
+export interface AdminUserListPaginationType extends TableListPaginationType{
   list: AdminUserType[];
 }

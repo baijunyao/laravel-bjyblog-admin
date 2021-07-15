@@ -1,11 +1,11 @@
 import request from '@/utils/request';
-import { ArticleType, ArticleListType } from '@/models/data';
+import { ArticleType, ArticleListPaginationType } from '@/models/data';
 
 export async function queryArticle(id: number) {
   return request(`/api/articles/${id}`);
 }
 
-export async function queryArticles(params: ArticleListType) {
+export async function queryArticles(params: ArticleListPaginationType) {
   return request('/api/articles', {
     params,
   });

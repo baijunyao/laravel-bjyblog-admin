@@ -13,7 +13,7 @@ import moment from 'moment';
 import { StateType } from './model';
 import UpdateForm, { UpdateItem } from './components/UpdateForm';
 import StandardTable from '@/pages/admin/components/StandardTable';
-import { TableListItem } from './data.d';
+import { CommentType } from './data.d';
 import { formatMessage } from 'umi-plugin-react/locale';
 
 import styles from '@/utils/style.less';
@@ -68,7 +68,7 @@ class TableList extends Component<TableListProps, TableListState> {
     {
       title: formatMessage({ id: 'Content' }),
       dataIndex: 'content',
-      render: (content: string, record: TableListItem) => <a href={`/article/${record.article.id}#comment-${record.id}`} target="_blank" rel="noopener noreferrer"><div dangerouslySetInnerHTML={{ __html: content }} /></a>,
+      render: (content: string, record: CommentType) => <a href={`/article/${record.article.id}#comment-${record.id}`} target="_blank" rel="noopener noreferrer"><div dangerouslySetInnerHTML={{ __html: content }} /></a>,
     },
     {
       title: formatMessage({ id: 'Article' }),
@@ -123,7 +123,7 @@ class TableList extends Component<TableListProps, TableListState> {
     {
       title: formatMessage({ id: 'Handle' }),
       width: 110,
-      render: (text: string, record: TableListItem) => {
+      render: (text: string, record: CommentType) => {
         if (record.deleted_at === null) {
           return (
             <Fragment>

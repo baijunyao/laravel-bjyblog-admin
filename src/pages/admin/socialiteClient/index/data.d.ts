@@ -1,4 +1,4 @@
-import { TableListData } from '@/models/data'
+import { TableListPaginationType } from '@/models/data'
 
 export interface SocialiteClientType {
   id: number;
@@ -11,6 +11,6 @@ export interface SocialiteClientType {
   deleted_at: string | null;
 }
 
-export interface SocialiteClientListType extends TableListData{
+export interface SocialiteClientListType extends TableListPaginationType{
   list: SocialiteClientType[];
 }

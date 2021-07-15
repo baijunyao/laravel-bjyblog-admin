@@ -2,10 +2,10 @@ import { AnyAction, Reducer } from 'redux';
 import { EffectsCommandMap } from 'dva';
 import { queryRule, removeRule, updateRule, forceDeleteRule, restoreRule } from './service';
 
-import { TableListData } from './data.d';
+import { CommentListPaginationType } from './data.d';
 
 export interface StateType {
-  data: TableListData;
+  data: CommentListPaginationType;
 }
 
 export type Effect = (

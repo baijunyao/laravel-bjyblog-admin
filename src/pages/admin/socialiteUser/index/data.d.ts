@@ -1,12 +1,7 @@
-import { TableListData as BaseTableListData } from '@/models/data'
+import { TableListPaginationType } from '@/models/data'
+import { SocialiteClientType } from '@/pages/admin/socialiteClient/index/data.d'
 
-export interface SocialiteClient {
-  id: number;
-  name: string;
-  icon: string;
-}
-
-export interface TableListItem {
+export interface SocialiteUserType {
   id: number;
   name: string;
   email: string;
@@ -14,12 +9,12 @@ export interface TableListItem {
   is_admin: number;
   is_blocked: number;
   login_times: number;
-  socialite_client: SocialiteClient;
+  socialite_client: SocialiteClientType;
   created_at: string;
   updated_at: string;
   deleted_at: string | null;
 }
 
 export interface TableListData extends BaseTableListData{
-  list: TableListItem[];
+  list: SocialiteUserType[];
 }

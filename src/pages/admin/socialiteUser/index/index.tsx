@@ -13,7 +13,7 @@ import { formatMessage } from 'umi-plugin-react/locale';
 import { StateType } from './model';
 import UpdateForm, { UpdateItem } from './components/UpdateForm';
 import StandardTable from '@/pages/admin/components/StandardTable';
-import { TableListItem } from './data.d';
+import { SocialiteUserType } from './data.d';
 
 import styles from '@/utils/style.less';
 
@@ -122,7 +122,7 @@ class TableList extends Component<TableListProps, TableListState> {
     {
       title: formatMessage({ id: 'Handle' }),
       width: 110,
-      render: (text: string, record: TableListItem) => {
+      render: (text: string, record: SocialiteUserType) => {
         if (record.deleted_at === null) {
           return (
             <Fragment>

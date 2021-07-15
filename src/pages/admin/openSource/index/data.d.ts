@@ -1,6 +1,6 @@
-import { TableListData as BaseTableListData } from '@/models/data'
+import { TableListPaginationType } from '@/models/data'
 
-export interface TableListItem {
+export interface OpenSourceType {
   id: number;
   sort: number;
   type: number;
@@ -10,6 +10,6 @@ export interface TableListItem {
   deleted_at: string | null;
 }
 
-export interface TableListData extends BaseTableListData{
-  list: TableListItem[];
+export interface OpenSourceListPaginationType extends TableListPaginationType{
+  list: OpenSourceType[];
 }
