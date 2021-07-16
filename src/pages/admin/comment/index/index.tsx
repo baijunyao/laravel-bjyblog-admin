@@ -10,7 +10,7 @@ import { FormComponentProps } from 'antd/es/form';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
 import moment from 'moment';
-import { StateType } from './model';
+import { CommentStateType } from './model';
 import UpdateForm, { UpdateItem } from './components/UpdateForm';
 import StandardTable from '@/pages/admin/components/StandardTable';
 import { CommentType } from './data.d';
@@ -30,7 +30,7 @@ interface TableListProps extends FormComponentProps {
     >
   >;
   loading: boolean;
-  adminComment: StateType;
+  adminComment: CommentStateType;
 }
 
 interface TableListState {
@@ -43,7 +43,7 @@ interface TableListState {
     adminComment,
     loading,
   }: {
-    adminComment: StateType;
+    adminComment: CommentStateType;
     loading: {
       models: {
         [key: string]: boolean;

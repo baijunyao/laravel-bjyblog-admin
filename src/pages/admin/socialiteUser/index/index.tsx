@@ -10,7 +10,7 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
 import moment from 'moment';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { StateType } from './model';
+import { SocialiteUserStateType } from './model';
 import UpdateForm, { UpdateItem } from './components/UpdateForm';
 import StandardTable from '@/pages/admin/components/StandardTable';
 import { SocialiteUserType } from './data.d';
@@ -29,7 +29,7 @@ interface TableListProps extends FormComponentProps {
       >
     >;
   loading: boolean;
-  adminSocialiteUser: StateType;
+  adminSocialiteUser: SocialiteUserStateType;
 }
 
 interface TableListState {
@@ -42,7 +42,7 @@ interface TableListState {
      adminSocialiteUser,
      loading,
    }: {
-    adminSocialiteUser: StateType;
+    adminSocialiteUser: SocialiteUserStateType;
     loading: {
       models: {
         [key: string]: boolean;

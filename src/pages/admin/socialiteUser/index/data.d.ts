@@ -15,6 +15,6 @@ export interface SocialiteUserType {
   deleted_at: string | null;
 }
 
-export interface TableListData extends BaseTableListData{
+export interface SocialiteUserListPaginationType extends TableListPaginationType{
   list: SocialiteUserType[];
 }

@@ -11,7 +11,7 @@ import { FormComponentProps } from 'antd/es/form';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { StateType } from '../model';
+import { ConfigStateType } from '../model';
 import UpdateForm, { UpdateItem } from '../components/UpdateForm';
 import { StandardTableColumnProps } from '../components/StandardTable';
 
@@ -25,7 +25,7 @@ interface TableListProps extends FormComponentProps {
       >
     >;
   loading: boolean;
-  adminConfig: StateType;
+  adminConfig: ConfigStateType;
 }
 
 interface TableListState {
@@ -38,7 +38,7 @@ interface TableListState {
      adminConfig,
      loading,
    }: {
-    adminConfig: StateType;
+    adminConfig: ConfigStateType;
     loading: {
       models: {
         [key: string]: boolean;

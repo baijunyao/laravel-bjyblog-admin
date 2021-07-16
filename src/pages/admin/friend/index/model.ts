@@ -4,18 +4,18 @@ import { addRule, queryRule, removeRule, updateRule, forceDeleteRule, restoreRul
 
 import { FriendListPaginationType } from './data.d';
 
-export interface StateType {
+export interface FriendStateType {
   data: FriendListPaginationType;
 }
 
 export type Effect = (
   action: AnyAction,
-  effects: EffectsCommandMap & { select: <T>(func: (state: StateType) => T) => T },
+  effects: EffectsCommandMap & { select: <T>(func: (state: FriendStateType) => T) => T },
 ) => void;
 
 export interface ModelType {
   namespace: string;
-  state: StateType;
+  state: FriendStateType;
   effects: {
     fetch: Effect;
     add: Effect;
@@ -25,10 +25,10 @@ export interface ModelType {
     restore: Effect;
   };
   reducers: {
-    save: Reducer<StateType>;
-    new: Reducer<StateType>;
-    edit: Reducer<StateType>;
-    remove: Reducer<StateType>;
+    save: Reducer<FriendStateType>;
+    new: Reducer<FriendStateType>;
+    edit: Reducer<FriendStateType>;
+    remove: Reducer<FriendStateType>;
   };
 }
 

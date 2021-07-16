@@ -4,18 +4,18 @@ import { addRule, queryRule, removeRule, updateRule, forceDeleteRule, restoreRul
 
 import { SiteListPaginationType } from './data.d';
 
-export interface StateType {
+export interface SiteStateType {
   data: SiteListPaginationType;
 }
 
 export type Effect = (
   action: AnyAction,
-  effects: EffectsCommandMap & { select: <T>(func: (state: StateType) => T) => T },
+  effects: EffectsCommandMap & { select: <T>(func: (state: SiteStateType) => T) => T },
 ) => void;
 
 export interface ModelType {
   namespace: string;
-  state: StateType;
+  state: SiteStateType;
   effects: {
     fetch: Effect;
     add: Effect;
@@ -25,10 +25,10 @@ export interface ModelType {
     restore: Effect;
   };
   reducers: {
-    save: Reducer<StateType>;
-    new: Reducer<StateType>;
-    edit: Reducer<StateType>;
-    remove: Reducer<StateType>;
+    save: Reducer<SiteStateType>;
+    new: Reducer<SiteStateType>;
+    edit: Reducer<SiteStateType>;
+    remove: Reducer<SiteStateType>;
   };
 }
 

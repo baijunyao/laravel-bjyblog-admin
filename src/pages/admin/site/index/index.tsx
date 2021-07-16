@@ -11,7 +11,7 @@ import { FormComponentProps } from 'antd/es/form';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
 import moment from 'moment';
-import { StateType } from './model';
+import { SiteStateType } from './model';
 import CreateForm, { NewItem } from './components/CreateForm';
 import UpdateForm, { UpdateItem } from './components/UpdateForm';
 import StandardTable from '@/pages/admin/components/StandardTable';
@@ -34,7 +34,7 @@ interface TableListProps extends FormComponentProps {
     >
   >;
   loading: boolean;
-  adminSite: StateType;
+  adminSite: SiteStateType;
 }
 
 interface TableListState {
@@ -48,7 +48,7 @@ interface TableListState {
     adminSite,
     loading,
   }: {
-    adminSite: StateType;
+    adminSite: SiteStateType;
     loading: {
       models: {
         [key: string]: boolean;

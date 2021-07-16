@@ -3,7 +3,7 @@ import { EffectsCommandMap } from 'dva';
 import { queryRule, updateRule } from '@/pages/admin/config/service';
 import { ConfigListPaginationType } from './data.d';
 
-export interface StateType {
+export interface ConfigStateType {
   data: ConfigListPaginationType;
 }
 
@@ -14,14 +14,14 @@ export type Effect = (
 
 export interface ModelType {
   namespace: string;
-  state: StateType;
+  state: ConfigStateType;
   effects: {
     fetch: Effect;
     update: Effect;
   };
   reducers: {
-    save: Reducer<StateType>;
-    edit: Reducer<StateType>;
+    save: Reducer<ConfigStateType>;
+    edit: Reducer<ConfigStateType>;
   };
 }
 const Model: ModelType = {

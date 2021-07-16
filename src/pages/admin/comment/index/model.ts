@@ -4,18 +4,18 @@ import { queryRule, removeRule, updateRule, forceDeleteRule, restoreRule } from 
 
 import { CommentListPaginationType } from './data.d';
 
-export interface StateType {
+export interface CommentStateType {
   data: CommentListPaginationType;
 }
 
 export type Effect = (
   action: AnyAction,
-  effects: EffectsCommandMap & { select: <T>(func: (state: StateType) => T) => T },
+  effects: EffectsCommandMap & { select: <T>(func: (state: CommentStateType) => T) => T },
 ) => void;
 
 export interface ModelType {
   namespace: string;
-  state: StateType;
+  state: CommentStateType;
   effects: {
     fetch: Effect;
     update: Effect;
@@ -24,9 +24,9 @@ export interface ModelType {
     restore: Effect;
   };
   reducers: {
-    save: Reducer<StateType>;
-    edit: Reducer<StateType>;
-    remove: Reducer<StateType>;
+    save: Reducer<CommentStateType>;
+    edit: Reducer<CommentStateType>;
+    remove: Reducer<CommentStateType>;
   };
 }
 

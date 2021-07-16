@@ -2,27 +2,27 @@ import { AnyAction, Reducer } from 'redux';
 import { EffectsCommandMap } from 'dva';
 import { queryRule, updateRule } from './service';
 
-import { TableListData } from './data.d';
+import { SocialiteUserListPaginationType } from './data.d';
 
-export interface StateType {
-  data: TableListData;
+export interface SocialiteUserStateType {
+  data: SocialiteUserListPaginationType;
 }
 
 export type Effect = (
   action: AnyAction,
-  effects: EffectsCommandMap & { select: <T>(func: (state: StateType) => T) => T },
+  effects: EffectsCommandMap & { select: <T>(func: (state: SocialiteUserStateType) => T) => T },
 ) => void;
 
 export interface ModelType {
   namespace: string;
-  state: StateType;
+  state: SocialiteUserStateType;
   effects: {
     fetch: Effect;
     update: Effect;
   };
   reducers: {
-    save: Reducer<StateType>;
-    edit: Reducer<StateType>;
+    save: Reducer<SocialiteUserStateType>;
+    edit: Reducer<SocialiteUserStateType>;
   };
 }
 

@@ -4,25 +4,25 @@ import { querySocialiteClients, updateSocialiteClients } from './service';
 
 import { SocialiteClientListType, SocialiteClientType } from './data.d';
 
-export interface StateType {
+export interface SocialiteClientStateType {
   data: SocialiteClientListType;
 }
 
 export type Effect = (
   action: AnyAction,
-  effects: EffectsCommandMap & { select: <T>(func: (state: StateType) => T) => T },
+  effects: EffectsCommandMap & { select: <T>(func: (state: SocialiteClientStateType) => T) => T },
 ) => void;
 
 export interface ModelType {
   namespace: string;
-  state: StateType;
+  state: SocialiteClientStateType;
   effects: {
     fetch: Effect;
     update: Effect;
   };
   reducers: {
-    save: Reducer<StateType>;
-    edit: Reducer<StateType>;
+    save: Reducer<SocialiteClientStateType>;
+    edit: Reducer<SocialiteClientStateType>;
   };
 }
 

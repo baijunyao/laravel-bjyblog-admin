@@ -9,7 +9,7 @@ import { FormComponentProps } from 'antd/es/form';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { StateType } from './model';
+import { SocialiteClientStateType } from './model';
 import UpdateForm, { UpdateItem } from './components/UpdateForm';
 import StandardTable from '@/pages/admin/components/StandardTable';
 import { SocialiteClientType } from './data.d';
@@ -25,7 +25,7 @@ interface TableListProps extends FormComponentProps {
     >
   >;
   loading: boolean;
-  adminSocialiteClient: StateType;
+  adminSocialiteClient: SocialiteClientStateType;
 }
 
 interface TableListState {
@@ -38,7 +38,7 @@ interface TableListState {
     adminSocialiteClient,
     loading,
   }: {
-    adminSocialiteClient: StateType;
+    adminSocialiteClient: SocialiteClientStateType;
     loading: {
       models: {
         [key: string]: boolean;
