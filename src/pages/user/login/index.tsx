@@ -7,7 +7,7 @@ import { connect } from 'dva';
 import { StateType } from '@/models/login';
 import LoginComponents from './components/Login';
 
-import styles from '@/utils/style.less';
+import styles from './style.less';
 
 const { Tab, Email, Password, Submit } = LoginComponents;
 
