@@ -54,17 +54,20 @@ export interface TagListPaginationType extends TableListPaginationType{
   list: TagType[];
 }
 
-export interface CategoryType {
+export interface ModelType {
   id: number;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string | null;
+}
+
+export interface CategoryType extends ModelType{
   name: string;
   slug: string;
   keywords: string;
   description: string;
   sort: number;
   pid: number;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
 }
 
 export interface CategoryListPaginationType extends TableListPaginationType{

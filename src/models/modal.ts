@@ -1,13 +1,12 @@
 import { Effect } from 'dva';
 import { Reducer } from 'redux';
-
-export interface CurrentUser {
-  avatar: string;
-  name: string;
-}
+import { MetaType } from '@/components/FormBuilder';
 
 export interface ModalModelState {
+  title: string;
   visible: boolean;
+  meta: MetaType[];
+  actionType: string;
 }
 
 export interface ModalModelType {
@@ -25,7 +24,10 @@ const ModalModel: ModalModelType = {
   namespace: 'modal',
 
   state: {
+    title: '',
     visible: false,
+    meta: [],
+    actionType: '',
   },
 
   effects: {

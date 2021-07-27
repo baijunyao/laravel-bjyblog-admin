@@ -260,4 +260,5 @@ export default {
   'QQ group code': 'QQ groupe code',
   'QQ group QR code': 'QQ groupe QR code',
   'The email or password is incorrect': "L'e-mail ou le mot de passe est incorrect",
+  ID: 'ID',
 };

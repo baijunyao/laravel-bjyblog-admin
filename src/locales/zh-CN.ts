@@ -278,4 +278,5 @@ export default {
   'QQ group QR code': 'QQ 群二维码',
 
   'The email or password is incorrect': '邮箱或密码错误',
+  ID: 'ID',
 };

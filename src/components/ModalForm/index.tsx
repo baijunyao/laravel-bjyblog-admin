@@ -1,60 +1,117 @@
 import React, { Component } from 'react';
-import { Form, Modal } from 'antd';
-import { formatMessage } from 'umi-plugin-react/locale';
+import { Form, Modal, Input } from 'antd';
 import { Dispatch } from 'redux';
 import { connect } from 'dva';
-import FormBuilder, { FormBuilderPropType } from '@/components/FormBuilder';
+import { formatMessage } from 'umi-plugin-react/locale';
+import collect from 'collect.js';
+import FormBuilder, { FormBuilderPropType, MetaType } from '@/components/FormBuilder';
 import { ModalModelState } from '@/models/modal';
 
 interface ModalFormPropType extends FormBuilderPropType{
   dispatch: Dispatch;
   modal: ModalModelState;
-  model: string;
-  title: string;
-  visible: boolean;
+}
+
+export function handleUpdate(
+  dispatch: Dispatch,
+  meta: MetaType[],
+  record: any,
+  actionType: string,
+) {
+  meta.map(value => {
+    const valueWithDefault: MetaType = value;
+    valueWithDefault.initialValue = record[value.key];
+
+    return valueWithDefault;
+  })
+
+  if (collect(meta).where('key', 'id').count() === 0) {
+    meta.push({
+      key: 'id',
+      label: 'ID',
+      required: false,
+      widget: Input,
+      initialValue: record.id,
+      visibility: 'hidden',
+    })
+  }
+
+  updateModalFormProps(
+    dispatch,
+    true,
+    formatMessage({ id: 'Edit' }),
+    meta,
+    actionType,
+  )
+}
+
+export function updateModalFormProps(
+  dispatch: Dispatch,
+  visible: boolean,
+  title: string,
+  meta: MetaType[],
+  actionType: string,
+) {
+  dispatch({
+    type: 'modal/update',
+    payload: {
+      title,
+      visible,
+      meta,
+      actionType,
+    },
+  });
 }
 
 class ModalForm extends Component<ModalFormPropType> {
-  handleAdd = (fields: any) => {
-    const { dispatch, model } = this.props;
-
-    dispatch({
-      type: `${model}/add`,
-      payload: fields,
-    });
-  };
-
   okHandle = () => {
-    const { form } = this.props
+    const { dispatch, form, modal } = this.props
 
     form.validateFields((err, fieldsValue) => {
       if (err) return;
+
+      dispatch({
+        type: modal.actionType,
+        payload: fieldsValue,
+      })
+
+      updateModalFormProps(
+        dispatch,
+        false,
+        modal.title,
+        modal.meta,
+        modal.actionType,
+      );
+
       form.resetFields();
-      this.handleAdd(fieldsValue);
     });
   };
 
   cancelHandle = () => {
-    const { dispatch } = this.props;
+    const { dispatch, modal } = this.props;
 
-    dispatch({
-      type: 'modal/update',
-      payload: {
-        visible: false,
-      },
-    });
+    updateModalFormProps(
+      dispatch,
+      false,
+      modal.title,
+      modal.meta,
+      modal.actionType,
+    );
   }
 
   render() {
+    const { modal } = this.props;
+
     return (
       <Modal
-        title={formatMessage({ id: this.props.title })}
-        visible={this.props.modal.visible}
+        title={modal.title}
+        visible={modal.visible}
         onOk={this.okHandle}
         onCancel={this.cancelHandle}
       >
         <FormBuilder
-          meta={this.props.meta}
+          meta={modal.meta}
+          // @ts-ignore
           form={this.props.form}
         />
       </Modal>
@@ -63,5 +120,5 @@ class ModalForm extends Component<ModalFormPropType> {
 }
 
 export default connect(
-  ({ modal }: { modal: ModalModelState }) => (modal),
+  (modal: { modal: ModalModelState }) => (modal),
 )(Form.create<ModalFormPropType>()(ModalForm))
