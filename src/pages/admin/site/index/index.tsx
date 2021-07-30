@@ -1,8 +1,7 @@
 import {
-  Button,
   Card,
   Divider,
-  Form,
+  Form, Input, Radio,
 } from 'antd';
 import React, { Component, Fragment } from 'react';
 
@@ -11,23 +10,22 @@ import { FormComponentProps } from 'antd/es/form';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
 import moment from 'moment';
+import { formatMessage } from 'umi-plugin-react/locale';
 import { SiteStateType } from './model';
-import CreateForm, { NewItem } from './components/CreateForm';
-import UpdateForm, { UpdateItem } from './components/UpdateForm';
 import StandardTable from '@/pages/admin/components/StandardTable';
 import { SiteType } from './data.d';
-import { formatMessage } from 'umi-plugin-react/locale';
 
 import styles from '@/utils/style.less';
+import ModalForm, { handleUpdate } from '@/components/ModalForm';
+import AddButton from '@/components/AddButton';
+import { MetaType } from '@/components/FormBuilder';
 
 const status = ['√', '×'];
 
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch<
     Action<
-      | 'adminSite/add'
       | 'adminSite/fetch'
-      | 'adminSite/update'
       | 'adminSite/destroy'
       | 'adminSite/forceDelete'
       | 'adminSite/restore'
@@ -35,12 +33,6 @@ interface TableListProps extends FormComponentProps {
   >;
   loading: boolean;
   adminSite: SiteStateType;
-}
-
-interface TableListState {
-  modalVisible: boolean;
-  updateModalVisible: boolean;
-  updateFormValues: UpdateItem;
 }
 
 @connect(
@@ -59,20 +51,7 @@ interface TableListState {
     loading: loading.models.adminSite,
   }),
 )
-class TableList extends Component<TableListProps, TableListState> {
-  state: TableListState = {
-    modalVisible: false,
-    updateModalVisible: false,
-    updateFormValues: {
-      id: 0,
-      name: '',
-      description: '',
-      url: '',
-      sort: 0,
-      audit: 0,
-    },
-  };
-
+class TableList extends Component<TableListProps> {
   columns = [
     {
       title: formatMessage({ id: 'Name' }),
@@ -85,7 +64,7 @@ class TableList extends Component<TableListProps, TableListState> {
     {
       title: 'URL',
       dataIndex: 'url',
-      render: url => <a href={url} target="_blank" rel="noopener noreferrer">{url}</a>,
+      render: (url: string) => <a href={url} target="_blank" rel="noopener noreferrer">{url}</a>,
     },
     {
       title: formatMessage({ id: 'Sort' }),
@@ -140,7 +119,7 @@ class TableList extends Component<TableListProps, TableListState> {
         if (record.deleted_at === null) {
           return (
             <Fragment>
-              <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
+              <a onClick={() => handleUpdate(this.props.dispatch, this.meta, record, 'adminSite/update')}>{formatMessage({ id: 'Edit' })}</a>
               <Divider type="vertical" />
               <a onClick={() => this.handleDestroy(record)}>{formatMessage({ id: 'Delete' })}</a>
             </Fragment>
@@ -148,7 +127,7 @@ class TableList extends Component<TableListProps, TableListState> {
         }
         return (
           <Fragment>
-            <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
+            <a onClick={() => handleUpdate(this.props.dispatch, this.meta, record, 'adminSite/update')}>{formatMessage({ id: 'Edit' })}</a>
             <Divider type="vertical" />
             <a onClick={() => this.handleForceDelete(record)}>{formatMessage({ id: 'Force Delete' })}</a>
             <Divider type="vertical" />
@@ -159,6 +138,52 @@ class TableList extends Component<TableListProps, TableListState> {
     },
   ];
 
+  meta: MetaType[] = [
+    {
+      key: 'name',
+      label: 'Name',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: 'description',
+      label: 'Description',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: 'url',
+      label: 'URL',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: 'sort',
+      label: 'Sort',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: 'audit',
+      label: 'Audited',
+      widget: Radio.Group,
+      children: {
+        widget: Radio,
+        list: [
+          {
+            value: 1,
+            label: 'Yes',
+          },
+          {
+            value: 0,
+            label: 'No',
+          },
+        ],
+      },
+      required: true,
+    },
+  ];
+
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
@@ -166,45 +191,7 @@ class TableList extends Component<TableListProps, TableListState> {
     });
   }
 
-  handleModalVisible = (flag?: boolean) => {
-    this.setState({
-      modalVisible: !!flag,
-    });
-  };
-
-  handleUpdateModalVisible = (flag?: boolean, record?: UpdateItem) => {
-    this.setState({
-      updateModalVisible: !!flag,
-      updateFormValues: record || {
-        id: 0,
-        name: '',
-        description: '',
-        url: '',
-        sort: 0,
-        audit: 0,
-      },
-    });
-  };
-
-  handleAdd = (fields: NewItem) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminSite/add',
-      payload: fields,
-    });
-    this.handleModalVisible();
-  };
-
-  handleUpdate = (fields: UpdateItem) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminSite/update',
-      payload: fields,
-    });
-    this.handleUpdateModalVisible();
-  };
-
-  handleDestroy = (fields: UpdateItem) => {
+  handleDestroy = (fields: SiteType) => {
     const { dispatch } = this.props;
     dispatch({
       type: 'adminSite/destroy',
@@ -212,7 +199,7 @@ class TableList extends Component<TableListProps, TableListState> {
     });
   };
 
-  handleForceDelete = (fields: UpdateItem) => {
+  handleForceDelete = (fields: SiteType) => {
     const { dispatch } = this.props;
     dispatch({
       type: 'adminSite/forceDelete',
@@ -220,7 +207,7 @@ class TableList extends Component<TableListProps, TableListState> {
     });
   };
 
-  handleRestore = (fields: UpdateItem) => {
+  handleRestore = (fields: SiteType) => {
     const { dispatch } = this.props;
     dispatch({
       type: 'adminSite/restore',
@@ -229,38 +216,21 @@ class TableList extends Component<TableListProps, TableListState> {
   };
 
   render() {
-    const { modalVisible, updateModalVisible, updateFormValues } = this.state;
-
-    const parentMethods = {
-      handleAdd: this.handleAdd,
-      handleModalVisible: this.handleModalVisible,
-    };
-    const updateMethods = {
-      handleUpdateModalVisible: this.handleUpdateModalVisible,
-      handleUpdate: this.handleUpdate,
-    };
-
     return (
       <PageHeaderWrapper>
         <Card bordered={false}>
           <div className={styles.tableList}>
-            <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
-                {formatMessage({ id: 'Add' })}
-              </Button>
-            </div>
+            <AddButton
+              meta={this.meta}
+              actionType="adminCategory/add"
+            />
             <StandardTable
               columns={this.columns}
               model="adminSite"
             />
           </div>
         </Card>
-        <CreateForm {...parentMethods} modalVisible={modalVisible} />
-        <UpdateForm
-          {...updateMethods}
-          updateModalVisible={updateModalVisible}
-          updateFormValues={ updateFormValues }
-        />
+        <ModalForm />
       </PageHeaderWrapper>
     );
   }

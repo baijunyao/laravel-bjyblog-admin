@@ -15,11 +15,21 @@ interface AddButtonPropType {
 
 class AddButton extends Component<AddButtonPropType> {
   handleModalVisible = () => {
+    const { meta } = this.props;
+
+    meta.forEach((row, index) => {
+      meta[index].initialValue = undefined;
+
+      if (row.key === 'id') {
+        meta.splice(index, 1);
+      }
+    })
+
     updateModalFormProps(
       this.props.dispatch,
       true,
       formatMessage({ id: 'Add' }),
-      this.props.meta,
+      meta,
       this.props.actionType,
     )
   };

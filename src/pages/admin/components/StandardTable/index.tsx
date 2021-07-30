@@ -14,7 +14,7 @@ const getValue = (obj: { [x: string]: string[] }) =>
     .map(key => obj[key])
     .join(',');
 
-@connect(state => (state))
+@connect((state: any) => (state))
 class StandardTable extends Component<StandardTablePropType> {
   componentDidMount() {
     const { dispatch } = this.props;

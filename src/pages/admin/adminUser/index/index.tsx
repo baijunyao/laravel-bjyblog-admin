@@ -1,35 +1,24 @@
-import { Card, Form } from 'antd';
+import { Card, Form, Input } from 'antd';
 import React, { Component, Fragment } from 'react';
-import { Dispatch, Action } from 'redux';
+import { Dispatch } from 'redux';
 import { FormComponentProps } from 'antd/es/form';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
 import moment from 'moment';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { AdminUserStateType } from './model';
-import UpdateForm, { UpdateItem } from './components/UpdateForm';
 import StandardTable from '@/pages/admin/components/StandardTable';
 import { AdminUserType } from './data.d';
 import styles from '@/utils/style.less';
+import ModalForm, { handleUpdate } from '@/components/ModalForm';
+import { MetaType } from '@/components/FormBuilder';
 
 const status = ['√', '×'];
 
 interface TableListProps extends FormComponentProps {
-  dispatch: Dispatch<
-    Action<
-      | 'adminUser/update'
-      | 'adminUser/destroy'
-      | 'adminUser/forceDelete'
-      | 'adminUser/restore'
-    >
-  >;
+  dispatch: Dispatch;
   loading: boolean;
   adminUser: AdminUserStateType;
-}
-
-interface TableListState {
-  updateModalVisible: boolean;
-  updateFormValues: UpdateItem;
 }
 
 @connect(
@@ -48,16 +37,7 @@ interface TableListState {
     loading: loading.models.adminUser,
   }),
 )
-class TableList extends Component<TableListProps, TableListState> {
-  state: TableListState = {
-    updateModalVisible: false,
-    updateFormValues: {
-      id: 0,
-      name: '',
-      email: '',
-    },
-  };
-
+class TableList extends Component<TableListProps> {
   columns = [
     {
       title: formatMessage({ id: 'Name' }),
@@ -99,48 +79,41 @@ class TableList extends Component<TableListProps, TableListState> {
         if (record.deleted_at === null) {
           return (
             <Fragment>
-              <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
+              <a onClick={() => handleUpdate(this.props.dispatch, this.meta,record, 'adminUser/update')}>{formatMessage({ id: 'Edit' })}</a>
             </Fragment>
           )
         }
         return (
           <Fragment>
-            <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
+            <a onClick={() => handleUpdate(this.props.dispatch, this.meta,record, 'adminUser/update')}>{formatMessage({ id: 'Edit' })}</a>
           </Fragment>
         )
       },
     },
   ];
 
-  handleUpdateModalVisible = (flag?: boolean, record?: UpdateItem) => {
-    this.setState({
-      updateModalVisible: !!flag,
-      updateFormValues: record || {
-        id: 0,
-        name: '',
-        email: '',
-      },
-    });
-  };
-
-  handleUpdate = (fields: UpdateItem) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminUser/update',
-      payload: fields,
-    });
-
-    this.handleUpdateModalVisible();
-  };
+  meta: MetaType[] = [
+    {
+      key: 'name',
+      label: 'Name',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: 'email',
+      label: 'Email',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: 'password',
+      label: 'Password',
+      widget: Input,
+      required: true,
+    },
+  ];
 
   render() {
-    const { updateModalVisible, updateFormValues } = this.state;
-
-    const updateMethods = {
-      handleUpdateModalVisible: this.handleUpdateModalVisible,
-      handleUpdate: this.handleUpdate,
-    };
-
     return (
       <PageHeaderWrapper>
         <Card bordered={false}>
@@ -153,11 +126,7 @@ class TableList extends Component<TableListProps, TableListState> {
             />
           </div>
         </Card>
-        <UpdateForm
-          {...updateMethods}
-          updateModalVisible={updateModalVisible}
-          updateFormValues={ updateFormValues }
-        />
+        <ModalForm />
       </PageHeaderWrapper>
     );
   }

@@ -1,8 +1,7 @@
 import {
-  Button,
   Card,
   Divider,
-  Form,
+  Form, Input, Radio,
 } from 'antd';
 import React, { Component, Fragment } from 'react';
 
@@ -13,12 +12,12 @@ import { connect } from 'dva';
 import moment from 'moment';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { OpenSourceStateType } from './model';
-import CreateForm, { NewItem } from './components/CreateForm';
-import UpdateForm, { UpdateItem } from './components/UpdateForm';
 import StandardTable from '@/pages/admin/components/StandardTable';
 import { OpenSourceType } from './data.d'
-
 import styles from '@/utils/style.less';
+import ModalForm, { handleUpdate } from '@/components/ModalForm';
+import AddButton from '@/components/AddButton';
+import { MetaType } from '@/components/FormBuilder';
 
 const type:string[] = ['', 'GitHub', 'Gitee'];
 const status:string[] = ['√', '×'];
@@ -26,8 +25,6 @@ const status:string[] = ['√', '×'];
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch<
     Action<
-      | 'adminOpenSource/add'
-      | 'adminOpenSource/update'
       | 'adminOpenSource/destroy'
       | 'adminOpenSource/forceDelete'
       | 'adminOpenSource/restore'
@@ -35,12 +32,6 @@ interface TableListProps extends FormComponentProps {
   >;
   loading: boolean;
   adminOpenSource: OpenSourceStateType;
-}
-
-interface TableListState {
-  modalVisible: boolean;
-  updateModalVisible: boolean;
-  updateFormValues: UpdateItem;
 }
 
 @connect(
@@ -59,18 +50,7 @@ interface TableListState {
     loading: loading.models.adminOpenSource,
   }),
 )
-class TableList extends Component<TableListProps, TableListState> {
-  state: TableListState = {
-    modalVisible: false,
-    updateModalVisible: false,
-    updateFormValues: {
-      id: 0,
-      name: '',
-      sort: 0,
-      type: 1,
-    },
-  };
-
+class TableList extends Component<TableListProps> {
   columns = [
     {
       title: formatMessage({ id: 'Name' }),
@@ -129,7 +109,7 @@ class TableList extends Component<TableListProps, TableListState> {
         if (record.deleted_at === null) {
           return (
             <Fragment>
-              <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
+              <a onClick={() => handleUpdate(this.props.dispatch, this.meta, record, 'adminOpenSource/update')}>{formatMessage({ id: 'Edit' })}</a>
               <Divider type="vertical" />
               <a onClick={() => this.handleDestroy(record)}>{formatMessage({ id: 'Delete' })}</a>
             </Fragment>
@@ -137,7 +117,7 @@ class TableList extends Component<TableListProps, TableListState> {
         }
         return (
           <Fragment>
-            <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
+            <a onClick={() => handleUpdate(this.props.dispatch, this.meta, record, 'adminOpenSource/update')}>{formatMessage({ id: 'Edit' })}</a>
             <Divider type="vertical" />
             <a onClick={() => this.handleForceDelete(record)}>{formatMessage({ id: 'Force Delete' })}</a>
             <Divider type="vertical" />
@@ -148,43 +128,41 @@ class TableList extends Component<TableListProps, TableListState> {
     },
   ];
 
-  handleModalVisible = (flag?: boolean) => {
-    this.setState({
-      modalVisible: !!flag,
-    });
-  };
-
-  handleUpdateModalVisible = (flag?: boolean, record?: UpdateItem) => {
-    this.setState({
-      updateModalVisible: !!flag,
-      updateFormValues: record || {
-        id: 0,
-        name: '',
-        sort: 0,
-        type: 1,
+  meta: MetaType[] = [
+    {
+      key: 'type',
+      label: 'Type',
+      widget: Radio.Group,
+      children: {
+        widget: Radio,
+        list: [
+          {
+            value: 1,
+            label: 'GitHub',
+          },
+          {
+            value: 2,
+            label: 'Gitee',
+          },
+        ],
       },
-    });
-  };
+      required: true,
+    },
+    {
+      key: 'name',
+      label: 'Name',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: 'sort',
+      label: 'Sort',
+      widget: Input,
+      required: true,
+    },
+  ];
 
-  handleAdd = (fields: NewItem) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminOpenSource/add',
-      payload: fields,
-    });
-    this.handleModalVisible();
-  };
-
-  handleUpdate = (fields: UpdateItem) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminOpenSource/update',
-      payload: fields,
-    });
-    this.handleUpdateModalVisible();
-  };
-
-  handleDestroy = (fields: UpdateItem) => {
+  handleDestroy = (fields: OpenSourceType) => {
     const { dispatch } = this.props;
     dispatch({
       type: 'adminOpenSource/destroy',
@@ -192,7 +170,7 @@ class TableList extends Component<TableListProps, TableListState> {
     });
   };
 
-  handleForceDelete = (fields: UpdateItem) => {
+  handleForceDelete = (fields: OpenSourceType) => {
     const { dispatch } = this.props;
     dispatch({
       type: 'adminOpenSource/forceDelete',
@@ -200,7 +178,7 @@ class TableList extends Component<TableListProps, TableListState> {
     });
   };
 
-  handleRestore = (fields: UpdateItem) => {
+  handleRestore = (fields: OpenSourceType) => {
     const { dispatch } = this.props;
     dispatch({
       type: 'adminOpenSource/restore',
@@ -209,38 +187,21 @@ class TableList extends Component<TableListProps, TableListState> {
   };
 
   render() {
-    const { modalVisible, updateModalVisible, updateFormValues } = this.state;
-
-    const parentMethods = {
-      handleAdd: this.handleAdd,
-      handleModalVisible: this.handleModalVisible,
-    };
-    const updateMethods = {
-      handleUpdateModalVisible: this.handleUpdateModalVisible,
-      handleUpdate: this.handleUpdate,
-    };
-
     return (
       <PageHeaderWrapper>
         <Card bordered={false}>
           <div className={styles.tableList}>
-            <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
-                {formatMessage({ id: 'Add' })}
-              </Button>
-            </div>
+            <AddButton
+              meta={this.meta}
+              actionType="adminCategory/add"
+            />
             <StandardTable
               columns={this.columns}
               model="adminOpenSource"
             />
           </div>
         </Card>
-        <CreateForm {...parentMethods} modalVisible={modalVisible} />
-        <UpdateForm
-          {...updateMethods}
-          updateModalVisible={updateModalVisible}
-          updateFormValues={ updateFormValues }
-        />
+        <ModalForm />
       </PageHeaderWrapper>
     );
   }

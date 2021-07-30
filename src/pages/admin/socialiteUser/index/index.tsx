@@ -1,40 +1,29 @@
 import {
   Card,
-  Form,
+  Form, Input, Radio,
 } from 'antd';
 import React, { Component, Fragment } from 'react';
 
-import { Dispatch, Action } from 'redux';
+import { Dispatch } from 'redux';
 import { FormComponentProps } from 'antd/es/form';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
 import moment from 'moment';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { SocialiteUserStateType } from './model';
-import UpdateForm, { UpdateItem } from './components/UpdateForm';
 import StandardTable from '@/pages/admin/components/StandardTable';
 import { SocialiteUserType } from './data.d';
 
 import styles from '@/utils/style.less';
+import ModalForm, { handleUpdate } from '@/components/ModalForm';
+import { MetaType } from '@/components/FormBuilder';
 
 const status = ['√', '×'];
 
 interface TableListProps extends FormComponentProps {
-  dispatch: Dispatch<
-    Action<
-      | 'adminSocialiteUser/update'
-      | 'adminSocialiteUser/destroy'
-      | 'adminSocialiteUser/forceDelete'
-      | 'adminSocialiteUser/restore'
-      >
-    >;
+  dispatch: Dispatch;
   loading: boolean;
   adminSocialiteUser: SocialiteUserStateType;
-}
-
-interface TableListState {
-  updateModalVisible: boolean;
-  updateFormValues: UpdateItem;
 }
 
 @connect(
@@ -53,18 +42,7 @@ interface TableListState {
     loading: loading.models.adminSocialiteUser,
   }),
 )
-class TableList extends Component<TableListProps, TableListState> {
-  state: TableListState = {
-    updateModalVisible: false,
-    updateFormValues: {
-      id: 0,
-      name: '',
-      email: '',
-      is_admin: 0,
-      is_blocked: 0,
-    },
-  };
-
+class TableList extends Component<TableListProps> {
   columns = [
     {
       title: formatMessage({ id: 'Name' }),
@@ -126,49 +104,73 @@ class TableList extends Component<TableListProps, TableListState> {
         if (record.deleted_at === null) {
           return (
             <Fragment>
-              <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
+              <a onClick={() => handleUpdate(this.props.dispatch, this.meta, record, 'adminSocialiteUser/update')}>{formatMessage({ id: 'Edit' })}</a>
             </Fragment>
           )
         }
         return (
           <Fragment>
-            <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
+            <a onClick={() => handleUpdate(this.props.dispatch, this.meta, record, 'adminSocialiteUser/update')}>{formatMessage({ id: 'Edit' })}</a>
           </Fragment>
         )
       },
     },
   ];
 
-  handleUpdateModalVisible = (flag?: boolean, record?: UpdateItem) => {
-    this.setState({
-      updateModalVisible: !!flag,
-      updateFormValues: record || {
-        id: 0,
-        name: '',
-        email: '',
-        is_admin: 0,
-        is_blocked: 0,
+  meta: MetaType[] = [
+    {
+      key: 'name',
+      label: 'Name',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: 'email',
+      label: 'Email',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: 'is_admin',
+      label: 'Is Administrator',
+      widget: Radio.Group,
+      children: {
+        widget: Radio,
+        list: [
+          {
+            value: 1,
+            label: 'Yes',
+          },
+          {
+            value: 0,
+            label: 'No',
+          },
+        ],
       },
-    });
-  };
-
-  handleUpdate = (fields: UpdateItem) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminSocialiteUser/update',
-      payload: fields,
-    });
-    this.handleUpdateModalVisible();
-  };
+      required: true,
+    },
+    {
+      key: 'is_blocked',
+      label: 'Is Blocked',
+      widget: Radio.Group,
+      children: {
+        widget: Radio,
+        list: [
+          {
+            value: 1,
+            label: 'Yes',
+          },
+          {
+            value: 0,
+            label: 'No',
+          },
+        ],
+      },
+      required: true,
+    },
+  ];
 
   render() {
-    const { updateModalVisible, updateFormValues } = this.state;
-
-    const updateMethods = {
-      handleUpdateModalVisible: this.handleUpdateModalVisible,
-      handleUpdate: this.handleUpdate,
-    };
-
     return (
       <PageHeaderWrapper>
         <Card bordered={false}>
@@ -181,11 +183,7 @@ class TableList extends Component<TableListProps, TableListState> {
             />
           </div>
         </Card>
-        <UpdateForm
-          {...updateMethods}
-          updateModalVisible={updateModalVisible}
-          updateFormValues={ updateFormValues }
-        />
+        <ModalForm />
       </PageHeaderWrapper>
     );
   }

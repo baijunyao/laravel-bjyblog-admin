@@ -1,29 +1,27 @@
 import {
   Card,
   Divider,
-  Form,
+  Form, Input, Radio,
 } from 'antd';
 import React, { Component, Fragment } from 'react';
-
 import { Dispatch, Action } from 'redux';
 import { FormComponentProps } from 'antd/es/form';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
 import moment from 'moment';
+import { formatMessage } from 'umi-plugin-react/locale';
 import { CommentStateType } from './model';
-import UpdateForm, { UpdateItem } from './components/UpdateForm';
 import StandardTable from '@/pages/admin/components/StandardTable';
 import { CommentType } from './data.d';
-import { formatMessage } from 'umi-plugin-react/locale';
-
 import styles from '@/utils/style.less';
+import { MetaType } from '@/components/FormBuilder';
+import ModalForm, { handleUpdate } from '@/components/ModalForm';
 
 const status = ['√', '×'];
 
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch<
     Action<
-      | 'adminComment/update'
       | 'adminComment/destroy'
       | 'adminComment/forceDelete'
       | 'adminComment/restore'
@@ -35,7 +33,7 @@ interface TableListProps extends FormComponentProps {
 
 interface TableListState {
   updateModalVisible: boolean;
-  updateFormValues: UpdateItem;
+  updateFormValues: CommentType;
 }
 
 @connect(
@@ -55,15 +53,6 @@ interface TableListState {
   }),
 )
 class TableList extends Component<TableListProps, TableListState> {
-  state: TableListState = {
-    updateModalVisible: false,
-    updateFormValues: {
-      id: 0,
-      content: '',
-      is_audited: 1,
-    },
-  };
-
   columns = [
     {
       title: formatMessage({ id: 'Content' }),
@@ -127,7 +116,7 @@ class TableList extends Component<TableListProps, TableListState> {
         if (record.deleted_at === null) {
           return (
             <Fragment>
-              <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
+              <a onClick={() => handleUpdate(this.props.dispatch, this.meta, record, 'adminComment/update')}>{formatMessage({ id: 'Edit' })}</a>
               <Divider type="vertical" />
               <a onClick={() => this.handleDestroy(record)}>{formatMessage({ id: 'Delete' })}</a>
             </Fragment>
@@ -135,7 +124,7 @@ class TableList extends Component<TableListProps, TableListState> {
         }
         return (
           <Fragment>
-            <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
+            <a onClick={() => handleUpdate(this.props.dispatch, this.meta, record, 'adminComment/update')}>{formatMessage({ id: 'Edit' })}</a>
             <Divider type="vertical" />
             <a onClick={() => this.handleForceDelete(record)}>{formatMessage({ id: 'Force Delete' })}</a>
             <Divider type="vertical" />
@@ -146,27 +135,35 @@ class TableList extends Component<TableListProps, TableListState> {
     },
   ];
 
-  handleUpdateModalVisible = (flag?: boolean, record?: UpdateItem) => {
-    this.setState({
-      updateModalVisible: !!flag,
-      updateFormValues: record || {
-        id: 0,
-        content: '',
-        is_audited: 1,
+  meta: MetaType[] = [
+    {
+      key: 'content',
+      label: 'Content',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: 'is_audited',
+      label: 'Audited',
+      widget: Radio.Group,
+      children: {
+        widget: Radio,
+        list: [
+          {
+            value: 1,
+            label: 'Yes',
+          },
+          {
+            value: 0,
+            label: 'No',
+          },
+        ],
       },
-    });
-  };
+      required: true,
+    },
+  ];
 
-  handleUpdate = (fields: UpdateItem) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminComment/update',
-      payload: fields,
-    });
-    this.handleUpdateModalVisible();
-  };
-
-  handleDestroy = (fields: UpdateItem) => {
+  handleDestroy = (fields: CommentType) => {
     const { dispatch } = this.props;
     dispatch({
       type: 'adminComment/destroy',
@@ -174,7 +171,7 @@ class TableList extends Component<TableListProps, TableListState> {
     });
   };
 
-  handleForceDelete = (fields: UpdateItem) => {
+  handleForceDelete = (fields: CommentType) => {
     const { dispatch } = this.props;
     dispatch({
       type: 'adminComment/forceDelete',
@@ -182,7 +179,7 @@ class TableList extends Component<TableListProps, TableListState> {
     });
   };
 
-  handleRestore = (fields: UpdateItem) => {
+  handleRestore = (fields: CommentType) => {
     const { dispatch } = this.props;
     dispatch({
       type: 'adminComment/restore',
@@ -191,13 +188,6 @@ class TableList extends Component<TableListProps, TableListState> {
   };
 
   render() {
-    const { updateModalVisible, updateFormValues } = this.state;
-
-    const updateMethods = {
-      handleUpdateModalVisible: this.handleUpdateModalVisible,
-      handleUpdate: this.handleUpdate,
-    };
-
     return (
       <PageHeaderWrapper>
         <Card bordered={false}>
@@ -210,11 +200,7 @@ class TableList extends Component<TableListProps, TableListState> {
             />
           </div>
         </Card>
-        <UpdateForm
-          {...updateMethods}
-          updateModalVisible={updateModalVisible}
-          updateFormValues={ updateFormValues }
-        />
+        <ModalForm />
       </PageHeaderWrapper>
     );
   }

@@ -1,6 +1,6 @@
 import {
   Card,
-  Form,
+  Form, Input,
 } from 'antd';
 import React, { Component, Fragment } from 'react';
 
@@ -10,11 +10,12 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { SocialiteClientStateType } from './model';
-import UpdateForm, { UpdateItem } from './components/UpdateForm';
 import StandardTable from '@/pages/admin/components/StandardTable';
 import { SocialiteClientType } from './data.d';
 
 import styles from '@/utils/style.less';
+import ModalForm, { handleUpdate } from '@/components/ModalForm';
+import { MetaType } from '@/components/FormBuilder';
 
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch<
@@ -26,11 +27,6 @@ interface TableListProps extends FormComponentProps {
   >;
   loading: boolean;
   adminSocialiteClient: SocialiteClientStateType;
-}
-
-interface TableListState {
-  updateModalVisible: boolean;
-  updateFormValues: UpdateItem;
 }
 
 @connect(
@@ -49,16 +45,7 @@ interface TableListState {
     loading: loading.models.adminSocialiteClient,
   }),
 )
-class TableList extends Component<TableListProps, TableListState> {
-  state: TableListState = {
-    updateModalVisible: false,
-    updateFormValues: {
-      id: 0,
-      client_id: '',
-      client_secret: '',
-    },
-  };
-
+class TableList extends Component<TableListProps> {
   columns = [
     {
       title: 'name',
@@ -77,40 +64,35 @@ class TableList extends Component<TableListProps, TableListState> {
       width: 110,
       render: (text: string, record: SocialiteClientType) => (
           <Fragment>
-            <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
+            <a onClick={() => handleUpdate(this.props.dispatch, this.meta, record, 'adminSocialiteClient/update')}>{formatMessage({ id: 'Edit' })}</a>
           </Fragment>
         ),
     },
   ];
 
-  handleUpdateModalVisible = (flag?: boolean, record?: UpdateItem) => {
-    this.setState({
-      updateModalVisible: !!flag,
-      updateFormValues: record || {
-        id: 0,
-        client_id: '',
-        client_secret: '',
-      },
-    });
-  };
+  meta: MetaType[] = [
+    {
+      key: 'client_id',
+      label: 'Client id',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: 'client_secret',
+      label: 'Client secret',
+      widget: Input,
+      required: true,
+    },
+  ];
 
-  handleUpdate = (fields: UpdateItem) => {
+  componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminSocialiteClient/update',
-      payload: fields,
+      type: 'adminSocialiteClient/fetch',
     });
-    this.handleUpdateModalVisible();
-  };
+  }
 
   render() {
-    const { updateModalVisible, updateFormValues } = this.state;
-
-    const updateMethods = {
-      handleUpdateModalVisible: this.handleUpdateModalVisible,
-      handleUpdate: this.handleUpdate,
-    };
-
     return (
       <PageHeaderWrapper>
         <Card bordered={false}>
@@ -121,11 +103,7 @@ class TableList extends Component<TableListProps, TableListState> {
             />
           </div>
         </Card>
-        <UpdateForm
-          {...updateMethods}
-          updateModalVisible={updateModalVisible}
-          updateFormValues={ updateFormValues }
-        />
+        <ModalForm />
       </PageHeaderWrapper>
     );
   }

@@ -9,16 +9,39 @@ export interface FormBuilderPropType extends FormComponentProps {
   meta: MetaType[];
 }
 
+interface ChildrenListType {
+  value: string | number;
+  label: string;
+}
+
+interface ChildrenType {
+  widget: any;
+  list: ChildrenListType[]
+}
+
 export interface MetaType {
   key: string;
   label: string;
   required: boolean;
   widget: any;
   initialValue?: any;
+  children?: ChildrenType,
   visibility?: string;
 }
 
 class FormBuilder extends Component<FormBuilderPropType> {
+  renderChildren = (children: ChildrenType) => (
+    <>
+      {children.list.map(
+        (list: ChildrenListType) => (
+          <children.widget key={`children-${list.label}`} value={list.value}>
+            {formatMessage({ id: list.label })}
+          </children.widget>
+        ),
+      )}
+    </>
+  )
+
   renderElement = (element: MetaType) => (
     <FormItem
       key={element.key}
@@ -33,7 +56,13 @@ class FormBuilder extends Component<FormBuilderPropType> {
         this.props.form.getFieldDecorator(element.key, {
           rules: [{ required: element.required }],
           initialValue: element.initialValue,
-        })(<element.widget />)
+        })(
+          <element.widget>
+            {
+              element.children === undefined ? null : this.renderChildren(element.children)
+            }
+          </element.widget>,
+        )
       }
     </FormItem>
   )

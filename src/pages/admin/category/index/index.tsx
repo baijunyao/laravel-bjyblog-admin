@@ -1,11 +1,5 @@
-import {
-  Button,
-  Card,
-  Divider,
-  Form,
-} from 'antd';
+import { Card, Divider, Form, Input } from 'antd';
 import React, { Component, Fragment } from 'react';
-
 import { Dispatch, Action } from 'redux';
 import { FormComponentProps } from 'antd/es/form';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
@@ -13,68 +7,41 @@ import { connect } from 'dva';
 import moment from 'moment';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { CategoryStateType } from '@/models/category';
-import CreateForm, { NewCategory } from './components/CreateForm';
-import UpdateForm, { UpdateCategory } from './components/UpdateForm';
 import StandardTable from '@/pages/admin/components/StandardTable';
-
+import ModalForm, { handleUpdate } from '@/components/ModalForm';
+import AddButton from '@/components/AddButton';
 import styles from '@/utils/style.less';
+import { MetaType } from '@/components/FormBuilder';
+import { CategoryType } from '@/models/data';
 
 const status = ['√', '×'];
 
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch<
     Action<
-      | 'adminTag/add'
-      | 'adminTag/update'
-      | 'adminTag/destroy'
-      | 'adminTag/forceDelete'
-      | 'adminTag/restore'
+      | 'adminCategory/destroy'
+      | 'adminCategory/forceDelete'
+      | 'adminCategory/restore'
     >
   >;
-  loading: boolean;
-  adminTag: CategoryStateType;
-}
-
-interface TableListState {
-  modalVisible: boolean;
-  updateModalVisible: boolean;
-  updateFormValues: UpdateCategory;
+  adminCategory: CategoryStateType;
 }
 
 @connect(
   ({
-    adminTag,
-    loading,
+    adminCategory,
   }: {
-    adminTag: CategoryStateType;
-    loading: {
-      models: {
-        [key: string]: boolean;
-      };
-    };
+    adminCategory: CategoryStateType;
   }) => ({
-    adminTag,
-    loading: loading.models.adminTag,
+    adminCategory,
   }),
 )
-class TableList extends Component<TableListProps, TableListState> {
-  state: TableListState = {
-    modalVisible: false,
-    updateModalVisible: false,
-    updateFormValues: {
-      id: 0,
-      name: '',
-      keywords: '',
-      description: '',
-      deleted_at: '',
-    },
-  };
-
+class TableList extends Component<TableListProps> {
   columns = [
     {
       title: formatMessage({ id: 'Name' }),
       dataIndex: 'name',
-      render: (text:string, record: UpdateCategory) => <a href={`/category/${record.id}`} target="_blank" rel="noopener noreferrer">{text}</a>,
+      render: (text:string, record: CategoryType) => <a href={`/category/${record.id}`} target="_blank" rel="noopener noreferrer">{text}</a>,
     },
     {
       title: formatMessage({ id: 'Keywords' }),
@@ -112,11 +79,11 @@ class TableList extends Component<TableListProps, TableListState> {
     {
       title: formatMessage({ id: 'Handle' }),
       width: 110,
-      render: (text:string, record: UpdateCategory) => {
+      render: (text:string, record: CategoryType) => {
         if (record.deleted_at === null) {
           return (
             <Fragment>
-              <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
+              <a onClick={() => handleUpdate(this.props.dispatch, this.meta, record, 'adminCategory/update')}>{formatMessage({ id: 'Edit' })}</a>
               <Divider type="vertical" />
               <a onClick={() => this.handleDestroy(record)}>{formatMessage({ id: 'Delete' })}</a>
             </Fragment>
@@ -124,7 +91,7 @@ class TableList extends Component<TableListProps, TableListState> {
         }
         return (
           <Fragment>
-            <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
+            <a onClick={() => handleUpdate(this.props.dispatch, this.meta, record, 'adminCategory/update')}>{formatMessage({ id: 'Edit' })}</a>
             <Divider type="vertical" />
             <a onClick={() => this.handleForceDelete(record)}>{formatMessage({ id: 'Force Delete' })}</a>
             <Divider type="vertical" />
@@ -135,100 +102,67 @@ class TableList extends Component<TableListProps, TableListState> {
     },
   ];
 
-  handleModalVisible = (flag?: boolean) => {
-    this.setState({
-      modalVisible: !!flag,
-    });
-  };
+  meta: MetaType[] = [
+    {
+      key: 'name',
+      label: 'Name',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: 'keywords',
+      label: 'Keywords',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: 'description',
+      label: 'Description',
+      widget: Input,
+      required: true,
+    },
+  ];
 
-  handleUpdateModalVisible = (flag?: boolean, record?: UpdateCategory) => {
-    this.setState({
-      updateModalVisible: !!flag,
-      updateFormValues: record || {
-        id: 0,
-        name: '',
-        keywords: '',
-        description: '',
-        deleted_at: '',
-      },
-    });
-  };
-
-  handleAdd = (fields: NewCategory) => {
+  handleDestroy = (fields: CategoryType) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminTag/add',
-      payload: fields,
-    });
-    this.handleModalVisible();
-  };
-
-  handleUpdate = (fields: UpdateCategory) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminTag/update',
-      payload: fields,
-    });
-    this.handleUpdateModalVisible();
-  };
-
-  handleDestroy = (fields: UpdateCategory) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminTag/destroy',
+      type: 'adminCategory/destroy',
       payload: fields,
     });
   };
 
-  handleForceDelete = (fields: UpdateCategory) => {
+  handleForceDelete = (fields: CategoryType) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminTag/forceDelete',
+      type: 'adminCategory/forceDelete',
       payload: fields,
     });
   };
 
-  handleRestore = (fields: UpdateCategory) => {
+  handleRestore = (fields: CategoryType) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminTag/restore',
+      type: 'adminCategory/restore',
       payload: fields,
     });
   };
 
   render() {
-    const { modalVisible, updateModalVisible, updateFormValues } = this.state;
-
-    const parentMethods = {
-      handleAdd: this.handleAdd,
-      handleModalVisible: this.handleModalVisible,
-    };
-    const updateMethods = {
-      handleUpdateModalVisible: this.handleUpdateModalVisible,
-      handleUpdate: this.handleUpdate,
-    };
-
     return (
       <PageHeaderWrapper>
         <Card bordered={false}>
           <div className={styles.tableList}>
-            <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
-                {formatMessage({ id: 'Add' })}
-              </Button>
-            </div>
+            <AddButton
+              meta={this.meta}
+              actionType="adminCategory/add"
+            />
             <StandardTable
               columns={this.columns}
-              model="adminTag"
+              model="adminCategory"
             />
           </div>
         </Card>
-        <CreateForm {...parentMethods} modalVisible={modalVisible} />
-        <UpdateForm
-          {...updateMethods}
-          updateModalVisible={updateModalVisible}
-          updateFormValues={ updateFormValues }
-        />
+        <ModalForm />
       </PageHeaderWrapper>
     );
   }
