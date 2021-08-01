@@ -6,7 +6,7 @@ import {
   Upload,
   Icon,
 } from 'antd';
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { UploadChangeParam, UploadFile } from 'antd/es/upload/interface'
 
 import { Dispatch, Action } from 'redux';
@@ -15,8 +15,6 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { ConfigStateType } from '../model';
-import UpdateForm, { UpdateItem } from '../components/UpdateForm';
-import { StandardTableColumnProps } from '../components/StandardTable';
 
 const FormItem = Form.Item;
 
@@ -32,8 +30,6 @@ interface TableListProps extends FormComponentProps {
 }
 
 interface TableListState {
-  updateModalVisible: boolean;
-  updateFormValues: UpdateItem;
   loading: boolean;
   imageUrl: string;
 }
@@ -74,34 +70,9 @@ function beforeUpload(file: UploadFile) {
 )
 class TableList extends Component<TableListProps, TableListState> {
   state: TableListState = {
-    updateModalVisible: false,
-    updateFormValues: {
-      id: 0,
-      value: '',
-    },
     loading: false,
     imageUrl: '',
   };
-
-  columns: StandardTableColumnProps[] = [
-    {
-      title: formatMessage({ id: 'Name' }),
-      dataIndex: 'name',
-    },
-    {
-      title: '值',
-      dataIndex: 'value',
-    },
-    {
-      title: formatMessage({ id: 'Handle' }),
-      width: 110,
-      render: (text, record) => (
-          <Fragment>
-            <a onClick={() => this.handleUpdateModalVisible(true, record)}>{formatMessage({ id: 'Edit' })}</a>
-          </Fragment>
-        ),
-    },
-  ];
 
   componentDidMount() {
     const { dispatch } = this.props;
@@ -109,25 +80,6 @@ class TableList extends Component<TableListProps, TableListState> {
       type: 'adminConfig/fetch',
     });
   }
-
-  handleUpdateModalVisible = (flag?: boolean, record?: UpdateItem) => {
-    this.setState({
-      updateModalVisible: !!flag,
-      updateFormValues: record || {
-        id: 0,
-        value: '',
-      },
-    });
-  };
-
-  handleUpdate = (fields: UpdateItem) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminConfig/update',
-      payload: fields,
-    });
-    this.handleUpdateModalVisible();
-  };
 
   handleSubmit = (e: React.FormEvent) => {
     const {
@@ -187,13 +139,6 @@ class TableList extends Component<TableListProps, TableListState> {
       adminConfig: { data },
       form: { getFieldDecorator },
     } = this.props;
-
-    const { updateModalVisible, updateFormValues } = this.state;
-
-    const updateMethods = {
-      handleUpdateModalVisible: this.handleUpdateModalVisible,
-      handleUpdate: this.handleUpdate,
-    };
 
     const formItemLayout = {
       labelCol: {
@@ -304,11 +249,6 @@ class TableList extends Component<TableListProps, TableListState> {
             </FormItem>
           </Form>
         </Card>
-        <UpdateForm
-          {...updateMethods}
-          updateModalVisible={updateModalVisible}
-          updateFormValues={ updateFormValues }
-        />
       </PageHeaderWrapper>
     );
   }

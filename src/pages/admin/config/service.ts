@@ -1,6 +1,5 @@
 import request from '@/utils/request';
 import { TableListParams } from '@/models/data';
-import { UpdateItem } from '@/pages/admin/config/components/UpdateForm';
 import { ConfigType } from '@/pages/admin/config/data';
 
 export async function queryRule(params: TableListParams) {
@@ -19,7 +18,7 @@ export async function queryRule(params: TableListParams) {
   return response;
 }
 
-export async function updateRule(params: UpdateItem) {
+export async function updateRule(params: ConfigType) {
   return request(`/api/configs/${params.id}`, {
     method: 'PUT',
     data: params,
