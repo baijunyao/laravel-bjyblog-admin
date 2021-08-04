@@ -49,7 +49,6 @@ class StandardTable extends Component<StandardTablePropType> {
   };
 
   render() {
-    console.log(this.props)
     return (
       <div className={styles.standardTable}>
         <Table

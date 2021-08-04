@@ -1,325 +1,190 @@
 import {
-  Button,
-  Card,
-  Form, Input,
-  Radio, Select,
+  Form,
+  Input,
+  Radio,
 } from 'antd';
 import React, { Component } from 'react';
 
-import { Dispatch, Action } from 'redux';
-import { FormComponentProps } from 'antd/es/form';
-import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import { connect } from 'dva';
-import { formatMessage } from 'umi-plugin-react/locale';
-import { ConfigStateType } from '../model';
+import ConfigForm from '@/pages/admin/config/components/ConfigForm';
+import { MetaType } from '@/components/FormBuilder';
 
-const FormItem = Form.Item;
-const { TextArea } = Input;
-const { Option } = Select;
-
-interface TableListProps extends FormComponentProps {
-  dispatch: Dispatch<
-    Action<
-      | 'adminConfig/fetch'
-      | 'adminConfig/update'
-      >
-    >;
-  loading: boolean;
-  adminConfig: ConfigStateType;
-}
-
-@connect(
-  ({
-     adminConfig,
-     loading,
-   }: {
-    adminConfig: ConfigStateType;
-    loading: {
-      models: {
-        [key: string]: boolean;
-      };
-    };
-  }) => ({
-    adminConfig,
-    loading: loading.models.adminConfig,
-  }),
-)
-class TableList extends Component<TableListProps> {
-  componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminConfig/fetch',
-    });
-  }
-
-  handleSubmit = (e: React.FormEvent) => {
-    const {
-      adminConfig: { data },
-      dispatch,
-      form,
-    } = this.props;
-    e.preventDefault();
-    form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        Object.keys(values).forEach(id => {
-          if (values[id] !== data.list[id].value) {
-            dispatch({
-              type: 'adminConfig/update',
-              payload: {
-                id,
-                value: values[id],
-              },
-            });
-          }
-        })
-      }
-    });
-  };
+class TableList extends Component {
+  meta: MetaType[] = [
+    {
+      key: '166',
+      label: 'Language',
+      widget: Radio.Group,
+      children: {
+        widget: Radio,
+        list: [
+          {
+            value: 'en',
+            label: 'English',
+          },
+          {
+            value: 'fr',
+            label: 'French',
+          },
+          {
+            value: 'ru',
+            label: 'Russian',
+          },
+          {
+            value: 'zh-CN',
+            label: 'Chinese(Simplified)',
+          },
+        ],
+      },
+      required: true,
+    },
+    {
+      key: '195',
+      label: 'Timezone',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: '171',
+      label: 'Logo Style',
+      widget: Radio.Group,
+      children: {
+        widget: Radio,
+        list: [
+          {
+            value: 'true',
+            label: 'Allow commercial',
+          },
+          {
+            value: 'false',
+            label: 'Only text',
+          },
+        ],
+      },
+      required: true,
+    },
+    {
+      key: '117',
+      label: 'ICP',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: '125',
+      label: 'Default Author',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: '119',
+      label: 'Article Copyright Word',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: '141',
+      label: 'Image Alt Word',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: '107',
+      label: 'Image Water Text',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: '110',
+      label: 'Image Water Color',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: '128',
+      label: 'Baidu Site URL',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: '123',
+      label: 'Statistics Code',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: '118',
+      label: 'Admin Email',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: '148',
+      label: 'Notification Email',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: '158',
+      label: 'Sentry DSN',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: '172',
+      label: 'CDN Domain',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: '185',
+      label: 'Cookie Domain',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: '193',
+      label: 'Link Target',
+      widget: Radio.Group,
+      children: {
+        widget: Radio,
+        list: [
+          {
+            value: '_blank',
+            label: 'New Tab',
+          },
+          {
+            value: '_self',
+            label: 'Current Tab',
+          },
+        ],
+      },
+      required: true,
+    },
+    {
+      key: '194',
+      label: 'Breadcrumb',
+      widget: Radio.Group,
+      children: {
+        widget: Radio,
+        list: [
+          {
+            value: 'true',
+            label: 'Yes',
+          },
+          {
+            value: 'false',
+            label: 'No',
+          },
+        ],
+      },
+      required: true,
+    },
+  ];
 
   render() {
-    const {
-      adminConfig: { data },
-      form: { getFieldDecorator },
-    } = this.props;
-
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 7 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-        md: { span: 10 },
-      },
-    };
-
-    const submitFormLayout = {
-      wrapperCol: {
-        xs: { span: 24, offset: 0 },
-        sm: { span: 10, offset: 7 },
-      },
-    };
-
-    if (data.list.length === 0) {
-      return (
-        <PageHeaderWrapper>
-        </PageHeaderWrapper>
-      )
-    }
-
     return (
-      <PageHeaderWrapper>
-        <Card bordered={false}>
-          <Form onSubmit={this.handleSubmit} hideRequiredMark style={{ marginTop: 8 }}>
-            <FormItem
-              {...formItemLayout}
-              label={formatMessage({ id: 'Language' })}
-            >
-              {getFieldDecorator('166', {
-                rules: [{ required: true }],
-                initialValue: data.list[166].value,
-              })(
-                <Select>
-                  <Option value="en">{formatMessage({ id: 'English' })}</Option>
-                  <Option value="fr">{formatMessage({ id: 'French' })}</Option>
-                  <Option value="ru">{formatMessage({ id: 'Russian' })}</Option>
-                  <Option value="zh-CN">{formatMessage({ id: 'Chinese(Simplified)' })}</Option>
-                </Select>,
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={formatMessage({ id: 'Timezone' })}
-            >
-              {getFieldDecorator('195', {
-                rules: [{ required: true }],
-                initialValue: data.list[195].value,
-              })(
-                <Input />,
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={formatMessage({ id: 'Logo Style' })}
-            >
-              {getFieldDecorator('171', {
-                rules: [{ required: true }],
-                initialValue: data.list[171].value,
-              })(<Radio.Group>
-                <Radio value="true">{formatMessage({ id: 'Text with php tag' })}</Radio>
-                <Radio value="false">{formatMessage({ id: 'Only text' })}</Radio>
-              </Radio.Group>)}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={formatMessage({ id: 'ICP' })}
-            >
-              {getFieldDecorator('117', {
-                initialValue: data.list[117].value,
-              })(
-                <Input />,
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={formatMessage({ id: 'Default Author' })}
-            >
-              {getFieldDecorator('125', {
-                rules: [
-                  {
-                    required: true,
-                  },
-                ],
-                initialValue: data.list[125].value,
-              })(
-                <Input />,
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={formatMessage({ id: 'Article Copyright Word' })}
-            >
-              {getFieldDecorator('119', {
-                initialValue: data.list[119].value,
-              })(
-                <TextArea />,
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={formatMessage({ id: 'Image Alt Word' })}
-            >
-              {getFieldDecorator('141', {
-                initialValue: data.list[141].value,
-              })(
-                <Input />,
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={formatMessage({ id: 'Image Water Text' })}
-            >
-              {getFieldDecorator('107', {
-                initialValue: data.list[107].value,
-              })(
-                <Input />,
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={formatMessage({ id: 'Image Water Color' })}
-            >
-              {getFieldDecorator('110', {
-                initialValue: data.list[110].value,
-              })(
-                <Input />,
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={formatMessage({ id: 'Baidu Site URL' })}
-            >
-              {getFieldDecorator('128', {
-                initialValue: data.list[128].value,
-              })(
-                <Input />,
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={formatMessage({ id: 'Statistics Code' })}
-            >
-              {getFieldDecorator('123', {
-                initialValue: data.list[123].value,
-              })(
-                <TextArea />,
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={formatMessage({ id: 'Admin Email' })}
-            >
-              {getFieldDecorator('118', {
-                initialValue: data.list[118].value,
-              })(
-                <Input />,
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={formatMessage({ id: 'Notification Email' })}
-            >
-              {getFieldDecorator('148', {
-                initialValue: data.list[148].value,
-              })(
-                <Input />,
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={formatMessage({ id: 'Sentry DSN' })}
-            >
-              {getFieldDecorator('158', {
-                initialValue: data.list[158].value,
-              })(
-                <Input />,
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={formatMessage({ id: 'CDN Domain' })}
-            >
-              {getFieldDecorator('172', {
-                initialValue: data.list[172].value,
-              })(
-                <Input />,
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={formatMessage({ id: 'Cookie Domain' })}
-            >
-              {getFieldDecorator('185', {
-                initialValue: data.list[185].value,
-              })(
-                <Input />,
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={formatMessage({ id: 'Link Target' })}
-            >
-              {getFieldDecorator('193', {
-                rules: [{ required: true }],
-                initialValue: data.list[193].value,
-              })(<Radio.Group>
-                <Radio value="_blank">{formatMessage({ id: 'New Tab' })}</Radio>
-                <Radio value="_self">{formatMessage({ id: 'Current Tab' })}</Radio>
-              </Radio.Group>)}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={formatMessage({ id: 'Breadcrumb' })}
-            >
-              {getFieldDecorator('194', {
-                rules: [{ required: true }],
-                initialValue: data.list[194].value,
-              })(<Radio.Group>
-                <Radio value="true">{formatMessage({ id: 'Yes' })}</Radio>
-                <Radio value="false">{formatMessage({ id: 'No' })}</Radio>
-              </Radio.Group>)}
-            </FormItem>
-            <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
-              <Button type="primary" htmlType="submit">
-                {formatMessage({ id: 'Submit' })}
-              </Button>
-            </FormItem>
-          </Form>
-        </Card>
-      </PageHeaderWrapper>
+      <ConfigForm meta={this.meta} />
     );
   }
 }
 
-export default Form.create<TableListProps>()(TableList);
+export default Form.create()(TableList);

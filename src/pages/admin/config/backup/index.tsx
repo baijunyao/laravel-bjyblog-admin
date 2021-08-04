@@ -1,197 +1,71 @@
 import {
-  Button,
-  Card,
   Form,
   Input,
   Checkbox,
 } from 'antd';
 import React, { Component } from 'react';
 
-import { Dispatch, Action } from 'redux';
-import { FormComponentProps } from 'antd/es/form';
-import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import { connect } from 'dva';
-import { formatMessage } from 'umi-plugin-react/locale';
-import { ConfigStateType } from '../model';
+import ConfigForm from '@/pages/admin/config/components/ConfigForm';
+import { MetaType } from '@/components/FormBuilder';
 
-const FormItem = Form.Item;
-
-interface TableListProps extends FormComponentProps {
-  dispatch: Dispatch<
-    Action<
-      | 'adminConfig/fetch'
-      | 'adminConfig/update'
-      >
-    >;
-  loading: boolean;
-  adminConfig: ConfigStateType;
-}
-
-@connect(
-  ({
-     adminConfig,
-     loading,
-   }: {
-    adminConfig: ConfigStateType;
-    loading: {
-      models: {
-        [key: string]: boolean;
-      };
-    };
-  }) => ({
-    adminConfig,
-    loading: loading.models.adminConfig,
-  }),
-)
-class TableList extends Component<TableListProps> {
-  componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminConfig/fetch',
-    });
-  }
-
-  handleSubmit = (e: React.FormEvent) => {
-    const {
-      adminConfig: { data },
-      dispatch,
-      form,
-    } = this.props;
-    e.preventDefault();
-    form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        Object.keys(values).forEach((id) => {
-          if (values[id] !== data.list[id].value) {
-            dispatch({
-              type: 'adminConfig/update',
-              payload: {
-                id,
-                value: values[id],
-              },
-            });
-          }
-        })
-      }
-    });
-  };
+class TableList extends Component {
+  meta: MetaType[] = [
+    {
+      key: '164',
+      label: 'Type',
+      widget: Checkbox.Group,
+      children: {
+        widget: Checkbox,
+        list: [
+          {
+            value: 'local',
+            label: 'Local',
+          },
+          {
+            value: 'oss',
+            label: 'Aliyun OSS',
+          },
+        ],
+      },
+      required: true,
+    },
+    {
+      key: '159',
+      label: 'MySQL Dump Path',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: '160',
+      label: 'Aliyun AccessKeyID',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: '161',
+      label: 'Aliyun AccessKeySecret',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: '162',
+      label: 'Aliyun BUCKET',
+      widget: Input,
+      required: true,
+    },
+    {
+      key: '163',
+      label: 'Aliyun ENDPOINT',
+      widget: Input,
+      required: true,
+    },
+  ];
 
   render() {
-    const {
-      adminConfig: { data },
-      form: { getFieldDecorator },
-    } = this.props;
-
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 7 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-        md: { span: 10 },
-      },
-    };
-
-    const submitFormLayout = {
-      wrapperCol: {
-        xs: { span: 24, offset: 0 },
-        sm: { span: 10, offset: 7 },
-      },
-    };
-
-    if (data.list.length === 0) {
-      return (
-        <PageHeaderWrapper>
-        </PageHeaderWrapper>
-      )
-    }
-
     return (
-      <PageHeaderWrapper>
-        <Card bordered={false}>
-          <Form onSubmit={this.handleSubmit} hideRequiredMark style={{ marginTop: 8 }}>
-            <FormItem
-              {...formItemLayout}
-              label={formatMessage({ id: 'Type' })}
-            >
-              {getFieldDecorator('164', {
-                initialValue: data.list[164].value,
-              })(<Checkbox.Group>
-                <Checkbox value="local">{formatMessage({ id: 'Local' })}</Checkbox>
-                <Checkbox value="oss">{formatMessage({ id: 'Aliyun OSS' })}</Checkbox>
-              </Checkbox.Group>)}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={formatMessage({ id: 'Notification Email' })}
-            >
-              {getFieldDecorator('165', {
-                initialValue: data.list[165].value,
-              })(
-                <Input />,
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={formatMessage({ id: 'MySQL Dump Path' })}
-            >
-              {getFieldDecorator('159', {
-                initialValue: data.list[159].value,
-              })(
-                <Input />,
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={formatMessage({ id: 'Aliyun AccessKeyID' })}
-            >
-              {getFieldDecorator('160', {
-                initialValue: data.list[160].value,
-              })(
-                <Input />,
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={formatMessage({ id: 'Aliyun AccessKeySecret' })}
-            >
-              {getFieldDecorator('161', {
-                initialValue: data.list[161].value,
-              })(
-                <Input />,
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={formatMessage({ id: 'Aliyun BUCKET' })}
-            >
-              {getFieldDecorator('162', {
-                initialValue: data.list[162].value,
-              })(
-                <Input />,
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={formatMessage({ id: 'Aliyun ENDPOINT' })}
-            >
-              {getFieldDecorator('163', {
-                initialValue: data.list[163].value,
-              })(
-                <Input />,
-              )}
-            </FormItem>
-            <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
-              <Button type="primary" htmlType="submit">
-                {formatMessage({ id: 'Submit' })}
-              </Button>
-            </FormItem>
-          </Form>
-        </Card>
-      </PageHeaderWrapper>
+      <ConfigForm meta={this.meta} />
     );
   }
 }
 
-export default Form.create<TableListProps>()(TableList);
+export default Form.create()(TableList);
