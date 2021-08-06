@@ -1,12 +1,8 @@
-import { TableListPaginationType } from '@/models/data'
+import { EloquentType, TableListPaginationType } from '@/models/data'
 
-export interface ConfigType {
-  id: number;
+export interface ConfigType extends EloquentType{
   name: string;
   value: string;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
 }
 
 export interface ConfigListPaginationType extends TableListPaginationType{

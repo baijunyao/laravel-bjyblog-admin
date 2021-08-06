@@ -1,11 +1,7 @@
-import { TableListPaginationType } from '@/models/data'
+import { EloquentType, TableListPaginationType } from '@/models/data'
 
-export interface NoteType {
-  id: number;
+export interface NoteType extends EloquentType{
   content: string;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
 }
 
 export interface NoteListPaginationType extends TableListPaginationType{

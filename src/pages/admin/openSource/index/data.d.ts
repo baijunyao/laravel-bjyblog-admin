@@ -1,13 +1,9 @@
-import { TableListPaginationType } from '@/models/data'
+import { EloquentType, TableListPaginationType } from '@/models/data'
 
-export interface OpenSourceType {
-  id: number;
+export interface OpenSourceType extends EloquentType{
   sort: number;
   type: number;
   name: string;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
 }
 
 export interface OpenSourceListPaginationType extends TableListPaginationType{

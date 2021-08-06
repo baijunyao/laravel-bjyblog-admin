@@ -1,8 +1,7 @@
-import { TableListPaginationType } from '@/models/data'
 import { SocialiteClientType } from '@/pages/admin/socialiteClient/index/data.d'
+import { EloquentType, TableListPaginationType } from '@/models/data'
 
-export interface SocialiteUserType {
-  id: number;
+export interface SocialiteUserType extends EloquentType{
   name: string;
   email: string;
   avatar: string;
@@ -10,9 +9,6 @@ export interface SocialiteUserType {
   is_blocked: number;
   login_times: number;
   socialite_client: SocialiteClientType;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
 }
 
 export interface SocialiteUserListPaginationType extends TableListPaginationType{

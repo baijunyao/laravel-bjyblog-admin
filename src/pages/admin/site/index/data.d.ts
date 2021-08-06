@@ -1,15 +1,11 @@
-import { TableListPaginationType } from '@/models/data'
+import { EloquentType, TableListPaginationType } from '@/models/data'
 
-export interface SiteType {
-  id: number;
+export interface SiteType extends EloquentType{
   name: string;
   description: string;
   url: string;
   sort: number;
   audit: number;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
 }
 
 export interface SiteListPaginationType extends TableListPaginationType{

@@ -1,13 +1,9 @@
-import { TableListPaginationType } from '@/models/data'
+import { EloquentType, TableListPaginationType } from '@/models/data'
 
-export interface FriendType {
-  id: number;
+export interface FriendType extends EloquentType{
   name: string;
   url: string;
   sort: number;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
 }
 
 export interface FriendListPaginationType extends TableListPaginationType{

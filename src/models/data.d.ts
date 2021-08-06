@@ -39,29 +39,25 @@ export interface TableListParams {
   currentPage: number;
 }
 
-export interface TagType {
+export interface EloquentType {
   id: number;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string | null;
+}
+
+export interface TagType extends EloquentType{
   name: string;
   slug: string;
   keywords: string;
   description: string;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
 }
 
 export interface TagListPaginationType extends TableListPaginationType{
   list: TagType[];
 }
 
-export interface ModelType {
-  id: number;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
-}
-
-export interface CategoryType extends ModelType{
+export interface CategoryType extends EloquentType{
   name: string;
   slug: string;
   keywords: string;
@@ -74,8 +70,7 @@ export interface CategoryListPaginationType extends TableListPaginationType{
   list: CategoryType[];
 }
 
-export interface ArticleType {
-  id: number;
+export interface ArticleType extends EloquentType{
   category_id: number;
   title: string;
   slug: string;
@@ -89,9 +84,6 @@ export interface ArticleType {
   views: number;
   tags: TagType[],
   category: CategoryType;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
 }
 
 export interface ArticleListPaginationType extends TableListPaginationType{
