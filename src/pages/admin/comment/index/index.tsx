@@ -1,9 +1,8 @@
 import {
   Card,
-  Divider,
   Form, Input, Radio,
 } from 'antd';
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Dispatch, Action } from 'redux';
 import { FormComponentProps } from 'antd/es/form';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
@@ -15,7 +14,8 @@ import StandardTable from '@/pages/admin/components/StandardTable';
 import { CommentType } from './data.d';
 import styles from '@/utils/style.less';
 import { MetaType } from '@/components/FormBuilder';
-import ModalForm, { handleUpdate } from '@/components/ModalForm';
+import ModalForm from '@/components/ModalForm';
+import HandleDropdown from '@/components/HandleDropdown';
 
 const status = ['√', '×'];
 
@@ -112,26 +112,15 @@ class TableList extends Component<TableListProps, TableListState> {
     {
       title: formatMessage({ id: 'Handle' }),
       width: 110,
-      render: (text: string, record: CommentType) => {
-        if (record.deleted_at === null) {
-          return (
-            <Fragment>
-              <a onClick={() => handleUpdate(this.props.dispatch, this.meta, record, 'adminComment/update')}>{formatMessage({ id: 'Edit' })}</a>
-              <Divider type="vertical" />
-              <a onClick={() => this.handleDestroy(record)}>{formatMessage({ id: 'Delete' })}</a>
-            </Fragment>
-          )
-        }
-        return (
-          <Fragment>
-            <a onClick={() => handleUpdate(this.props.dispatch, this.meta, record, 'adminComment/update')}>{formatMessage({ id: 'Edit' })}</a>
-            <Divider type="vertical" />
-            <a onClick={() => this.handleForceDelete(record)}>{formatMessage({ id: 'Force Delete' })}</a>
-            <Divider type="vertical" />
-            <a onClick={() => this.handleRestore(record)}>{formatMessage({ id: 'Restore' })}</a>
-          </Fragment>
-        )
-      },
+      render: (text: string, record: CommentType) => (
+        <HandleDropdown
+          dispatch={this.props.dispatch}
+          meta={this.meta}
+          rows={this.props.adminComment.data.list}
+          selectedRow={record}
+          namespace="adminComment"
+        />
+      ),
     },
   ];
 
@@ -162,30 +151,6 @@ class TableList extends Component<TableListProps, TableListState> {
       required: true,
     },
   ];
-
-  handleDestroy = (fields: CommentType) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminComment/destroy',
-      payload: fields,
-    });
-  };
-
-  handleForceDelete = (fields: CommentType) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminComment/forceDelete',
-      payload: fields,
-    });
-  };
-
-  handleRestore = (fields: CommentType) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminComment/restore',
-      payload: fields,
-    });
-  };
 
   render() {
     return (

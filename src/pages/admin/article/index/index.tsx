@@ -1,10 +1,9 @@
 import {
   Button,
-  Card,
-  Divider,
-  Form,
+  Card, Dropdown,
+  Form, Menu,
 } from 'antd';
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
 import { Dispatch, Action } from 'redux';
 import { FormComponentProps } from 'antd/es/form';
@@ -12,6 +11,7 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import moment from 'moment';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { router } from 'umi';
+import { connect } from 'dva';
 import StandardTable from '@/pages/admin/components/StandardTable';
 import { ArticleListPaginationType, ArticleType } from '@/models/data.d';
 import styles from '@/utils/style.less';
@@ -34,6 +34,7 @@ interface TableListState {
   formValues: { [key: string]: string };
 }
 
+@connect((state: TableListProps) => state)
 class TableList extends Component<TableListProps, TableListState> {
   columns = [
     {
@@ -81,28 +82,43 @@ class TableList extends Component<TableListProps, TableListState> {
     {
       title: formatMessage({ id: 'Handle' }),
       width: 110,
-      render: (text: string, record: ArticleType) => {
-        if (record.deleted_at === null) {
-          return (
-            <Fragment>
-              <a onClick={() => this.handleRedirectToEditPage(record)}>{formatMessage({ id: 'Edit' })}</a>
-              <Divider type="vertical" />
-              <a onClick={() => this.handleDestroy(record)}>{formatMessage({ id: 'Delete' })}</a>
-            </Fragment>
-          )
-        }
-        return (
-          <Fragment>
-            <a onClick={() => this.handleRedirectToEditPage(record)}>{formatMessage({ id: 'Edit' })}</a>
-            <Divider type="vertical" />
-            <a onClick={() => this.handleForceDelete(record)}>{formatMessage({ id: 'Force Delete' })}</a>
-            <Divider type="vertical" />
-            <a onClick={() => this.handleRestore(record)}>{formatMessage({ id: 'Restore' })}</a>
-          </Fragment>
-        )
-      },
+      render: (text: string, record: ArticleType) => (
+        <Dropdown overlay={this.generateMenu(record)}>
+          <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+            {formatMessage({ id: 'Handle' })}
+          </a>
+        </Dropdown>
+      ),
     },
   ];
+
+  generateMenu = (record: ArticleType) => {
+    if (record.deleted_at === null) {
+      return (
+        <Menu>
+          <Menu.Item key="0">
+            <a onClick={() => this.handleRedirectToEditPage(record)}>{formatMessage({ id: 'Edit' })}</a>
+          </Menu.Item>
+          <Menu.Item key="2">
+            <a onClick={() => this.handleDestroy(record)}>{formatMessage({ id: 'Delete' })}</a>
+          </Menu.Item>
+        </Menu>
+      )
+    }
+    return (
+      <Menu>
+        <Menu.Item key="0">
+          <a onClick={() => this.handleRedirectToEditPage(record)}>{formatMessage({ id: 'Edit' })}</a>
+        </Menu.Item>
+        <Menu.Item key="1">
+          <a onClick={() => this.handleForceDelete(record)}>{formatMessage({ id: 'Force Delete' })}</a>
+        </Menu.Item>
+        <Menu.Item key="2">
+          <a onClick={() => this.handleRestore(record)}>{formatMessage({ id: 'Restore' })}</a>
+        </Menu.Item>
+      </Menu>
+    )
+  };
 
   handleRedirectToCreatePage = () => {
     router.push('/article/create');

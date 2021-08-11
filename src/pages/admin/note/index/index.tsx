@@ -1,9 +1,8 @@
 import {
   Card,
-  Divider,
   Form, Input,
 } from 'antd';
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
 import { Dispatch, Action } from 'redux';
 import { FormComponentProps } from 'antd/es/form';
@@ -16,8 +15,9 @@ import StandardTable from '@/pages/admin/components/StandardTable';
 import { NoteType } from './data.d'
 import styles from '@/utils/style.less';
 import AddButton from '@/components/AddButton';
-import ModalForm, { handleUpdate } from '@/components/ModalForm';
+import ModalForm from '@/components/ModalForm';
 import { MetaType } from '@/components/FormBuilder';
+import HandleDropdown from '@/components/HandleDropdown';
 
 const { TextArea } = Input;
 const status = ['√', '×'];
@@ -84,26 +84,15 @@ class TableList extends Component<TableListProps> {
     {
       title: formatMessage({ id: 'Handle' }),
       width: 110,
-      render: (text: string, record: NoteType) => {
-        if (record.deleted_at === null) {
-          return (
-            <Fragment>
-              <a onClick={() => handleUpdate(this.props.dispatch, this.meta, record, 'adminNote/update')}>{formatMessage({ id: 'Edit' })}</a>
-              <Divider type="vertical" />
-              <a onClick={() => this.handleDestroy(record)}>{formatMessage({ id: 'Delete' })}</a>
-            </Fragment>
-          )
-        }
-        return (
-          <Fragment>
-            <a onClick={() => handleUpdate(this.props.dispatch, this.meta, record, 'adminNote/update')}>{formatMessage({ id: 'Edit' })}</a>
-            <Divider type="vertical" />
-            <a onClick={() => this.handleForceDelete(record)}>{formatMessage({ id: 'Force Delete' })}</a>
-            <Divider type="vertical" />
-            <a onClick={() => this.handleRestore(record)}>{formatMessage({ id: 'Restore' })}</a>
-          </Fragment>
-        )
-      },
+      render: (text: string, record: NoteType) => (
+        <HandleDropdown
+          dispatch={this.props.dispatch}
+          meta={this.meta}
+          rows={this.props.adminNote.data.list}
+          selectedRow={record}
+          namespace="adminNote"
+        />
+      ),
     },
   ];
 
@@ -115,30 +104,6 @@ class TableList extends Component<TableListProps> {
       required: true,
     },
   ];
-
-  handleDestroy = (fields: NoteType) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminNote/destroy',
-      payload: fields,
-    });
-  };
-
-  handleForceDelete = (fields: NoteType) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminNote/forceDelete',
-      payload: fields,
-    });
-  };
-
-  handleRestore = (fields: NoteType) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminNote/restore',
-      payload: fields,
-    });
-  };
 
   render() {
     return (

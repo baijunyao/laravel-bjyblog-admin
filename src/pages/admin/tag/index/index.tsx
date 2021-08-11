@@ -1,11 +1,10 @@
 import {
   Card,
-  Divider,
   Form, Input,
 } from 'antd';
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
-import { Dispatch, Action } from 'redux';
+import { Dispatch } from 'redux';
 import { FormComponentProps } from 'antd/es/form';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
@@ -16,38 +15,25 @@ import StandardTable from '@/pages/admin/components/StandardTable';
 import { TagType } from '@/models/data.d';
 
 import styles from '@/utils/style.less';
-import ModalForm, { handleUpdate } from '@/components/ModalForm';
+import ModalForm from '@/components/ModalForm';
 import AddButton from '@/components/AddButton';
 import { MetaType } from '@/components/FormBuilder';
+import HandleDropdown from '@/components/HandleDropdown';
 
 const status = ['√', '×'];
 
 interface TableListProps extends FormComponentProps {
-  dispatch: Dispatch<
-    Action<
-      | 'adminTag/destroy'
-      | 'adminTag/forceDelete'
-      | 'adminTag/restore'
-    >
-  >;
-  loading: boolean;
+  dispatch: Dispatch;
   adminTag: TagStateType;
 }
 
 @connect(
   ({
     adminTag,
-    loading,
   }: {
     adminTag: TagStateType;
-    loading: {
-      models: {
-        [key: string]: boolean;
-      };
-    };
   }) => ({
     adminTag,
-    loading: loading.models.adminTag,
   }),
 )
 class TableList extends Component<TableListProps> {
@@ -93,26 +79,15 @@ class TableList extends Component<TableListProps> {
     {
       title: formatMessage({ id: 'Handle' }),
       width: 110,
-      render: (text: string, record: TagType) => {
-        if (record.deleted_at === null) {
-          return (
-            <Fragment>
-              <a onClick={() => handleUpdate(this.props.dispatch, this.meta, record, 'adminTag/update')}>{formatMessage({ id: 'Edit' })}</a>
-              <Divider type="vertical" />
-              <a onClick={() => this.handleDestroy(record)}>{formatMessage({ id: 'Delete' })}</a>
-            </Fragment>
-          )
-        }
-        return (
-          <Fragment>
-            <a onClick={() => handleUpdate(this.props.dispatch, this.meta, record, 'adminTag/update')}>{formatMessage({ id: 'Edit' })}</a>
-            <Divider type="vertical" />
-            <a onClick={() => this.handleForceDelete(record)}>{formatMessage({ id: 'Force Delete' })}</a>
-            <Divider type="vertical" />
-            <a onClick={() => this.handleRestore(record)}>{formatMessage({ id: 'Restore' })}</a>
-          </Fragment>
-        )
-      },
+      render: (text: string, record: TagType) => (
+        <HandleDropdown
+          dispatch={this.props.dispatch}
+          meta={this.meta}
+          rows={this.props.adminTag.data.list}
+          selectedRow={record}
+          namespace="adminTag"
+        />
+      ),
     },
   ];
 
@@ -137,30 +112,6 @@ class TableList extends Component<TableListProps> {
     },
   ];
 
-  handleDestroy = (fields: TagType) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminTag/destroy',
-      payload: fields,
-    });
-  };
-
-  handleForceDelete = (fields: TagType) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminTag/forceDelete',
-      payload: fields,
-    });
-  };
-
-  handleRestore = (fields: TagType) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminTag/restore',
-      payload: fields,
-    });
-  };
-
   render() {
     return (
       <PageHeaderWrapper>
@@ -168,7 +119,7 @@ class TableList extends Component<TableListProps> {
           <div className={styles.tableList}>
             <AddButton
               meta={this.meta}
-              actionType="adminCategory/add"
+              actionType="adminTag/add"
             />
             <StandardTable
               columns={this.columns}

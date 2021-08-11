@@ -1,5 +1,5 @@
-import { Card, Divider, Form, Input } from 'antd';
-import React, { Component, Fragment } from 'react';
+import { Card, Form, Input } from 'antd';
+import React, { Component } from 'react';
 import { Dispatch, Action } from 'redux';
 import { FormComponentProps } from 'antd/es/form';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
@@ -8,11 +8,12 @@ import moment from 'moment';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { CategoryStateType } from '@/models/category';
 import StandardTable from '@/pages/admin/components/StandardTable';
-import ModalForm, { handleUpdate } from '@/components/ModalForm';
+import ModalForm from '@/components/ModalForm';
 import AddButton from '@/components/AddButton';
 import styles from '@/utils/style.less';
 import { MetaType } from '@/components/FormBuilder';
 import { CategoryType } from '@/models/data';
+import HandleDropdown from '@/components/HandleDropdown';
 
 const status = ['√', '×'];
 
@@ -79,26 +80,15 @@ class TableList extends Component<TableListProps> {
     {
       title: formatMessage({ id: 'Handle' }),
       width: 110,
-      render: (text:string, record: CategoryType) => {
-        if (record.deleted_at === null) {
-          return (
-            <Fragment>
-              <a onClick={() => handleUpdate(this.props.dispatch, this.meta, record, 'adminCategory/update')}>{formatMessage({ id: 'Edit' })}</a>
-              <Divider type="vertical" />
-              <a onClick={() => this.handleDestroy(record)}>{formatMessage({ id: 'Delete' })}</a>
-            </Fragment>
-          )
-        }
-        return (
-          <Fragment>
-            <a onClick={() => handleUpdate(this.props.dispatch, this.meta, record, 'adminCategory/update')}>{formatMessage({ id: 'Edit' })}</a>
-            <Divider type="vertical" />
-            <a onClick={() => this.handleForceDelete(record)}>{formatMessage({ id: 'Force Delete' })}</a>
-            <Divider type="vertical" />
-            <a onClick={() => this.handleRestore(record)}>{formatMessage({ id: 'Restore' })}</a>
-          </Fragment>
-        )
-      },
+      render: (text:string, record: CategoryType) => (
+        <HandleDropdown
+          dispatch={this.props.dispatch}
+          meta={this.meta}
+          rows={this.props.adminCategory.data.list}
+          selectedRow={record}
+          namespace="adminCategory"
+        />
+      ),
     },
   ];
 
@@ -122,30 +112,6 @@ class TableList extends Component<TableListProps> {
       required: true,
     },
   ];
-
-  handleDestroy = (fields: CategoryType) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminCategory/destroy',
-      payload: fields,
-    });
-  };
-
-  handleForceDelete = (fields: CategoryType) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminCategory/forceDelete',
-      payload: fields,
-    });
-  };
-
-  handleRestore = (fields: CategoryType) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminCategory/restore',
-      payload: fields,
-    });
-  };
 
   render() {
     return (

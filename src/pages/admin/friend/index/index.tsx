@@ -1,9 +1,8 @@
 import {
   Card,
-  Divider,
   Form, Input,
 } from 'antd';
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
 import { Dispatch, Action } from 'redux';
 import { FormComponentProps } from 'antd/es/form';
@@ -14,10 +13,11 @@ import { formatMessage } from 'umi-plugin-react/locale';
 import { FriendStateType } from './model';
 import StandardTable from '@/pages/admin/components/StandardTable';
 import styles from '@/utils/style.less';
-import ModalForm, { handleUpdate } from '@/components/ModalForm';
+import ModalForm from '@/components/ModalForm';
 import AddButton from '@/components/AddButton';
 import { MetaType } from '@/components/FormBuilder';
 import { FriendType } from '@/pages/admin/friend/index/data';
+import HandleDropdown from '@/components/HandleDropdown';
 
 const status = ['√', '×'];
 
@@ -92,26 +92,15 @@ class TableList extends Component<TableListProps> {
     {
       title: formatMessage({ id: 'Handle' }),
       width: 110,
-      render: (text: string, record: FriendType) => {
-        if (record.deleted_at === null) {
-          return (
-            <Fragment>
-              <a onClick={() => handleUpdate(this.props.dispatch, this.meta, record, 'adminFriendship/update')}>{formatMessage({ id: 'Edit' })}</a>
-              <Divider type="vertical" />
-              <a onClick={() => this.handleDestroy(record)}>{formatMessage({ id: 'Delete' })}</a>
-            </Fragment>
-          )
-        }
-        return (
-          <Fragment>
-            <a onClick={() => handleUpdate(this.props.dispatch, this.meta, record, 'adminFriendship/update')}>{formatMessage({ id: 'Edit' })}</a>
-            <Divider type="vertical" />
-            <a onClick={() => this.handleForceDelete(record)}>{formatMessage({ id: 'Force Delete' })}</a>
-            <Divider type="vertical" />
-            <a onClick={() => this.handleRestore(record)}>{formatMessage({ id: 'Restore' })}</a>
-          </Fragment>
-        )
-      },
+      render: (text: string, record: FriendType) => (
+        <HandleDropdown
+          dispatch={this.props.dispatch}
+          meta={this.meta}
+          rows={this.props.adminFriendship.data.list}
+          selectedRow={record}
+          namespace="adminFriendship"
+        />
+      ),
     },
   ];
 
@@ -135,30 +124,6 @@ class TableList extends Component<TableListProps> {
       required: true,
     },
   ];
-
-  handleDestroy = (fields: FriendType) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminFriendship/destroy',
-      payload: fields,
-    });
-  };
-
-  handleForceDelete = (fields: FriendType) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminFriendship/forceDelete',
-      payload: fields,
-    });
-  };
-
-  handleRestore = (fields: FriendType) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminFriendship/restore',
-      payload: fields,
-    });
-  };
 
   render() {
     return (

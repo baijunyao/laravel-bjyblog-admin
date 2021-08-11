@@ -1,9 +1,8 @@
 import {
   Card,
-  Divider,
   Form, Input, Radio,
 } from 'antd';
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
 import { Dispatch, Action } from 'redux';
 import { FormComponentProps } from 'antd/es/form';
@@ -16,9 +15,10 @@ import StandardTable from '@/pages/admin/components/StandardTable';
 import { SiteType } from './data.d';
 
 import styles from '@/utils/style.less';
-import ModalForm, { handleUpdate } from '@/components/ModalForm';
+import ModalForm from '@/components/ModalForm';
 import AddButton from '@/components/AddButton';
 import { MetaType } from '@/components/FormBuilder';
+import HandleDropdown from '@/components/HandleDropdown';
 
 const status = ['√', '×'];
 
@@ -115,26 +115,15 @@ class TableList extends Component<TableListProps> {
     {
       title: formatMessage({ id: 'Handle' }),
       width: 110,
-      render: (text: string, record: SiteType) => {
-        if (record.deleted_at === null) {
-          return (
-            <Fragment>
-              <a onClick={() => handleUpdate(this.props.dispatch, this.meta, record, 'adminSite/update')}>{formatMessage({ id: 'Edit' })}</a>
-              <Divider type="vertical" />
-              <a onClick={() => this.handleDestroy(record)}>{formatMessage({ id: 'Delete' })}</a>
-            </Fragment>
-          )
-        }
-        return (
-          <Fragment>
-            <a onClick={() => handleUpdate(this.props.dispatch, this.meta, record, 'adminSite/update')}>{formatMessage({ id: 'Edit' })}</a>
-            <Divider type="vertical" />
-            <a onClick={() => this.handleForceDelete(record)}>{formatMessage({ id: 'Force Delete' })}</a>
-            <Divider type="vertical" />
-            <a onClick={() => this.handleRestore(record)}>{formatMessage({ id: 'Restore' })}</a>
-          </Fragment>
-        )
-      },
+      render: (text: string, record: SiteType) => (
+        <HandleDropdown
+          dispatch={this.props.dispatch}
+          meta={this.meta}
+          rows={this.props.adminSite.data.list}
+          selectedRow={record}
+          namespace="adminSite"
+        />
+      ),
     },
   ];
 
@@ -183,37 +172,6 @@ class TableList extends Component<TableListProps> {
       required: true,
     },
   ];
-
-  componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminSite/fetch',
-    });
-  }
-
-  handleDestroy = (fields: SiteType) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminSite/destroy',
-      payload: fields,
-    });
-  };
-
-  handleForceDelete = (fields: SiteType) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminSite/forceDelete',
-      payload: fields,
-    });
-  };
-
-  handleRestore = (fields: SiteType) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminSite/restore',
-      payload: fields,
-    });
-  };
 
   render() {
     return (

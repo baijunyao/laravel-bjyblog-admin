@@ -85,13 +85,6 @@ class TableList extends Component<TableListProps> {
     },
   ];
 
-  componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'adminSocialiteClient/fetch',
-    });
-  }
-
   render() {
     return (
       <PageHeaderWrapper>

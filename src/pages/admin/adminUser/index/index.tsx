@@ -75,20 +75,11 @@ class TableList extends Component<TableListProps> {
     {
       title: formatMessage({ id: 'Handle' }),
       width: 110,
-      render: (text: string, record: AdminUserType) => {
-        if (record.deleted_at === null) {
-          return (
-            <Fragment>
-              <a onClick={() => handleUpdate(this.props.dispatch, this.meta,record, 'adminUser/update')}>{formatMessage({ id: 'Edit' })}</a>
-            </Fragment>
-          )
-        }
-        return (
-          <Fragment>
-            <a onClick={() => handleUpdate(this.props.dispatch, this.meta,record, 'adminUser/update')}>{formatMessage({ id: 'Edit' })}</a>
-          </Fragment>
-        )
-      },
+      render: (text: string, record: AdminUserType) => (
+        <Fragment>
+          <a onClick={() => handleUpdate(this.props.dispatch, this.meta, record, 'adminUser/update')}>{formatMessage({ id: 'Edit' })}</a>
+        </Fragment>
+      ),
     },
   ];
 
