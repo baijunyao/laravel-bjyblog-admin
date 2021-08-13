@@ -22,24 +22,16 @@ const status = ['√', '×'];
 
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch;
-  loading: boolean;
   adminSocialiteUser: SocialiteUserStateType;
 }
 
 @connect(
   ({
      adminSocialiteUser,
-     loading,
    }: {
     adminSocialiteUser: SocialiteUserStateType;
-    loading: {
-      models: {
-        [key: string]: boolean;
-      };
-    };
   }) => ({
     adminSocialiteUser,
-    loading: loading.models.adminSocialiteUser,
   }),
 )
 class TableList extends Component<TableListProps> {

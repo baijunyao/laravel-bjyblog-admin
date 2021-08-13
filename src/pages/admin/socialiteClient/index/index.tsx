@@ -25,24 +25,16 @@ interface TableListProps extends FormComponentProps {
       | 'adminSocialiteClient/destroy'
     >
   >;
-  loading: boolean;
   adminSocialiteClient: SocialiteClientStateType;
 }
 
 @connect(
   ({
     adminSocialiteClient,
-    loading,
   }: {
     adminSocialiteClient: SocialiteClientStateType;
-    loading: {
-      models: {
-        [key: string]: boolean;
-      };
-    };
   }) => ({
     adminSocialiteClient,
-    loading: loading.models.adminSocialiteClient,
   }),
 )
 class TableList extends Component<TableListProps> {

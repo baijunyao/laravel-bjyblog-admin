@@ -27,7 +27,6 @@ interface TableListProps extends FormComponentProps {
       | 'adminComment/restore'
     >
   >;
-  loading: boolean;
   adminComment: CommentStateType;
 }
 
@@ -39,17 +38,10 @@ interface TableListState {
 @connect(
   ({
     adminComment,
-    loading,
   }: {
     adminComment: CommentStateType;
-    loading: {
-      models: {
-        [key: string]: boolean;
-      };
-    };
   }) => ({
     adminComment,
-    loading: loading.models.adminComment,
   }),
 )
 class TableList extends Component<TableListProps, TableListState> {

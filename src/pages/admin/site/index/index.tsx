@@ -31,24 +31,16 @@ interface TableListProps extends FormComponentProps {
       | 'adminSite/restore'
     >
   >;
-  loading: boolean;
   adminSite: SiteStateType;
 }
 
 @connect(
   ({
     adminSite,
-    loading,
   }: {
     adminSite: SiteStateType;
-    loading: {
-      models: {
-        [key: string]: boolean;
-      };
-    };
   }) => ({
     adminSite,
-    loading: loading.models.adminSite,
   }),
 )
 class TableList extends Component<TableListProps> {

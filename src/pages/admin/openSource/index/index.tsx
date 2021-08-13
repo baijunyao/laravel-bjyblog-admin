@@ -30,24 +30,16 @@ interface TableListProps extends FormComponentProps {
       | 'adminOpenSource/restore'
     >
   >;
-  loading: boolean;
   adminOpenSource: OpenSourceStateType;
 }
 
 @connect(
   ({
     adminOpenSource,
-    loading,
   }: {
     adminOpenSource: OpenSourceStateType;
-    loading: {
-      models: {
-        [key: string]: boolean;
-      };
-    };
   }) => ({
     adminOpenSource,
-    loading: loading.models.adminOpenSource,
   }),
 )
 class TableList extends Component<TableListProps> {

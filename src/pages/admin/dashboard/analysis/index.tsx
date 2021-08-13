@@ -1,6 +1,6 @@
 import { Col, Row, Card, List, Avatar } from 'antd';
 import React, { Component, Suspense } from 'react';
-import { Dispatch } from 'redux';
+import { Action, Dispatch } from 'redux';
 import { GridContent } from '@ant-design/pro-layout';
 import { connect } from 'dva';
 import { formatMessage } from 'umi-plugin-react/locale';
@@ -10,15 +10,18 @@ import { DashboardType } from './data.d';
 
 interface AnalysisProps {
   adminDashboard: DashboardType;
-  dispatch: Dispatch<any>;
-  loading: boolean;
+  dispatch: Dispatch<
+    Action<
+      'adminDashboard/fetch'
+    >
+  >;
 }
 
 @connect(
   ({
     adminDashboard,
   }: {
-    adminDashboard: any;
+    adminDashboard: DashboardType;
   }) => ({
     adminDashboard,
   }),

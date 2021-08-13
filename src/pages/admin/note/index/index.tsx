@@ -30,24 +30,16 @@ interface TableListProps extends FormComponentProps {
       | 'adminNote/restore'
     >
   >;
-  loading: boolean;
   adminNote: NoteStateType;
 }
 
 @connect(
   ({
     adminNote,
-    loading,
   }: {
     adminNote: NoteStateType;
-    loading: {
-      models: {
-        [key: string]: boolean;
-      };
-    };
   }) => ({
     adminNote,
-    loading: loading.models.adminNote,
   }),
 )
 class TableList extends Component<TableListProps> {

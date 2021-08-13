@@ -29,24 +29,16 @@ interface TableListProps extends FormComponentProps {
       | 'adminFriendship/restore'
     >
   >;
-  loading: boolean;
   adminFriendship: FriendStateType;
 }
 
 @connect(
   ({
     adminFriendship,
-    loading,
   }: {
     adminFriendship: FriendStateType;
-    loading: {
-      models: {
-        [key: string]: boolean;
-      };
-    };
   }) => ({
     adminFriendship,
-    loading: loading.models.adminFriendship,
   }),
 )
 class TableList extends Component<TableListProps> {

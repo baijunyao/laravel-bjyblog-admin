@@ -17,24 +17,16 @@ const status = ['√', '×'];
 
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch;
-  loading: boolean;
   adminUser: AdminUserStateType;
 }
 
 @connect(
   ({
     adminUser,
-    loading,
   }: {
     adminUser: AdminUserStateType;
-    loading: {
-      models: {
-        [key: string]: boolean;
-      };
-    };
   }) => ({
     adminUser,
-    loading: loading.models.adminUser,
   }),
 )
 class TableList extends Component<TableListProps> {
