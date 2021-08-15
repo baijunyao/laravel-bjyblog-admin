@@ -18,7 +18,8 @@
     "strict": true,
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "types": ["cypress"]
   },
   "exclude": [
     "node_modules",
