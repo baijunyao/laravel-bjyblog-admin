@@ -48,17 +48,17 @@ class HandleDropdown extends Component<HandleDropdownProps> {
     return (
       <Menu>
         <Menu.Item key="0">
-          <a onClick={() => handleUpdate(this.props.dispatch, this.props.meta, this.props.selectedRow, `${this.props.namespace}/update`)}>{formatMessage({ id: 'Edit' })}</a>
+          <a className="handle-edit-btn" onClick={() => handleUpdate(this.props.dispatch, this.props.meta, this.props.selectedRow, `${this.props.namespace}/update`)}>{formatMessage({ id: 'Edit' })}</a>
         </Menu.Item>
         <Menu.Item key="1">
           {
             deletedAt === null ?
-              <a onClick={() => this.handleDestroy(selectedRow)}>{formatMessage({ id: 'Delete' })}</a> :
-              <a onClick={() => this.handleForceDelete(selectedRow)}>{formatMessage({ id: 'Force Delete' })}</a>
+              <a className="handle-delete-btn" onClick={() => this.handleDestroy(selectedRow)}>{formatMessage({ id: 'Delete' })}</a> :
+              <a className="handle-force-delete-btn" onClick={() => this.handleForceDelete(selectedRow)}>{formatMessage({ id: 'Force Delete' })}</a>
           }
         </Menu.Item>
         <Menu.Item key="2">
-          <a onClick={() => this.handleRestore(selectedRow)}>{formatMessage({ id: 'Restore' })}</a>
+          <a className="handle-restore-btn" onClick={() => this.handleRestore(selectedRow)}>{formatMessage({ id: 'Restore' })}</a>
         </Menu.Item>
       </Menu>
     );
@@ -71,7 +71,7 @@ class HandleDropdown extends Component<HandleDropdownProps> {
 
     return (
       <Dropdown overlay={this.generateMenu(this.props.selectedRow)}>
-        <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+        <a className="ant-dropdown-link handle-btn" onClick={e => e.preventDefault()}>
           {formatMessage({ id: 'Handle' })}
         </a>
       </Dropdown>
