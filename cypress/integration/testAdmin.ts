@@ -1,5 +1,19 @@
 const faker = require('faker');
 
+function testDeleteRestoreForceDelete() {
+  cy.get('.handle-btn:last').click()
+  cy.get('.handle-delete-btn:last').click()
+
+  cy.get('.handle-btn:last').click()
+  cy.get('.handle-restore-btn:last').click()
+
+  cy.get('.handle-btn:last').click()
+  cy.get('.handle-delete-btn:last').click()
+
+  cy.get('.handle-btn:last').click()
+  cy.get('.handle-force-delete-btn:last').click()
+}
+
 describe('test login', () => {
   it('should login successful', () => {
     cy.visit('/ant/#/ant/user/login')
@@ -18,7 +32,7 @@ describe('test login', () => {
   })
 });
 
-describe('test category', () => {
+describe('test admin page', () => {
   beforeEach(() => {
     cy.request('POST', '/oauth/token', {
       grant_type: 'password',
@@ -45,7 +59,7 @@ describe('test category', () => {
     cy.contains(description)
     description = faker.name.findName()
 
-    cy.get('.ant-table-pagination:last').click()
+    cy.get('.ant-pagination-item:last').click()
     cy.get('.handle-btn:last').click()
     cy.get('.handle-edit-btn:last').click()
     cy.get('#name').type(faker.name.findName())
@@ -55,14 +69,36 @@ describe('test category', () => {
 
     cy.contains(description)
 
-    cy.get('.handle-btn:last').click()
-    cy.get('.handle-delete-btn:last').click()
+    testDeleteRestoreForceDelete()
+  })
 
-    cy.get('.handle-btn:last').click()
-    cy.get('.handle-restore-btn:last').click()
 
+  it('tag', () => {
+    cy.visit('/ant/#/ant/tag/index')
+    cy.contains('button', 'Add').click()
+
+    let description = faker.name.findName()
+
+    cy.get('#name').type(faker.name.findName())
+    cy.get('#keywords').type(faker.name.findName())
+    cy.get('#description').type(description)
+    cy.contains('button', 'OK').first().click()
+
+    cy.contains(description)
+    description = faker.name.findName()
+
+    cy.get('.ant-pagination-item:last').click()
     cy.get('.handle-btn:last').click()
-    cy.get('.handle-delete-btn:last').click()
+    cy.get('.handle-edit-btn:last').click()
+    cy.get('#name').type(faker.name.findName())
+    cy.get('#keywords').type(faker.name.findName())
+    cy.get('#description').type(description)
+    cy.contains('button', 'OK').first().click()
+
+    cy.contains(description)
+
+    testDeleteRestoreForceDelete()
+  })
 
     cy.get('.handle-btn:last').click()
     cy.get('.handle-force-delete-btn:last').click()
