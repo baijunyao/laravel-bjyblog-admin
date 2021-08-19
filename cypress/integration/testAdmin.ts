@@ -100,7 +100,18 @@ describe('test admin page', () => {
     testDeleteRestoreForceDelete()
   })
 
+  it('comment', () => {
+    cy.visit('/ant/#/ant/comment/index')
+
+    const content = faker.name.findName()
+
     cy.get('.handle-btn:last').click()
-    cy.get('.handle-force-delete-btn:last').click()
+    cy.get('.handle-edit-btn:last').click()
+    cy.get('#content').type(content)
+    cy.contains('button', 'OK').first().click()
+
+    cy.contains(content)
+
+    testDeleteRestoreForceDelete()
   })
 });
