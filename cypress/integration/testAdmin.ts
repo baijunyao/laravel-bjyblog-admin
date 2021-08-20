@@ -1,5 +1,31 @@
 const faker = require('faker');
 
+function clickHandleButton() {
+  cy.get('.handle-btn:last').click()
+}
+
+function clickAddButton() {
+  cy.contains('button', 'Add').click()
+}
+
+function clickEditButton() {
+  cy.get('.handle-edit-btn:last').click()
+}
+
+function clickOkButton() {
+  cy.contains('button', 'OK').first().click()
+}
+
+function clickLastPaginationButton() {
+  cy.get('.ant-pagination-item:last').click()
+}
+
+function typeInputRandomValue(id: string, value = null) {
+  value = value === null ? faker.name.findName() : value;
+
+  cy.get(`#${id}`).type(value)
+}
+
 function testDeleteRestoreForceDelete() {
   cy.get('.handle-btn:last').click()
   cy.get('.handle-delete-btn:last').click()
@@ -47,25 +73,26 @@ describe('test admin page', () => {
 
   it('category', () => {
     cy.visit('/ant/#/ant/category/index')
-    cy.contains('button', 'Add').click()
+    clickAddButton()
 
     let description = faker.name.findName()
 
-    cy.get('#name').type(faker.name.findName())
-    cy.get('#keywords').type(faker.name.findName())
-    cy.get('#description').type(description)
-    cy.contains('button', 'OK').first().click()
+    typeInputRandomValue('name');
+    typeInputRandomValue('keywords');
+    typeInputRandomValue('description', description);
+    clickOkButton()
 
     cy.contains(description)
     description = faker.name.findName()
 
-    cy.get('.ant-pagination-item:last').click()
-    cy.get('.handle-btn:last').click()
-    cy.get('.handle-edit-btn:last').click()
-    cy.get('#name').type(faker.name.findName())
-    cy.get('#keywords').type(faker.name.findName())
-    cy.get('#description').type(description)
-    cy.contains('button', 'OK').first().click()
+    clickLastPaginationButton()
+    clickHandleButton()
+    clickEditButton()
+
+    typeInputRandomValue('name');
+    typeInputRandomValue('keywords');
+    typeInputRandomValue('description', description);
+    clickOkButton()
 
     cy.contains(description)
 
@@ -75,25 +102,25 @@ describe('test admin page', () => {
 
   it('tag', () => {
     cy.visit('/ant/#/ant/tag/index')
-    cy.contains('button', 'Add').click()
+    clickAddButton()
 
     let description = faker.name.findName()
 
-    cy.get('#name').type(faker.name.findName())
-    cy.get('#keywords').type(faker.name.findName())
-    cy.get('#description').type(description)
-    cy.contains('button', 'OK').first().click()
+    typeInputRandomValue('name');
+    typeInputRandomValue('keywords');
+    typeInputRandomValue('description', description);
+    clickOkButton()
 
     cy.contains(description)
     description = faker.name.findName()
 
-    cy.get('.ant-pagination-item:last').click()
-    cy.get('.handle-btn:last').click()
-    cy.get('.handle-edit-btn:last').click()
-    cy.get('#name').type(faker.name.findName())
-    cy.get('#keywords').type(faker.name.findName())
-    cy.get('#description').type(description)
-    cy.contains('button', 'OK').first().click()
+    clickLastPaginationButton()
+    clickHandleButton()
+    clickEditButton()
+    typeInputRandomValue('name');
+    typeInputRandomValue('keywords');
+    typeInputRandomValue('description', description);
+    clickOkButton()
 
     cy.contains(description)
 
@@ -105,13 +132,22 @@ describe('test admin page', () => {
 
     const content = faker.name.findName()
 
-    cy.get('.handle-btn:last').click()
-    cy.get('.handle-edit-btn:last').click()
-    cy.get('#content').type(content)
-    cy.contains('button', 'OK').first().click()
+    clickHandleButton()
+    clickEditButton()
+    typeInputRandomValue('content', content);
+    clickOkButton()
 
     cy.contains(content)
 
     testDeleteRestoreForceDelete()
+  })
+
+  it('admin user', () => {
+    cy.visit('/ant/#/ant/adminUser/index')
+
+    clickEditButton()
+    typeInputRandomValue('name');
+    typeInputRandomValue('password', Cypress.env('BLOG_PASSWORD'));
+    clickOkButton()
   })
 });
