@@ -56,7 +56,7 @@ class TableList extends Component<TableListProps> {
       width: 110,
       render: (text: string, record: SocialiteClientType) => (
           <Fragment>
-            <a onClick={() => handleUpdate(this.props.dispatch, this.meta, record, 'adminSocialiteClient/update')}>{formatMessage({ id: 'Edit' })}</a>
+            <a className="handle-edit-btn" onClick={() => handleUpdate(this.props.dispatch, this.meta, record, 'adminSocialiteClient/update')}>{formatMessage({ id: 'Edit' })}</a>
           </Fragment>
         ),
     },

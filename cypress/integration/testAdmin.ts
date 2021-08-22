@@ -150,4 +150,13 @@ describe('test admin page', () => {
     typeInputRandomValue('password', Cypress.env('BLOG_PASSWORD'));
     clickOkButton()
   })
+
+  it('socialite client', () => {
+    cy.visit('/ant/#/ant/socialiteClient/index')
+
+    clickEditButton()
+    typeInputRandomValue('client_id');
+    typeInputRandomValue('client_secret');
+    clickOkButton()
+  })
 });
