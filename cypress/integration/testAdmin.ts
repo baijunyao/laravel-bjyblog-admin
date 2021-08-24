@@ -159,4 +159,13 @@ describe('test admin page', () => {
     typeInputRandomValue('client_secret');
     clickOkButton()
   })
+
+  it('socialite user', () => {
+    cy.visit('/ant/#/ant/socialiteUser/index')
+
+    clickEditButton()
+    typeInputRandomValue('name');
+    typeInputRandomValue('email', faker.internet.email());
+    clickOkButton()
+  })
 });
