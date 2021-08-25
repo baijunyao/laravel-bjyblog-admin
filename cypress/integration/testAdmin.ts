@@ -168,4 +168,31 @@ describe('test admin page', () => {
     typeInputRandomValue('email', faker.internet.email());
     clickOkButton()
   })
+
+  it('friend', () => {
+    cy.visit('/ant/#/ant/friend/index')
+    clickAddButton()
+
+    let name = faker.name.findName()
+
+    typeInputRandomValue('name', name);
+    typeInputRandomValue('url', faker.internet.url());
+    typeInputRandomValue('sort', faker.datatype.number());
+    clickOkButton()
+    clickLastPaginationButton()
+
+    cy.contains(name)
+    name = faker.name.findName()
+
+    clickHandleButton()
+    clickEditButton()
+    typeInputRandomValue('name', name);
+    typeInputRandomValue('url', faker.internet.url());
+    typeInputRandomValue('sort', faker.datatype.number());
+    clickOkButton()
+
+    cy.contains(name)
+
+    testDeleteRestoreForceDelete()
+  })
 });
