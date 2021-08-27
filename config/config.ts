@@ -388,11 +388,11 @@ export default {
   chainWebpack: webpackPlugin,
   proxy: {
     '/oauth/*': {
-      target: 'http://development.baijunyao.com/',
+      target: 'http://staging.baijunyao.com/',
       changeOrigin: true,
     },
     '/api/*': {
-      target: 'http://development.baijunyao.com/',
+      target: 'http://staging.baijunyao.com/',
       changeOrigin: true,
     },
   },
