@@ -195,4 +195,35 @@ describe('test admin page', () => {
 
     testDeleteRestoreForceDelete()
   })
+
+  it('site', () => {
+    cy.visit('/ant/#/ant/site/index')
+    clickAddButton()
+
+    let description = faker.name.findName()
+    typeInputRandomValue('name');
+    typeInputRandomValue('description', description);
+    typeInputRandomValue('url', faker.internet.url());
+    typeInputRandomValue('sort', faker.datatype.number());
+    cy.contains('span', 'Yes').first().click()
+    clickOkButton()
+
+    clickLastPaginationButton()
+    cy.contains(description)
+
+    description = faker.name.findName()
+    clickHandleButton()
+    clickEditButton()
+    typeInputRandomValue('name');
+    typeInputRandomValue('description', description);
+    typeInputRandomValue('url', faker.internet.url());
+    typeInputRandomValue('sort', faker.datatype.number());
+    cy.contains('span', 'Yes').first().click()
+    clickOkButton()
+
+    clickLastPaginationButton()
+    cy.contains(description)
+
+    testDeleteRestoreForceDelete()
+  })
 });

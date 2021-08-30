@@ -172,7 +172,7 @@ class TableList extends Component<TableListProps> {
           <div className={styles.tableList}>
             <AddButton
               meta={this.meta}
-              actionType="adminCategory/add"
+              actionType="adminSite/add"
             />
             <StandardTable
               columns={this.columns}
