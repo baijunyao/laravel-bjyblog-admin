@@ -226,4 +226,28 @@ describe('test admin page', () => {
 
     testDeleteRestoreForceDelete()
   })
+
+  it('note', () => {
+    cy.visit('/ant/#/ant/note/index')
+    clickAddButton()
+
+    let content = faker.name.findName()
+
+    typeInputRandomValue('content', content);
+    clickOkButton()
+    clickLastPaginationButton()
+
+    cy.contains(content)
+    content = faker.name.findName()
+
+    clickHandleButton()
+    clickEditButton()
+    typeInputRandomValue('content', content);
+    clickOkButton()
+    clickLastPaginationButton()
+
+    cy.contains(content)
+
+    testDeleteRestoreForceDelete()
+  })
 });
