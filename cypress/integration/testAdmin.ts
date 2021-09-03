@@ -250,4 +250,31 @@ describe('test admin page', () => {
 
     testDeleteRestoreForceDelete()
   })
+
+  it('open source', () => {
+    cy.visit('/ant/#/ant/openSource/index')
+    clickAddButton()
+
+    let name = faker.name.findName()
+    typeInputRandomValue('name', name);
+    typeInputRandomValue('sort', faker.datatype.number());
+    cy.contains('.ant-radio-wrapper span', 'Gitee').first().click()
+    clickOkButton()
+
+    clickLastPaginationButton()
+    cy.contains(name)
+
+    name = faker.name.findName()
+    clickHandleButton()
+    clickEditButton()
+    typeInputRandomValue('name', name);
+    typeInputRandomValue('sort', faker.datatype.number());
+    cy.contains('.ant-radio-wrapper span', 'Gitee').first().click()
+    clickOkButton()
+
+    clickLastPaginationButton()
+    cy.contains(name)
+
+    testDeleteRestoreForceDelete()
+  })
 });

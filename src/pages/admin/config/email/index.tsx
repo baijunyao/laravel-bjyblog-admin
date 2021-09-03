@@ -37,13 +37,13 @@ class TableList extends Component {
       key: '143',
       label: 'Email Username',
       widget: Input,
-      required: true,
+      required: false,
     },
     {
       key: '144',
       label: 'Email Password',
       widget: Input,
-      required: true,
+      required: false,
     },
     {
       key: '145',

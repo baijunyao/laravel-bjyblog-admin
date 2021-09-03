@@ -150,7 +150,7 @@ class TableList extends Component<TableListProps> {
           <div className={styles.tableList}>
             <AddButton
               meta={this.meta}
-              actionType="adminCategory/add"
+              actionType="adminOpenSource/add"
             />
             <StandardTable
               columns={this.columns}
