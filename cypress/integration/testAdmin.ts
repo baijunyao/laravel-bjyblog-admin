@@ -16,14 +16,22 @@ function clickOkButton() {
   cy.contains('button', 'OK').first().click()
 }
 
+function clickSubmitButton() {
+  cy.contains('button', 'Submit').first().click()
+}
+
 function clickLastPaginationButton() {
   cy.get('.ant-pagination-item:last').click()
 }
 
-function typeInputRandomValue(id: string, value = null) {
+function typeInputRandomValue(id: string|number, value = null) {
   value = value === null ? faker.name.findName() : value;
 
-  cy.get(`#${id}`).type(value)
+  cy.get(`#${id}`).focus().clear().type(value)
+}
+
+function clearInputValue(id: string|number, value = null) {
+  cy.get(`#${id}`).focus().clear()
 }
 
 function testDeleteRestoreForceDelete() {
@@ -276,5 +284,28 @@ describe('test admin page', () => {
     cy.contains(name)
 
     testDeleteRestoreForceDelete()
+  })
+
+  it('open source', () => {
+    cy.visit('/ant/#/ant/config/email')
+
+    const idAndValues = {
+      156: faker.name.findName(),
+      155: faker.internet.port(),
+      142: faker.internet.email(),
+      143: faker.name.findName(),
+      144: faker.name.findName(),
+      145: faker.name.findName(),
+      157: faker.internet.email(),
+    }
+
+    Object.keys(idAndValues).forEach(key => typeInputRandomValue(key, idAndValues[key]))
+
+    clickSubmitButton()
+
+    clearInputValue(143);
+    clearInputValue(144);
+
+    clickSubmitButton()
   })
 });
