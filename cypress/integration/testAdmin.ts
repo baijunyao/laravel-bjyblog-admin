@@ -286,7 +286,7 @@ describe('test admin page', () => {
     testDeleteRestoreForceDelete()
   })
 
-  it('open source', () => {
+  it('email email', () => {
     cy.visit('/ant/#/ant/config/email')
 
     const idAndValues = {
@@ -305,6 +305,20 @@ describe('test admin page', () => {
 
     clearInputValue(143);
     clearInputValue(144);
+
+    clickSubmitButton()
+  })
+
+  it('comment audit', () => {
+    cy.visit('/ant/#/ant/config/commentAudit')
+
+    const idAndValues = {
+      174: faker.name.findName(),
+      175: faker.name.findName(),
+      176: faker.name.findName(),
+    }
+
+    Object.keys(idAndValues).forEach(key => typeInputRandomValue(key, idAndValues[key]))
 
     clickSubmitButton()
   })
