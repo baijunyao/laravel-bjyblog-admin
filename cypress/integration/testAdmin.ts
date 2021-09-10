@@ -1,3 +1,5 @@
+import { forEach } from "lodash";
+
 const faker = require('faker');
 
 function clickHandleButton() {
@@ -316,6 +318,20 @@ describe('test admin page', () => {
       174: faker.name.findName(),
       175: faker.name.findName(),
       176: faker.name.findName(),
+    }
+
+    Object.keys(idAndValues).forEach(key => typeInputRandomValue(key, idAndValues[key]))
+
+    clickSubmitButton()
+  })
+
+  it('qq group', () => {
+    cy.visit('/ant/#/ant/config/qqQun')
+
+    const idAndValues = {
+      150: faker.name.findName(),
+      151: faker.name.findName(),
+      152: faker.name.findName(),
     }
 
     Object.keys(idAndValues).forEach(key => typeInputRandomValue(key, idAndValues[key]))
