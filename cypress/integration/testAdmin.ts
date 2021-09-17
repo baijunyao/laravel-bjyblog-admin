@@ -391,4 +391,21 @@ describe('test admin page', () => {
 
     clickSubmitButton()
   })
+
+  it('social share', () => {
+    cy.visit('/ant/#/ant/config/socialShare')
+
+    const idAndValues = {
+      169: faker.name.findName(),
+      170: faker.name.findName(),
+    }
+
+    Object.keys(idAndValues).forEach(key => typeInputRandomValue(key, idAndValues[key]))
+
+    clickSubmitButton()
+
+    Object.keys(idAndValues).forEach(name => clearInputValue(name))
+
+    clickSubmitButton()
+  })
 });
