@@ -2,7 +2,11 @@ import { forEach } from "lodash";
 
 const faker = require('faker');
 
-function clickHandleButton() {
+function clickFirstHandleButton() {
+  cy.get('.handle-btn:first').click()
+}
+
+function clickLastHandleButton() {
   cy.get('.handle-btn:last').click()
 }
 
@@ -96,7 +100,7 @@ describe('test admin page', () => {
     description = faker.name.findName()
 
     clickLastPaginationButton()
-    clickHandleButton()
+    clickLastHandleButton()
     clickEditButton()
 
     typeInputRandomValue('name');
@@ -125,7 +129,7 @@ describe('test admin page', () => {
     description = faker.name.findName()
 
     clickLastPaginationButton()
-    clickHandleButton()
+    clickLastHandleButton()
     clickEditButton()
     typeInputRandomValue('name');
     typeInputRandomValue('keywords');
@@ -142,14 +146,18 @@ describe('test admin page', () => {
 
     const content = faker.name.findName()
 
-    clickHandleButton()
+    clickFirstHandleButton()
     clickEditButton()
     typeInputRandomValue('content', content);
     clickOkButton()
 
     cy.contains(content)
 
-    testDeleteRestoreForceDelete()
+    clickFirstHandleButton()
+    cy.get('.handle-delete-btn:first').click()
+
+    clickFirstHandleButton()
+    cy.get('.handle-restore-btn:first').click()
   })
 
   it('admin user', () => {
@@ -194,7 +202,7 @@ describe('test admin page', () => {
     cy.contains(name)
     name = faker.name.findName()
 
-    clickHandleButton()
+    clickLastHandleButton()
     clickEditButton()
     typeInputRandomValue('name', name);
     typeInputRandomValue('url', faker.internet.url());
@@ -222,7 +230,7 @@ describe('test admin page', () => {
     cy.contains(description)
 
     description = faker.name.findName()
-    clickHandleButton()
+    clickLastHandleButton()
     clickEditButton()
     typeInputRandomValue('name');
     typeInputRandomValue('description', description);
@@ -250,7 +258,7 @@ describe('test admin page', () => {
     cy.contains(content)
     content = faker.name.findName()
 
-    clickHandleButton()
+    clickLastHandleButton()
     clickEditButton()
     typeInputRandomValue('content', content);
     clickOkButton()
@@ -275,7 +283,7 @@ describe('test admin page', () => {
     cy.contains(name)
 
     name = faker.name.findName()
-    clickHandleButton()
+    clickLastHandleButton()
     clickEditButton()
     typeInputRandomValue('name', name);
     typeInputRandomValue('sort', faker.datatype.number());
@@ -379,7 +387,7 @@ describe('test admin page', () => {
     const idAndValues = {
       101: faker.name.findName(),
       149: faker.name.findName(),
-      202: faker.name.findName(),
+      102: faker.name.findName(),
       103: faker.name.findName(),
     }
 
@@ -398,6 +406,26 @@ describe('test admin page', () => {
     const idAndValues = {
       169: faker.name.findName(),
       170: faker.name.findName(),
+    }
+
+    Object.keys(idAndValues).forEach(key => typeInputRandomValue(key, idAndValues[key]))
+
+    clickSubmitButton()
+
+    Object.keys(idAndValues).forEach(name => clearInputValue(name))
+
+    clickSubmitButton()
+  })
+
+  it('social link', () => {
+    cy.visit('/ant/#/ant/config/socialLink')
+
+    const idAndValues = {
+      188: faker.internet.url(),
+      189: faker.internet.url(),
+      190: faker.internet.url(),
+      191: faker.internet.url(),
+      192: faker.internet.url(),
     }
 
     Object.keys(idAndValues).forEach(key => typeInputRandomValue(key, idAndValues[key]))
