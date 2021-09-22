@@ -436,4 +436,28 @@ describe('test admin page', () => {
 
     clickSubmitButton()
   })
+
+  it('search', () => {
+    cy.visit('/ant/#/ant/config/search')
+
+    const idAndValues = {
+      178: faker.name.findName(),
+      179: faker.name.findName(),
+      180: faker.name.findName(),
+      181: faker.name.findName(),
+      182: faker.name.findName(),
+      183: faker.name.findName(),
+      184: faker.name.findName(),
+      186: faker.name.findName(),
+      187: faker.name.findName(),
+    }
+
+    Object.keys(idAndValues).forEach(key => typeInputRandomValue(key, idAndValues[key]))
+
+    clickSubmitButton()
+
+    Object.keys(idAndValues).forEach(name => clearInputValue(name))
+
+    clickSubmitButton()
+  })
 });
