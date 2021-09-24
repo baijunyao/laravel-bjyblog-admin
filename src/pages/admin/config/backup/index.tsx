@@ -27,37 +27,37 @@ class TableList extends Component {
           },
         ],
       },
-      required: true,
+      required: false,
     },
     {
       key: '159',
       label: 'MySQL Dump Path',
       widget: Input,
-      required: true,
+      required: false,
     },
     {
       key: '160',
       label: 'Aliyun AccessKeyID',
       widget: Input,
-      required: true,
+      required: false,
     },
     {
       key: '161',
       label: 'Aliyun AccessKeySecret',
       widget: Input,
-      required: true,
+      required: false,
     },
     {
       key: '162',
       label: 'Aliyun BUCKET',
       widget: Input,
-      required: true,
+      required: false,
     },
     {
       key: '163',
       label: 'Aliyun ENDPOINT',
       widget: Input,
-      required: true,
+      required: false,
     },
   ];
 

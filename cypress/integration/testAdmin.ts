@@ -26,6 +26,11 @@ function clickSubmitButton() {
   cy.contains('button', 'Submit').first().click()
 }
 
+function clickSubmitButtonContainSuccess() {
+  cy.contains('button', 'Submit').first().click()
+  cy.contains('Success')
+}
+
 function clickLastPaginationButton() {
   cy.get('.ant-pagination-item:last').click()
 }
@@ -163,7 +168,7 @@ describe('test admin page', () => {
   it('admin user', () => {
     cy.visit('/ant/#/ant/adminUser/index')
 
-    clickEditButton()
+    cy.get('.handle-edit-btn:first').click()
     typeInputRandomValue('name');
     typeInputRandomValue('password', Cypress.env('BLOG_PASSWORD'));
     clickOkButton()
@@ -181,7 +186,7 @@ describe('test admin page', () => {
   it('socialite user', () => {
     cy.visit('/ant/#/ant/socialiteUser/index')
 
-    clickEditButton()
+    cy.get('.handle-edit-btn:first').click()
     typeInputRandomValue('name');
     typeInputRandomValue('email', faker.internet.email());
     clickOkButton()
@@ -310,13 +315,12 @@ describe('test admin page', () => {
     }
 
     Object.keys(idAndValues).forEach(key => typeInputRandomValue(key, idAndValues[key]))
-
-    clickSubmitButton()
+    clickSubmitButtonContainSuccess()
 
     clearInputValue(143);
     clearInputValue(144);
 
-    clickSubmitButton()
+    clickSubmitButtonContainSuccess()
   })
 
   it('comment audit', () => {
@@ -329,8 +333,7 @@ describe('test admin page', () => {
     }
 
     Object.keys(idAndValues).forEach(key => typeInputRandomValue(key, idAndValues[key]))
-
-    clickSubmitButton()
+    clickSubmitButtonContainSuccess()
   })
 
   it('qq group', () => {
@@ -343,8 +346,7 @@ describe('test admin page', () => {
     }
 
     Object.keys(idAndValues).forEach(key => typeInputRandomValue(key, idAndValues[key]))
-
-    clickSubmitButton()
+    clickSubmitButtonContainSuccess()
   })
 
   it('backup', () => {
@@ -358,8 +360,7 @@ describe('test admin page', () => {
     }
 
     Object.keys(idAndValues).forEach(key => typeInputRandomValue(key, idAndValues[key]))
-
-    clickSubmitButton()
+    clickSubmitButtonContainSuccess()
   })
 
   it('upload', () => {
@@ -373,12 +374,10 @@ describe('test admin page', () => {
     }
 
     Object.keys(idAndValues).forEach(key => typeInputRandomValue(key, idAndValues[key]))
-
-    clickSubmitButton()
+    clickSubmitButtonContainSuccess()
 
     Object.keys(idAndValues).forEach(name => clearInputValue(name))
-
-    clickSubmitButton()
+    clickSubmitButtonContainSuccess()
   })
 
   it('seo', () => {
@@ -392,12 +391,10 @@ describe('test admin page', () => {
     }
 
     Object.keys(idAndValues).forEach(key => typeInputRandomValue(key, idAndValues[key]))
-
-    clickSubmitButton()
+    clickSubmitButtonContainSuccess()
 
     Object.keys(idAndValues).forEach(name => clearInputValue(name))
-
-    clickSubmitButton()
+    clickSubmitButtonContainSuccess()
   })
 
   it('social share', () => {
@@ -409,12 +406,10 @@ describe('test admin page', () => {
     }
 
     Object.keys(idAndValues).forEach(key => typeInputRandomValue(key, idAndValues[key]))
-
-    clickSubmitButton()
+    clickSubmitButtonContainSuccess()
 
     Object.keys(idAndValues).forEach(name => clearInputValue(name))
-
-    clickSubmitButton()
+    clickSubmitButtonContainSuccess()
   })
 
   it('social link', () => {
@@ -429,12 +424,10 @@ describe('test admin page', () => {
     }
 
     Object.keys(idAndValues).forEach(key => typeInputRandomValue(key, idAndValues[key]))
-
-    clickSubmitButton()
+    clickSubmitButtonContainSuccess()
 
     Object.keys(idAndValues).forEach(name => clearInputValue(name))
-
-    clickSubmitButton()
+    clickSubmitButtonContainSuccess()
   })
 
   it('search', () => {
@@ -453,11 +446,10 @@ describe('test admin page', () => {
     }
 
     Object.keys(idAndValues).forEach(key => typeInputRandomValue(key, idAndValues[key]))
-
-    clickSubmitButton()
+    clickSubmitButtonContainSuccess()
 
     Object.keys(idAndValues).forEach(name => clearInputValue(name))
-
+    clickSubmitButtonContainSuccess()
   })
 
   it('other setting', () => {
@@ -473,9 +465,9 @@ describe('test admin page', () => {
     }
 
     Object.keys(idAndValues).forEach(key => typeInputRandomValue(key, idAndValues[key]))
-    clickSubmitButton()
+    clickSubmitButtonContainSuccess()
 
     Object.keys(idAndValues).forEach(name => clearInputValue(name))
-    clickSubmitButton()
+    clickSubmitButtonContainSuccess()
   })
 });
