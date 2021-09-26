@@ -396,7 +396,7 @@ export default {
       changeOrigin: true,
     },
   },
-  base: '/ant/',
-  publicPath: '/ant/',
+  base: '/admin/',
+  publicPath: '/admin/',
   history: 'hash',
 } as IConfig;
