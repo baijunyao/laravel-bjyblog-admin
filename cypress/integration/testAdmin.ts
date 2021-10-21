@@ -1,5 +1,3 @@
-import { forEach } from "lodash";
-
 const faker = require('faker');
 
 function clickFirstHandleButton() {
@@ -61,19 +59,19 @@ function testDeleteRestoreForceDelete() {
 
 describe('test login', () => {
   it('should login successful', () => {
-    cy.visit('/ant/#/ant/user/login')
+    cy.visit('/admin/#/admin/user/login')
     cy.get('#email').type('test@test.com')
     cy.get('#password').type(Cypress.env('BLOG_PASSWORD'))
     cy.get('.antd-pro-pages-user-login-components-login-index-login button').click()
-    cy.url().should('contain', '/ant#/ant/dashboard/analysis')
+    cy.url().should('contain', '/ant#/admin/dashboard/analysis')
   })
 
   it('should login fail', () => {
-    cy.visit('/ant/#/ant/user/login')
+    cy.visit('/admin/#/admin/user/login')
     cy.get('#email').type('test@test.com')
     cy.get('#password').type(faker.internet.password())
     cy.get('.antd-pro-pages-user-login-components-login-index-login button').click()
-    cy.url().should('contain', '/ant/#/ant/user/login')
+    cy.url().should('contain', '/admin/#/admin/user/login')
   })
 });
 
@@ -91,7 +89,7 @@ describe('test admin page', () => {
   })
 
   it('category', () => {
-    cy.visit('/ant/#/ant/category/index')
+    cy.visit('/admin/#/admin/category/index')
     clickAddButton()
 
     let description = faker.name.findName()
@@ -120,7 +118,7 @@ describe('test admin page', () => {
 
 
   it('tag', () => {
-    cy.visit('/ant/#/ant/tag/index')
+    cy.visit('/admin/#/admin/tag/index')
     clickAddButton()
 
     let description = faker.name.findName()
@@ -147,7 +145,7 @@ describe('test admin page', () => {
   })
 
   it('comment', () => {
-    cy.visit('/ant/#/ant/comment/index')
+    cy.visit('/admin/#/admin/comment/index')
 
     const content = faker.name.findName()
 
@@ -166,7 +164,7 @@ describe('test admin page', () => {
   })
 
   it('admin user', () => {
-    cy.visit('/ant/#/ant/adminUser/index')
+    cy.visit('/admin/#/admin/adminUser/index')
 
     cy.get('.handle-edit-btn:first').click()
     typeInputRandomValue('name');
@@ -175,7 +173,7 @@ describe('test admin page', () => {
   })
 
   it('socialite client', () => {
-    cy.visit('/ant/#/ant/socialiteClient/index')
+    cy.visit('/admin/#/admin/socialiteClient/index')
 
     clickEditButton()
     typeInputRandomValue('client_id');
@@ -184,7 +182,7 @@ describe('test admin page', () => {
   })
 
   it('socialite user', () => {
-    cy.visit('/ant/#/ant/socialiteUser/index')
+    cy.visit('/admin/#/admin/socialiteUser/index')
 
     cy.get('.handle-edit-btn:first').click()
     typeInputRandomValue('name');
@@ -193,7 +191,7 @@ describe('test admin page', () => {
   })
 
   it('friend', () => {
-    cy.visit('/ant/#/ant/friend/index')
+    cy.visit('/admin/#/admin/friend/index')
     clickAddButton()
 
     let name = faker.name.findName()
@@ -220,7 +218,7 @@ describe('test admin page', () => {
   })
 
   it('site', () => {
-    cy.visit('/ant/#/ant/site/index')
+    cy.visit('/admin/#/admin/site/index')
     clickAddButton()
 
     let description = faker.name.findName()
@@ -251,7 +249,7 @@ describe('test admin page', () => {
   })
 
   it('note', () => {
-    cy.visit('/ant/#/ant/note/index')
+    cy.visit('/admin/#/admin/note/index')
     clickAddButton()
 
     let content = faker.name.findName()
@@ -275,7 +273,7 @@ describe('test admin page', () => {
   })
 
   it('open source', () => {
-    cy.visit('/ant/#/ant/openSource/index')
+    cy.visit('/admin/#/admin/openSource/index')
     clickAddButton()
 
     let name = faker.name.findName()
@@ -302,7 +300,7 @@ describe('test admin page', () => {
   })
 
   it('email', () => {
-    cy.visit('/ant/#/ant/config/email')
+    cy.visit('/admin/#/admin/config/email')
 
     const idAndValues = {
       156: faker.name.findName(),
@@ -324,7 +322,7 @@ describe('test admin page', () => {
   })
 
   it('comment audit', () => {
-    cy.visit('/ant/#/ant/config/commentAudit')
+    cy.visit('/admin/#/admin/config/commentAudit')
 
     const idAndValues = {
       174: faker.name.findName(),
@@ -337,7 +335,7 @@ describe('test admin page', () => {
   })
 
   it('qq group', () => {
-    cy.visit('/ant/#/ant/config/qqQun')
+    cy.visit('/admin/#/admin/config/qqQun')
 
     const idAndValues = {
       150: faker.name.findName(),
@@ -350,7 +348,7 @@ describe('test admin page', () => {
   })
 
   it('backup', () => {
-    cy.visit('/ant/#/ant/config/backup')
+    cy.visit('/admin/#/admin/config/backup')
 
     const idAndValues = {
       160: faker.name.findName(),
@@ -364,7 +362,7 @@ describe('test admin page', () => {
   })
 
   it('upload', () => {
-    cy.visit('/ant/#/ant/config/upload')
+    cy.visit('/admin/#/admin/config/upload')
 
     const idAndValues = {
       200: faker.name.findName(),
@@ -381,7 +379,7 @@ describe('test admin page', () => {
   })
 
   it('seo', () => {
-    cy.visit('/ant/#/ant/config/seo')
+    cy.visit('/admin/#/admin/config/seo')
 
     const idAndValues = {
       101: faker.name.findName(),
@@ -398,7 +396,7 @@ describe('test admin page', () => {
   })
 
   it('social share', () => {
-    cy.visit('/ant/#/ant/config/socialShare')
+    cy.visit('/admin/#/admin/config/socialShare')
 
     const idAndValues = {
       169: faker.name.findName(),
@@ -413,7 +411,7 @@ describe('test admin page', () => {
   })
 
   it('social link', () => {
-    cy.visit('/ant/#/ant/config/socialLink')
+    cy.visit('/admin/#/admin/config/socialLink')
 
     const idAndValues = {
       188: faker.internet.url(),
@@ -431,7 +429,7 @@ describe('test admin page', () => {
   })
 
   it('search', () => {
-    cy.visit('/ant/#/ant/config/search')
+    cy.visit('/admin/#/admin/config/search')
 
     const idAndValues = {
       178: faker.name.findName(),
@@ -453,7 +451,7 @@ describe('test admin page', () => {
   })
 
   it('other setting', () => {
-    cy.visit('/ant/#/ant/config/otherSetting')
+    cy.visit('/admin/#/admin/config/otherSetting')
 
     const idAndValues = {
       117: faker.name.findName(),
