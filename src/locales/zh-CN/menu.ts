@@ -55,6 +55,8 @@ export default {
   'menu.article.index': '列表',
   'menu.comment': '评论',
   'menu.comment.index': '列表',
+  'menu.nav': '菜单',
+  'menu.nav.index': '列表',
   'menu.adminUser': '管理员',
   'menu.adminUser.index': '列表',
   'menu.socialiteUser': '第三方用户',

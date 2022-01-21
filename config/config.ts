@@ -187,6 +187,18 @@ export default {
           ],
         },
         {
+          name: 'nav',
+          icon: 'icon-menu',
+          path: '/nav',
+          routes: [
+            {
+              name: 'index',
+              path: '/nav/index',
+              component: './admin/nav/index',
+            },
+          ],
+        },
+        {
           name: 'adminUser',
           icon: 'icon-admin-user',
           path: '/adminUser',

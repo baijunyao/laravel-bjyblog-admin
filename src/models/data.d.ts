@@ -70,6 +70,16 @@ export interface CategoryListPaginationType extends TableListPaginationType{
   list: CategoryType[];
 }
 
+export interface NavType extends EloquentType{
+  sort: number;
+  name: string;
+  url: string;
+}
+
+export interface NavListPaginationType extends TableListPaginationType{
+  list: CategoryType[];
+}
+
 export interface ArticleType extends EloquentType{
   category_id: number;
   title: string;
