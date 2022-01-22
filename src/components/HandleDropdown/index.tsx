@@ -54,11 +54,11 @@ class HandleDropdown extends Component<HandleDropdownProps> {
           {
             deletedAt === null ?
               <a className="handle-delete-btn" onClick={() => this.handleDestroy(selectedRow)}>{formatMessage({ id: 'Delete' })}</a> :
-              <a className="handle-force-delete-btn" onClick={() => this.handleForceDelete(selectedRow)}>{formatMessage({ id: 'Force Delete' })}</a>
+              <>
+                <a className="handle-force-delete-btn" onClick={ () => this.handleForceDelete(selectedRow) }>{ formatMessage({ id: 'Force Delete' }) }</a>
+                <a className="handle-restore-btn" onClick={ () => this.handleRestore(selectedRow) }>{ formatMessage({ id: 'Restore' }) }</a>
+              </>
           }
-        </Menu.Item>
-        <Menu.Item key="2">
-          <a className="handle-restore-btn" onClick={() => this.handleRestore(selectedRow)}>{formatMessage({ id: 'Restore' })}</a>
         </Menu.Item>
       </Menu>
     );
