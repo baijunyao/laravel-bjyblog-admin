@@ -303,11 +303,6 @@ export default {
               component: './admin/config/qqQun',
             },
             {
-              name: 'backup',
-              path: '/config/backup',
-              component: './admin/config/backup',
-            },
-            {
               name: 'upload',
               path: '/config/upload',
               component: './admin/config/upload',

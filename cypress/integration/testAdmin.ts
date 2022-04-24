@@ -347,20 +347,6 @@ describe('test admin page', () => {
     clickSubmitButtonContainSuccess()
   })
 
-  it('backup', () => {
-    cy.visit('/admin/#/admin/config/backup')
-
-    const idAndValues = {
-      160: faker.name.findName(),
-      161: faker.name.findName(),
-      162: faker.name.findName(),
-      163: faker.name.findName(),
-    }
-
-    Object.keys(idAndValues).forEach(key => typeInputRandomValue(key, idAndValues[key]))
-    clickSubmitButtonContainSuccess()
-  })
-
   it('upload', () => {
     cy.visit('/admin/#/admin/config/upload')
 
