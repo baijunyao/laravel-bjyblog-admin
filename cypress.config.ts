@@ -10,4 +10,8 @@ export default defineConfig({
     },
     baseUrl: 'http://localhost:8000',
   },
+  screenshotOnRunFailure: false,
+  trashAssetsBeforeRuns: false,
+  video: false,
+  videoUploadOnPasses: false,
 })
