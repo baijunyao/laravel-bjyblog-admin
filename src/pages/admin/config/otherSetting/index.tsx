@@ -1,4 +1,5 @@
 import {
+  Checkbox,
   Form,
   Input,
   Radio,
@@ -123,12 +124,6 @@ class TableList extends Component {
       required: false,
     },
     {
-      key: '158',
-      label: 'Sentry DSN',
-      widget: Input,
-      required: false,
-    },
-    {
       key: '172',
       label: 'CDN Domain',
       widget: Input,
@@ -160,8 +155,8 @@ class TableList extends Component {
       required: true,
     },
     {
-      key: '194',
-      label: 'Breadcrumb',
+      key: '173',
+      label: 'Comment Audit',
       widget: Radio.Group,
       children: {
         widget: Radio,
@@ -173,6 +168,25 @@ class TableList extends Component {
           {
             value: 'false',
             label: 'No',
+          },
+        ],
+      },
+      required: true,
+    },
+    {
+      key: '204',
+      label: 'Type',
+      widget: Checkbox.Group,
+      children: {
+        widget: Checkbox,
+        list: [
+          {
+            value: 'public',
+            label: 'Local',
+          },
+          {
+            value: 'oss_uploads',
+            label: 'Aliyun OSS',
           },
         ],
       },

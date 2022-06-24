@@ -99,3 +99,12 @@ export interface ArticleType extends EloquentType{
 export interface ArticleListPaginationType extends TableListPaginationType{
   list: ArticleType[];
 }
+
+export interface ConfigType extends EloquentType{
+  name: string;
+  value: string;
+}
+
+export interface ConfigListPaginationType extends TableListPaginationType{
+  list: ConfigType[];
+}

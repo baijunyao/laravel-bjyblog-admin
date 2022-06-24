@@ -1,6 +1,5 @@
 import request from '@/utils/request';
-import { TableListParams } from '@/models/data';
-import { ConfigType } from '@/pages/admin/config/data';
+import { TableListParams, ConfigType } from '@/models/data';
 
 export async function queryRule(params: TableListParams) {
   const response = await request('/api/configs', {

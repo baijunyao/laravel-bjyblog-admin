@@ -283,6 +283,28 @@ export default {
           ],
         },
         {
+          name: 'cloudServices',
+          icon: 'icon-cloud-service',
+          path: '/services',
+          routes: [
+            {
+              name: 'baidu',
+              path: '/services/baidu',
+              component: './admin/services/baidu',
+            },
+            {
+              name: 'aliyun',
+              path: '/services/aliyun',
+              component: './admin/services/aliyun',
+            },
+            {
+              name: 'sentry',
+              path: '/services/sentry',
+              component: './admin/services/sentry',
+            },
+          ],
+        },
+        {
           name: 'config',
           icon: 'icon-setting',
           path: '/config',
@@ -293,19 +315,9 @@ export default {
               component: './admin/config/email',
             },
             {
-              name: 'commentAudit',
-              path: '/config/commentAudit',
-              component: './admin/config/commentAudit',
-            },
-            {
               name: 'qqQun',
               path: '/config/qqQun',
               component: './admin/config/qqQun',
-            },
-            {
-              name: 'upload',
-              path: '/config/upload',
-              component: './admin/config/upload',
             },
             {
               name: 'seo',

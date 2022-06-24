@@ -1,6 +1,6 @@
 import { AnyAction, Reducer } from 'redux';
 import { EffectsCommandMap } from 'dva';
-import { queryRule, updateRule } from '@/pages/admin/config/service';
+import { queryRule, updateRule } from '@/services/config';
 import { ConfigListPaginationType } from './data.d';
 
 export interface ConfigStateType {

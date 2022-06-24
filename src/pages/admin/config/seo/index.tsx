@@ -30,6 +30,25 @@ class TableList extends Component {
       required: true,
     },
     {
+      key: '194',
+      label: 'Breadcrumb',
+      widget: Radio.Group,
+      children: {
+        widget: Radio,
+        list: [
+          {
+            value: 'true',
+            label: 'Yes',
+          },
+          {
+            value: 'false',
+            label: 'No',
+          },
+        ],
+      },
+      required: true,
+    },
+    {
       key: '101',
       label: 'Blog Name',
       widget: Input,

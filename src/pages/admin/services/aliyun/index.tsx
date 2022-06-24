@@ -1,5 +1,4 @@
 import {
-  Checkbox,
   Form,
   Input,
 } from 'antd';
@@ -10,25 +9,6 @@ import { MetaType } from '@/components/FormBuilder';
 
 class TableList extends Component {
   meta: MetaType[] = [
-    {
-      key: '204',
-      label: 'Type',
-      widget: Checkbox.Group,
-      children: {
-        widget: Checkbox,
-        list: [
-          {
-            value: 'public',
-            label: 'Local',
-          },
-          {
-            value: 'oss_uploads',
-            label: 'Aliyun OSS',
-          },
-        ],
-      },
-      required: true,
-    },
     {
       key: '200',
       label: 'Aliyun AccessKeyID',

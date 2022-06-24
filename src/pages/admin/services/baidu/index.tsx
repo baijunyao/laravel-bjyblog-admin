@@ -1,7 +1,6 @@
 import {
   Form,
   Input,
-  Radio,
 } from 'antd';
 import React, { Component } from 'react';
 
@@ -10,25 +9,6 @@ import { MetaType } from '@/components/FormBuilder';
 
 class TableList extends Component {
   meta: MetaType[] = [
-    {
-      key: '173',
-      label: 'Comment Audit',
-      widget: Radio.Group,
-      children: {
-        widget: Radio,
-        list: [
-          {
-            value: 'true',
-            label: 'Yes',
-          },
-          {
-            value: 'false',
-            label: 'No',
-          },
-        ],
-      },
-      required: true,
-    },
     {
       key: '174',
       label: 'Baidu appid',

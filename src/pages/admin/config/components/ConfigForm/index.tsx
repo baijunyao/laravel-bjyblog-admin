@@ -10,7 +10,7 @@ import { FormComponentProps } from 'antd/es/form';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { ConfigStateType } from '../../model';
+import { ConfigStateType } from '@/pages/admin/config/model';
 import FormBuilder, { MetaType } from '@/components/FormBuilder';
 import { ConfigType } from '@/pages/admin/config/data';
 
