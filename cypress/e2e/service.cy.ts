@@ -10,19 +10,6 @@ const faker = require('faker');
 describe('test service', () => {
   beforeEach(() => login())
 
-  it('baidu', () => {
-    cy.visit('/admin/#/admin/services/baidu')
-
-    const idAndValues = {
-      174: faker.name.findName(),
-      175: faker.name.findName(),
-      176: faker.name.findName(),
-    }
-
-    Object.keys(idAndValues).forEach(key => typeInputRandomValue(key, idAndValues[key]))
-    clickSubmitButtonContainSuccess()
-  })
-
   it('aliyun', () => {
     cy.visit('/admin/#/admin/services/aliyun')
 
@@ -37,6 +24,33 @@ describe('test service', () => {
     clickSubmitButtonContainSuccess()
 
     Object.keys(idAndValues).forEach(name => clearInputValue(name))
+    clickSubmitButtonContainSuccess()
+  })
+
+  it('tencent', () => {
+    cy.visit('/admin/#/admin/services/tencent')
+
+    const idAndValues = {
+      205: faker.name.findName(),
+      206: faker.name.findName(),
+      207: faker.name.findName(),
+      208: faker.name.findName(),
+    }
+
+    Object.keys(idAndValues).forEach(key => typeInputRandomValue(key, idAndValues[key]))
+    clickSubmitButtonContainSuccess()
+  })
+
+  it('baidu', () => {
+    cy.visit('/admin/#/admin/services/baidu')
+
+    const idAndValues = {
+      174: faker.name.findName(),
+      175: faker.name.findName(),
+      176: faker.name.findName(),
+    }
+
+    Object.keys(idAndValues).forEach(key => typeInputRandomValue(key, idAndValues[key]))
     clickSubmitButtonContainSuccess()
   })
 

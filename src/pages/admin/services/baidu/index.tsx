@@ -11,19 +11,19 @@ class TableList extends Component {
   meta: MetaType[] = [
     {
       key: '174',
-      label: 'Baidu appid',
+      label: 'appid',
       widget: Input,
       required: true,
     },
     {
       key: '175',
-      label: 'Baidu appkey',
+      label: 'appkey',
       widget: Input,
       required: true,
     },
     {
       key: '176',
-      label: 'Baidu secret',
+      label: 'secret',
       widget: Input,
       required: true,
     },

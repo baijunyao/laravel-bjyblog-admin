@@ -288,14 +288,19 @@ export default {
           path: '/services',
           routes: [
             {
-              name: 'baidu',
-              path: '/services/baidu',
-              component: './admin/services/baidu',
-            },
-            {
               name: 'aliyun',
               path: '/services/aliyun',
               component: './admin/services/aliyun',
+            },
+            {
+              name: 'tencent',
+              path: '/services/tencent',
+              component: './admin/services/tencent',
+            },
+            {
+              name: 'baidu',
+              path: '/services/baidu',
+              component: './admin/services/baidu',
             },
             {
               name: 'sentry',

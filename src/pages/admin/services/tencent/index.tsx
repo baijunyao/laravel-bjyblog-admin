@@ -10,26 +10,26 @@ import { MetaType } from '@/components/FormBuilder';
 class TableList extends Component {
   meta: MetaType[] = [
     {
-      key: '200',
-      label: 'AccessKeyID',
+      key: '205',
+      label: 'secret_id',
       widget: Input,
       required: false,
     },
     {
-      key: '201',
-      label: 'AccessKeySecret',
+      key: '206',
+      label: 'secret_key',
       widget: Input,
       required: false,
     },
     {
-      key: '202',
-      label: 'BUCKET',
+      key: '207',
+      label: 'region',
       widget: Input,
       required: false,
     },
     {
-      key: '203',
-      label: 'ENDPOINT',
+      key: '208',
+      label: 'project_id',
       widget: Input,
       required: false,
     },
